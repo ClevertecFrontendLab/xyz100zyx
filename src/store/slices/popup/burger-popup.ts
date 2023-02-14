@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-const initialState: Record<string, boolean> = {
+const initialState: {burgerNav: boolean} = {
     burgerNav: false,
 }
 

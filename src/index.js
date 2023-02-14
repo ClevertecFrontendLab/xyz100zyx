@@ -10,6 +10,7 @@ import { LayoutMainPage } from './components/layouts';
 import { Terms } from './components';
 
 import './index.scss';
+import { LoaderWindow } from './components/popups/loader-window/loader-window';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -28,6 +29,7 @@ root.render(
           </Route>
         </Routes>
       </HashRouter>
+      <LoaderWindow />
     </Provider>
   </React.StrictMode>
 );

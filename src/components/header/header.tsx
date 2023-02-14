@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { UserCard } from '../common';
-import { toggle } from '../../store/slices/popup/popup-slice';
+import { toggle } from '../../store/slices/popup/burger-popup';
 import styles from './header.module.scss';
 import logo from '../../assets/logo.svg';
 import { RootState } from '../../store/store';

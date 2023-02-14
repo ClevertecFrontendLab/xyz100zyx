@@ -4,6 +4,9 @@
     min-height: 100vh;
     position: absolute;
     z-index: 1111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     @media(min-width: 769px){
         display: none;
@@ -11,5 +14,9 @@
 
     &__none{
         display:none;
+    }
+
+    &__error{
+        display: block !important;
     }
 }

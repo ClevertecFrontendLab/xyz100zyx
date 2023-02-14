@@ -1,10 +1,10 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useRef } from 'react';
 import styles from './book-section.module.scss';
-import { Book } from '../../types/data.types';
+import { FetchedBook } from '../../types/data.types';
 import { SliderImages } from '../swiper';
 
 interface IProps {
-  book: Book;
+  book: FetchedBook;
 }
 
 export const BookSection: FC<IProps> = ({ book }) => {
@@ -14,27 +14,20 @@ export const BookSection: FC<IProps> = ({ book }) => {
     <div ref={bookRef} className={styles.book}>
       <div className={styles.book__header}>
         <div className={styles.images}>
-          <SliderImages images={book.picture} />
+          <SliderImages images={book?.images} />
         </div>
         <div className={styles.book_info}>
           <h3 className={styles.book__title}>
-            Грокаем алгоритмы. Иллюстрированное пособие для программистов и любопытствующих
+            {book?.title}
           </h3>
-          <p className={styles.book__author}>Адитья Бхаргава, 2019</p>
+          <p className={styles.book__author}>{book?.authors && book.authors.map((author, index) => index !== 0 ? `${author}, ` : `${author}`)}, {book?.issueYear}</p>
           <button type='button' className={styles.book__action}>
-            ЗАБРОНИРОВАТЬ
+            {book?.delivery ? `ЗАНЯТА ДО ${book?.delivery?.dateHandedFrom}` : book?.booking ? 'ЗАБРОНИРОВАНА' : 'ЗАБРОНИРОВАТЬ'}
           </button>
           <div className={styles.book__header__desc}>
             <h5>О книге</h5>
             <p>
-              Алгоритмы — это всего лишь пошаговые алгоритмы решения задач, и большинство таких задач уже были кем-то
-              решены, протестированы и проверены. Можно, конечно, погрузится в глубокую философию гениального Кнута,
-              изучить многостраничные фолианты с доказательствами и обоснованиями, но хотите ли вы тратить на это свое
-              время?
-              <br />
-              <br />
-              Откройте великолепно иллюстрированную книгу и вы сразу поймете, что алгоритмы — это просто. А грокать
-              алгоритмы — это веселое и увлекательное занятие.
+              {book?.description}
             </p>
           </div>
         </div>
@@ -42,13 +35,7 @@ export const BookSection: FC<IProps> = ({ book }) => {
       <div className={styles.book__footer}>
         <h5>О книге</h5>
         <p className={styles.book__description}>
-          Алгоритмы — это всего лишь пошаговые алгоритмы решения задач, и большинство таких задач уже были кем-то
-          решены, протестированы и проверены. Можно, конечно, погрузится в глубокую философию гениального Кнута, изучить
-          многостраничные фолианты с доказательствами и обоснованиями, но хотите ли вы тратить на это свое время?
-          <br />
-          <br />
-          Откройте великолепно иллюстрированную книгу и вы сразу поймете, что алгоритмы — это просто. А грокать
-          алгоритмы — это веселое и увлекательное занятие.
+        {book?.description}
         </p>
       </div>
     </div>

@@ -1,29 +1,116 @@
-export type Book = {
-    id: number,
-    picture: any[],
-    rating: number | null,
-    title: string,
-    author: Array<string>,
-    year: number,
-    isAvailable: boolean,
-    city: string,
-    pages: number,
-    binding: string,
-    genre: string,
-    weight: number,
-    isbn: string,
-    manufacturer: string,
-    reviews: Array<Review>,
-    format: string,
-    description: string,
-    busyUntil?: string,
-    inCard?: true
-}
+export type FetchedBooks = {
+  issueYear: string;
+  rating?: number;
+  title: string;
+  authors: string[];
+  image?: {
+    url: string;
+  };
+  categories: string[];
+  id: number;
+  booking?: {
+    id: number;
+    order: boolean;
+    dateOrder: string;
+    customerId: number;
+    customerFirstName: string;
+    customerLastName: string;
+  };
+  delivery?: {
+    id: number;
+    handed: boolean;
+    dateHandedFrom: string;
+    dateHandedTo: string;
+    recipientId: number;
+    recipientFirstName: string;
+    recipientLastName: string;
+  };
+  histories?: [
+    {
+      id: number;
+      userId: number;
+    }
+  ];
+};
+
+export type FetchedBook = {
+  id: number;
+  title: string;
+  rating: number | null;
+  issueYear: string;
+  description: string;
+  publish: string;
+  pages: string;
+  cover: string;
+  weight: string;
+  format: string;
+  ISBN: string;
+  producer: string;
+  authors: string[];
+  images: { url: string }[];
+  categories: string[];
+  comments: [
+    {
+      id: 1;
+      rating: 4;
+      text: 'Самая лучшая книга в мире';
+      createdAt: '2022-10-23T12:23:13.012Z';
+      user: {
+        commentUserId: 6;
+        firstName: 'Aliaksei';
+        lastName: 'Valadzko';
+        avatarUrl: '/uploads/thumbnail_Screenshot_3_1016a62c87.png';
+      };
+    }
+  ];
+  booking: {
+    id: 7;
+    order: true;
+    dateOrder: '2022-10-24T00:00:00.000Z';
+    customerId: 6;
+    customerFirstName: 'Алексей';
+    customerLastName: 'Володько';
+  };
+  delivery: {
+    id: 7;
+    handed: true;
+    dateHandedFrom: '2022-10-24T00:00:00.000Z';
+    dateHandedTo: '2022-10-28T00:00:00.000Z';
+    recipientId: 6;
+    recipientFirstName: 'Ал';
+    recipientLastName: 'Вал';
+  };
+  histories: [
+    {
+      id: number;
+      userId: number;
+    }
+  ];
+};
+
+export type Genre = {
+  name: string;
+  path: string;
+  id: number;
+  count?: number;
+};
+
+export type FetchedError = {
+  status: number;
+  name: string;
+  message: string;
+  details: Record<any, any>;
+};
 
 export type Review = {
-    author: string,
-    avatar: any,
-    comment: string,
-    rating: number,
-    date: string,
-}
+  id: number;
+  rating: number;
+  text: string;
+  createdAt: string;
+  user: {
+    commentUserId: number;
+    firstName: string;
+    lastName: string;
+    avatarUrl: string;
+  };
+};

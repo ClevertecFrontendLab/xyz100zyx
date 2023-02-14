@@ -1,44 +1,41 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
+import { RootState } from '../../store/store';
+import { fetchBookById } from '../../store/slices/books/book-slice';
 import { BookSection } from '../../components';
 import { BookReview } from '../../components/book-review/book-review';
 import styles from './book-page.module.scss';
-import { Book } from '../../types/data.types';
 import iconDivider from '../../assets/link-divider.svg';
 import { ReactComponent as IconStarFill } from '../../assets/star-icon.svg';
 import { ReactComponent as IconStarUnfill } from '../../assets/star-icon-unfill.svg';
 import { ReactComponent as IconChevronVisible } from '../../assets/icon_chevron_visible.svg';
-import { books } from '../../components/books-list/books-list';
 
 export type Comment = { userName: string; body?: string; date: string };
 
-interface IProps {
-  book: Book;
-}
-
-export const BookPage: FC<IProps> = ({ book }) => {
-  const [comments, setComments] = useState<Comment[]>([
-    {
-      userName: 'Иван Иванов',
-      date: '5 января 2019',
-    },
-    {
-      userName: 'Николай Качков',
-      date: '20 июня 2018',
-      body: `Учитывая ключевые сценарии поведения, курс на социально-ориентированный национальный проект не оставляет шанса для анализа существующих паттернов поведения. Для современного мира внедрение современных методик предоставляет широкие возможности для позиций, занимаемых участниками в отношении поставленных задач. Как уже неоднократно упомянуто, сделанные на базе интернет-аналитики выводы будут в равной степени предоставлены сами себе. Вот вам яркий пример современных тенденций — глубокий уровень погружения создаёт предпосылки для своевременного выполнения сверхзадачи. И нет сомнений, что акционеры крупнейших компаний, инициированные исключительно синтетически, превращены в посмешище, хотя само их существование приносит несомненную пользу обществу.`,
-    },
-    {
-      userName: 'Екатерина Беляева',
-      date: '18 февраля 2018',
-    },
-  ]);
-
+export const BookPage: FC = () => {
   const [isVisibleComments, setVisibleComments] = useState(true);
 
   const { booksId } = useParams();
-  const actualBook = books.find((item) => String(item.id) === booksId);
 
-  return (
+  const { book, status, error } = useSelector((state: RootState) => state.books);
+  const dispatch = useDispatch<ThunkDispatch<RootState, any, AnyAction>>();
+
+  /* eslint-disable */
+  useEffect(() => {
+    dispatch(fetchBookById(Number.parseInt(booksId!)));
+    console.log(book);
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchBookById(Number.parseInt(booksId!)));
+    console.log(book);
+  }, [booksId]);
+
+  /* eslint-enable */
+
+  return status === 'fulfilled' ? (
     <section className={styles.page}>
       <div className={styles.nav}>
         <span className={styles.nav__links}>
@@ -47,37 +44,30 @@ export const BookPage: FC<IProps> = ({ book }) => {
           </a>
           <img src={iconDivider} alt='link divider' />
           <a className={styles.nav__link} href='#'>
-            Грокаем алгоритмы. Иллюстрированное пособие для программистов и любопытствующих
+            {book?.title}
           </a>
         </span>
       </div>
-      <BookSection book={actualBook!} />
+      <BookSection book={book!} />
       <div
         className={
-          actualBook!.picture.length < 2
+          book?.images && book?.images.length < 2
             ? `${styles.page__rating}`
             : `${styles.page__rating} ${styles.page__rating__with}`
         }
       >
         <h5 className={styles.section__label}>Рейтинг</h5>
+        {/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */}
         <ul className={styles.rating}>
-          <li>
-            <IconStarFill />
-          </li>
-          <li>
-            <IconStarFill />
-          </li>
-          <li>
-            <IconStarFill />
-          </li>
-          <li>
-            <IconStarFill />
-          </li>
-          <li>
-            <IconStarUnfill />
-          </li>
+          {book?.rating ?
+            [...Array(5)].map((_, index) =>
+              index <= Math.round(book?.rating!) ? <IconStarFill /> : <IconStarUnfill />
+            )
+            :
+            [...Array(5)].map((_, index) => <IconStarUnfill />)
+          }
         </ul>
-        <h5>4.3</h5>
+        <h5 className={styles.rating__text}>{book?.rating || 'ещё нет оценок'}</h5>
       </div>
       <div className={styles.detailed}>
         <h5 className={styles.section__label}>Подробная иформация</h5>
@@ -85,43 +75,41 @@ export const BookPage: FC<IProps> = ({ book }) => {
           <ul className={styles.detailed__left}>
             <li>
               <span className={styles.detailed__key}>Издательство</span>
-              <span className={styles.detailed__value}>Питер</span>
+              <span className={styles.detailed__value}>{book?.publish}</span>
             </li>
             <li>
               <span className={styles.detailed__key}>Год издания</span>
-              <span className={styles.detailed__value}>2019</span>
+              <span className={styles.detailed__value}>{book?.issueYear}</span>
             </li>
             <li>
               <span className={styles.detailed__key}>Страниц</span>
-              <span className={styles.detailed__value}>288</span>
+              <span className={styles.detailed__value}>{book?.pages}</span>
             </li>
             <li>
               <span className={styles.detailed__key}>Переплёт</span>
-              <span className={styles.detailed__value}>Мягкая обложка</span>
+              <span className={styles.detailed__value}>{book?.cover}</span>
             </li>
             <li>
               <span className={styles.detailed__key}>Формат</span>
-              <span className={styles.detailed__value}>70x100</span>
+              <span className={styles.detailed__value}>{book?.format}</span>
             </li>
           </ul>
           <ul className={styles.detailed__right}>
             <li>
               <span className={styles.detailed__key}>Жанр</span>
-              <span className={styles.detailed__value}>Компьютерная литература</span>
+              <span className={styles.detailed__value}>{book?.categories[0]}</span>
             </li>
             <li>
               <span className={styles.detailed__key}>Вес</span>
-              <span className={styles.detailed__value}>370 г</span>
+              <span className={styles.detailed__value}>{book?.weight} г</span>
             </li>
             <li>
               <span className={styles.detailed__key}>ISBN</span>
-              <span className={styles.detailed__value}>978-5-4461-0923-4</span>
+              <span className={styles.detailed__value}>{book?.ISBN}</span>
             </li>
             <li>
               <span className={styles.detailed__key}>Изготовитель</span>
-              <span className={styles.detailed__value}>
-                ООО «Питер Мейл». РФ, 198 206, г. Санкт-Петербург, Петергофское ш, д. 73, лит. А29
-              </span>
+              <span className={styles.detailed__value}>{book?.producer}</span>
             </li>
           </ul>
         </div>
@@ -133,7 +121,7 @@ export const BookPage: FC<IProps> = ({ book }) => {
           }
         >
           <p>
-            Отзывы<span>2</span>
+            Отзывы<span>{book?.comments?.length}</span>
           </p>
           <div
             data-test-id='button-hide-reviews'
@@ -143,10 +131,10 @@ export const BookPage: FC<IProps> = ({ book }) => {
             <IconChevronVisible />
           </div>
         </h5>
-        {isVisibleComments && (
+        {(isVisibleComments && book?.comments?.length) && (
           <ul className={styles.reviews__list}>
-            {comments.map((comment) => (
-              <BookReview key={comment.userName} comment={comment} />
+            {book?.comments?.map((comment) => (
+              <BookReview key={comment.id} comment={comment} />
             ))}
           </ul>
         )}
@@ -155,5 +143,7 @@ export const BookPage: FC<IProps> = ({ book }) => {
         ОЦЕНИТЬ КНИГУ
       </button>
     </section>
+  ) : (
+    <div />
   );
 };

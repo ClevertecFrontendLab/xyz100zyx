@@ -12,7 +12,7 @@ import 'swiper/css/pagination';
 import './slider-images.scss';
 
 interface IProps {
-  images: any[];
+  images: Array<{url: string}>;
 }
 
 export const SliderImages: FC<IProps> = ({ images }) => {
@@ -31,18 +31,18 @@ export const SliderImages: FC<IProps> = ({ images }) => {
         pagination={{clickable: true}}
         className='mySwiper2'
       >
-        {images.length < 1 && (
+        {images && images?.length < 1 && (
           <SwiperSlide>
             <img src={unbookImg} alt='big preview' />
           </SwiperSlide>
         )}
-        {images.map((img, index) => (
+        {images?.map((img, index) => (
           <SwiperSlide>
-            <img src={img} alt='big preview' />
+            <img src={`https://strapi.cleverland.by${img.url}`} alt='big preview' />
           </SwiperSlide>
         ))}
       </Swiper>
-      {images.length > 1 && (
+      {images && images?.length > 1 && (
         <Swiper
           loop={true}
           onSwiper={setThumbsSwiper}
@@ -55,9 +55,9 @@ export const SliderImages: FC<IProps> = ({ images }) => {
           scrollbar={{ draggable: true, }}
           className='mySwiper'
         >
-          {images.map((img, index) => (
+          {images && images?.map((img, index) => (
             <SwiperSlide data-test-id='slide-mini'>
-              <img src={img} alt='big preview' />
+              <img src={`https://strapi.cleverland.by${img.url}`} alt='big preview' />
             </SwiperSlide>
           ))}
         </Swiper>

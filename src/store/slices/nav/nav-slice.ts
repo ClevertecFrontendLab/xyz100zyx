@@ -1,12 +1,28 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { INavState } from './nav-slice.types';
+import { FetchedError } from '../../../types/data.types';
 
 const initialState: INavState = {
     activeDirectory: 0,
     activeGenre: 0,
-    isHiddenGenres: false
+    isHiddenGenres: true,
+    genres: [],
+    status: null,
+    error: null,
+    isErrorOpen: false
 }
+
+/* eslint-disable prefer-arrow-callback */
+export const fetchGenres = createAsyncThunk(
+    'nav/fetchGenres',
+    async function(){
+        const response = await fetch('https://strapi.cleverland.by/api/categories')
+        const data = await response.json()
+        return data;
+    }
+)
+
 /* eslint-disable no-param-reassign */
 const navSlice = createSlice({
     name: 'nav',
@@ -23,12 +39,27 @@ const navSlice = createSlice({
         },
         setGenresVisibility: (state, action: PayloadAction<boolean>) => {
             state.isHiddenGenres = action.payload;
+        },
+        closeErrorPopup: (state) => {
+            state.isErrorOpen = false;
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(fetchGenres.pending, (state) => {state.status = 'pending'})
+        builder.addCase(fetchGenres.fulfilled, (state, action) => {
+            state.genres = action.payload
+            state.status = 'fulfilled'
+        })
+        builder.addCase(fetchGenres.rejected, (state, action) => {
+            state.status = 'rejected'
+            state.isErrorOpen = true;
+            console.log(action.payload)
+        })
     }
 })
 
 
-export const { changeActiveDirectory, changeActiveGenre, toggleGenresVisibility, setGenresVisibility } = navSlice.actions;
+export const { changeActiveDirectory, changeActiveGenre, toggleGenresVisibility, setGenresVisibility, closeErrorPopup } = navSlice.actions;
 
 /* eslint-disable import/no-default-export */
 export default navSlice.reducer;

@@ -4,9 +4,11 @@ import styles from './book-review.module.scss';
 import userReviewImg from '../../assets/user-review.jpg';
 import { ReactComponent as IconStarFill } from '../../assets/star-icon.svg';
 import { ReactComponent as IconStarUnfill } from '../../assets/star-icon-unfill.svg';
+import { Review } from '../../types/data.types';
+import { getCommentDate } from '../../utils/date.utils';
 
 interface IProps {
-  comment: Comment;
+  comment: Review;
 }
 
 export const BookReview: FC<IProps> = ({ comment }) => (
@@ -16,12 +18,13 @@ export const BookReview: FC<IProps> = ({ comment }) => (
         <img src={userReviewImg} alt='comment info' />
       </a>
       <span className={styles.user}>
-        <span className={styles.comment__name}>{comment.userName}</span>
-        <span className={styles.comment__date}>{comment.date}</span>
+        <span className={styles.comment__name}>{comment.user.firstName} {comment.user.lastName}</span>
+        <span className={styles.comment__date}>{getCommentDate(comment.createdAt)}</span>
       </span>
     </div>
     <ul className={styles.comment__rating}>
-      <li>
+      {[...Array(5)].map((_, index) => index < Math.round(comment.rating) ? <li><IconStarFill /></li> : <li><IconStarUnfill /></li>)}
+      {/* <li>
         <IconStarFill />
       </li>
       <li>
@@ -35,8 +38,8 @@ export const BookReview: FC<IProps> = ({ comment }) => (
       </li>
       <li>
         <IconStarUnfill />
-      </li>
+      </li> */}
     </ul>
-    {comment.body && <p className={styles.comment__body}>{comment.body}</p>}
+    {comment.text && <p className={styles.comment__body}>{comment.text}</p>}
   </div>
 );

@@ -1,95 +1,20 @@
 import { FC, MouseEvent, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
 import {
   changeActiveDirectory,
   changeActiveGenre,
   toggleGenresVisibility,
   setGenresVisibility,
+  fetchGenres,
 } from '../../store/slices/nav/nav-slice';
-import { close } from '../../store/slices/popup/popup-slice';
+import { close } from '../../store/slices/popup/burger-popup';
 import styles from './nav-menu.module.scss';
 import { ReactComponent as IconChevronVisible } from '../../assets/icon_chevron_visible.svg';
 import { ReactComponent as IconChevronHidden } from '../../assets/nav_menu_chevron.svg';
 import { RootState } from '../../store/store';
-
-const categories: Array<{ label: string; count: number | null; to: string }> = [
-  {
-    label: 'Все книги',
-    count: null,
-    to: 'all',
-  },
-  {
-    label: 'Бизнес-книги',
-    count: 14,
-    to: 'bussiness',
-  },
-  {
-    label: 'Детективы',
-    count: 8,
-    to: 'detectives',
-  },
-  {
-    label: 'Детские книги',
-    count: 14,
-    to: 'children',
-  },
-  {
-    label: 'Зарубежная литература',
-    count: 2,
-    to: 'foreign',
-  },
-  {
-    label: 'История',
-    count: 5,
-    to: 'history',
-  },
-  {
-    label: 'Классическая литература',
-    count: 12,
-    to: 'classic',
-  },
-  {
-    label: 'Книги по психологии',
-    count: 11,
-    to: 'psychology',
-  },
-  {
-    label: 'Компьютерная литература',
-    count: 54,
-    to: 'computer',
-  },
-  {
-    label: 'Культура и искусство',
-    count: 5,
-    to: 'culture',
-  },
-  {
-    label: 'Наука и образование',
-    count: 2,
-    to: 'science',
-  },
-  {
-    label: 'Публицистическая литература',
-    count: 0,
-    to: 'literature',
-  },
-  {
-    label: 'Справочники',
-    count: 10,
-    to: 'directory',
-  },
-  {
-    label: 'Фантастика',
-    count: 12,
-    to: 'fantasy',
-  },
-  {
-    label: 'Юмористическая литература',
-    count: 8,
-    to: 'humor',
-  },
-];
+import { fetchBooks } from '../../store/slices/books/book-slice';
 
 interface IProps {
   dataTestIdShowcase: string;
@@ -99,20 +24,21 @@ interface IProps {
 }
 
 export const NavMenu: FC<IProps> = ({ dataTestIdBooks, dataTestIdContract, dataTestIdShowcase, dataTestIdTerms }) => {
-  const { activeGenre, activeDirectory, isHiddenGenres } = useSelector((state: RootState) => state.nav);
+  const { activeGenre, activeDirectory, isHiddenGenres, genres } = useSelector((state: RootState) => state.nav);
 
   const dispatch = useDispatch();
+  const thunkDispatch = useDispatch<ThunkDispatch<RootState, any, AnyAction>>()
   const navigate = useNavigate();
 
   const onLinkClick = (index: number) => {
     dispatch(changeActiveDirectory(0));
     dispatch(changeActiveGenre(index));
+    thunkDispatch(fetchBooks())
     dispatch(close());
   };
 
   const onDirClick = (index: number) => {
     dispatch(changeActiveDirectory(index));
-    console.log('dir click is work')
 
     if (index === 0) {
       dispatch(changeActiveGenre(0));
@@ -138,7 +64,10 @@ export const NavMenu: FC<IProps> = ({ dataTestIdBooks, dataTestIdContract, dataT
 
   /* eslint-disable react-hooks/exhaustive-deps */
 
-  useEffect(() => closeComponent(), [])
+  useEffect(() => {
+    thunkDispatch(fetchGenres())
+    closeComponent()
+  }, [])
 
   return (
     <div className={styles.menu}>
@@ -160,25 +89,25 @@ export const NavMenu: FC<IProps> = ({ dataTestIdBooks, dataTestIdContract, dataT
         )}
       </div>
       <ul className={!isHiddenGenres ? styles.menu__list : `${styles.menu__list} ${styles.menu__list__hidden}`}>
-        {categories.map((category, index) => (
+        {genres.map((category, index) => (
           <li
             data-test-id={index === 0 ? dataTestIdBooks : ''}
             role='presentation'
             className={styles.menu__item}
-            key={category.label}
+            key={category.id}
             onClick={() => onLinkClick(index)}
             onKeyDown={() => {}}
           >
-            <Link className={styles.menu__link} to={`/books/${category.to}`}>
+            <Link className={styles.menu__link} to={`/books/${category.path}`}>
               {index === activeGenre && activeDirectory === 0 ? (
                 <span className={`${styles.label} ${styles.label__active}`}>
-                  {category.label}
-                  <span className={styles.link__count}>{category.count}</span>
+                  {category.name}
+                  <span className={styles.link__count}>{category.count || ''}</span>
                 </span>
               ) : (
                 <span className={styles.label}>
-                  {category.label}
-                  <span className={styles.link__count}>{category.count}</span>
+                  {category.name}
+                  <span className={styles.link__count}>{category.count || ''}</span>
                 </span>
               )}
             </Link>
