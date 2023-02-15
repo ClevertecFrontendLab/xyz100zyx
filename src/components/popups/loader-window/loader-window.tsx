@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import iconLoader from '../../../assets/loader-icon.svg';

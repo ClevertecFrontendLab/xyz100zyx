@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from 'react';
+import { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import styles from './books-list.module.scss';

@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, Thumbs, FreeMode } from 'swiper';
+import { Navigation, Pagination, Scrollbar, Thumbs, FreeMode } from 'swiper';
 import SwiperClass from 'swiper/types/swiper-class';
 import unbookImg from '../../../../assets/unbook-img.jpg';
 
@@ -36,7 +36,7 @@ export const SliderImages: FC<IProps> = ({ images }) => {
             <img src={unbookImg} alt='big preview' />
           </SwiperSlide>
         )}
-        {images?.map((img, index) => (
+        {images?.map((img) => (
           <SwiperSlide key={img.url}>
             <img src={`https://strapi.cleverland.by${img.url}`} alt='big preview'/>
           </SwiperSlide>
@@ -55,7 +55,7 @@ export const SliderImages: FC<IProps> = ({ images }) => {
           scrollbar={{ draggable: true, }}
           className='mySwiper'
         >
-          {images && images?.map((img, index) => (
+          {images && images?.map((img) => (
             <SwiperSlide data-test-id='slide-mini' key={img.url}>
               <img src={`https://strapi.cleverland.by${img.url}`} alt='big preview'/>
             </SwiperSlide>

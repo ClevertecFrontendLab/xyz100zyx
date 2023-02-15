@@ -131,7 +131,7 @@ export const BookPage: FC = () => {
             <IconChevronVisible />
           </div>
         </h5>
-        {(isVisibleComments && book?.comments?.length) && (
+        {(isVisibleComments && book?.comments) && (
           <ul className={styles.reviews__list}>
             {book?.comments?.map((comment) => (
               <BookReview key={comment.id} comment={comment} />
