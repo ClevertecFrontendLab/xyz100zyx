@@ -88,7 +88,7 @@ export type FetchedBook = {
   ];
 };
 
-export type Genre = {
+export type Category = {
   name: string;
   path: string;
   id: number;

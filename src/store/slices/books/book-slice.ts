@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { BookService } from '../../../services/book-service';
 import { FetchedBook, FetchedBooks, FetchedError } from '../../../types/data.types';
 
 /* eslint-disable */
@@ -19,16 +20,17 @@ const initialState: {
 
 export const fetchBooks = createAsyncThunk('books/fetchBooks', async function (_, { rejectWithValue }) {
   try {
-    const response = await fetch('https://strapi.cleverland.by/api/books');
+    return await BookService.getBooks();
+    // const response = await fetch('https://strapi.cleverland.by/api/books');
 
-    if (!response.ok)
-      throw new Error(
-        JSON.stringify({ status: response.status, message: response.statusText, name: response.statusText })
-      );
+    // if (!response.ok)
+    //   throw new Error(
+    //     JSON.stringify({ status: response.status, message: response.statusText, name: response.statusText })
+    //   );
 
-    const data = await response.json();
+    // const data = await response.json();
 
-    return data;
+    // return data;
   } catch (error: any) {
     return rejectWithValue(error.message);
   }

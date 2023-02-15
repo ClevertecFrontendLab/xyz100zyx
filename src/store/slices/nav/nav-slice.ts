@@ -2,6 +2,7 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { INavState } from './nav-slice.types';
 import { FetchedError } from '../../../types/data.types';
+import { CategoryService } from '../../../services/category-service';
 
 const initialState: INavState = {
     activeDirectory: 0,
@@ -16,10 +17,12 @@ const initialState: INavState = {
 /* eslint-disable prefer-arrow-callback */
 export const fetchGenres = createAsyncThunk(
     'nav/fetchGenres',
-    async function(){
-        const response = await fetch('https://strapi.cleverland.by/api/categories')
-        const data = await response.json()
-        return data;
+    async function(_, {rejectWithValue}){
+        try{
+            return await CategoryService.getCategories()
+        }catch(error: any){
+            return rejectWithValue(error.message);
+        }
     }
 )
 
