@@ -13,8 +13,7 @@ import './index.scss';
 import { LoaderWindow } from './components/popups/loader-window/loader-window';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
+root.render( 
     <Provider store={store}>
       <HashRouter>
         <Routes>
@@ -31,5 +30,4 @@ root.render(
       </HashRouter>
       <LoaderWindow />
     </Provider>
-  </React.StrictMode>
 );
