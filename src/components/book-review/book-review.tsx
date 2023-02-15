@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { Comment } from '../../pages/book/book-page';
 import styles from './book-review.module.scss';
 import userReviewImg from '../../assets/user-review.jpg';
 import { ReactComponent as IconStarFill } from '../../assets/star-icon.svg';
@@ -27,12 +26,12 @@ export const BookReview: FC<IProps> = ({ comment }) => (
     <ul className={styles.comment__rating}>
       {[...Array(5)].map((_, index) =>
         index < Math.round(comment.rating) ? (
-          <li>
+          <li key={comment.text[index]}>
             <IconStarFill />
           </li>
         ) : (
           <li>
-            <IconStarUnfill />
+            <IconStarUnfill key={comment.text[index]}/>
           </li>
         )
       )}

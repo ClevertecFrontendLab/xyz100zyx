@@ -66,7 +66,7 @@ export const NavMenu: FC<IProps> = ({ dataTestIdBooks, dataTestIdContract, dataT
 
   useEffect(() => {
     thunkDispatch(fetchGenres());
-    closeComponent();
+    return closeComponent();
   }, []);
 
   return (

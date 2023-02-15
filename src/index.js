@@ -13,21 +13,21 @@ import './index.scss';
 import { LoaderWindow } from './components/popups/loader-window/loader-window';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render( 
-    <Provider store={store}>
-      <HashRouter>
-        <Routes>
-          <Route path='/' element={<Layout />}>
-            <Route element={<LayoutMainPage />}>
-              <Route path='/' element={<Navigate to='books/all' />} />
-              <Route path='/books/:category' element={<MainPage />} />
-              <Route path='/terms' element={<Terms type='terms' />} />
-              <Route path='/contract' element={<Terms type='contract' />} />
-            </Route>
-            <Route path='/books/:category/:booksId' element={<BookPage />} />
+root.render(
+  <Provider store={store}>
+    <HashRouter>
+      <Routes>
+        <Route path='/' element={<Layout />}>
+          <Route element={<LayoutMainPage />}>
+            <Route path='/' element={<Navigate to='books/all' />} />
+            <Route path='/books/:category' element={<MainPage />} />
+            <Route path='/terms' element={<Terms type='terms' />} />
+            <Route path='/contract' element={<Terms type='contract' />} />
           </Route>
-        </Routes>
-      </HashRouter>
-      <LoaderWindow />
-    </Provider>
+          <Route path='/books/:category/:booksId' element={<BookPage />} />
+        </Route>
+      </Routes>
+    </HashRouter>
+    <LoaderWindow />
+  </Provider>
 );

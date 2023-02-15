@@ -37,8 +37,8 @@ export const SliderImages: FC<IProps> = ({ images }) => {
           </SwiperSlide>
         )}
         {images?.map((img, index) => (
-          <SwiperSlide>
-            <img src={`https://strapi.cleverland.by${img.url}`} alt='big preview' />
+          <SwiperSlide key={img.url}>
+            <img src={`https://strapi.cleverland.by${img.url}`} alt='big preview'/>
           </SwiperSlide>
         ))}
       </Swiper>
@@ -56,8 +56,8 @@ export const SliderImages: FC<IProps> = ({ images }) => {
           className='mySwiper'
         >
           {images && images?.map((img, index) => (
-            <SwiperSlide data-test-id='slide-mini'>
-              <img src={`https://strapi.cleverland.by${img.url}`} alt='big preview' />
+            <SwiperSlide data-test-id='slide-mini' key={img.url}>
+              <img src={`https://strapi.cleverland.by${img.url}`} alt='big preview'/>
             </SwiperSlide>
           ))}
         </Swiper>

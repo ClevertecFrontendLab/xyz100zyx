@@ -12,25 +12,20 @@ import { ReactComponent as IconStarUnfill } from '../../assets/star-icon-unfill.
 import { ReactComponent as IconChevronVisible } from '../../assets/icon_chevron_visible.svg';
 import { useThunkDispatch } from '../../hooks/redux/dispatchers';
 
-export type Comment = { userName: string; body?: string; date: string };
+
 
 export const BookPage: FC = () => {
   const [isVisibleComments, setVisibleComments] = useState(true);
 
   const { booksId } = useParams();
 
-  const { book, status, error } = useSelector((state: RootState) => state.books);
+  const { book, status } = useSelector((state: RootState) => state.books);
   const dispatch = useThunkDispatch();
 
   /* eslint-disable */
-  useEffect(() => {
-    dispatch(fetchBookById(Number.parseInt(booksId!)));
-    console.log(book);
-  }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchBookById(Number.parseInt(booksId!)));
-    console.log(book);
+    const promise = dispatch(fetchBookById(Number.parseInt(booksId!)));
   }, [booksId]);
 
   /* eslint-enable */
@@ -61,10 +56,10 @@ export const BookPage: FC = () => {
         <ul className={styles.rating}>
           {book?.rating ?
             [...Array(5)].map((_, index) =>
-              index <= Math.round(book?.rating!) ? <IconStarFill /> : <IconStarUnfill />
+              index < Math.round(book?.rating!) ? <IconStarFill key={book?.ISBN[index]} /> : <IconStarUnfill key={book?.ISBN[index]} />
             )
             :
-            [...Array(5)].map((_, index) => <IconStarUnfill />)
+            [...Array(5)].map((_, index) => <IconStarUnfill key={book?.ISBN[index]} />)
           }
         </ul>
         <h5 className={styles.rating__text}>{book?.rating || 'ещё нет оценок'}</h5>

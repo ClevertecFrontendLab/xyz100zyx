@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import styles from './books-list.module.scss';
@@ -16,9 +16,11 @@ export const BooksList: FC<IProps> = ({ displayTemplate }) => {
   const { status, books } = useSelector((state: RootState) => state.books);
   const statusCategories = useSelector((state: RootState) => state.nav.status);
 
+
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     dispatch(fetchBooks());
-  }, [dispatch]);
+  }, []);
 
   /* eslint-disable react/jsx-no-useless-fragment */
   return (
