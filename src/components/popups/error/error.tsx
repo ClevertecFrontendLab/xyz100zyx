@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import styles from './error.module.scss';
 import iconError from '../../../assets/error-circle.svg';
 import iconClose from '../../../assets/error-close.svg';
-import { closeErrorPop } from '../../../store/slices/books/book-slice';
-import { closeErrorPopup } from '../../../store/slices/nav/nav-slice';
+import { closeErrorPop, nullableStatus } from '../../../store/slices/books/book-slice';
+import { closeErrorPopup, nullableCategoryStatus } from '../../../store/slices/nav/nav-slice';
 
 
 interface IProps{
@@ -16,8 +16,8 @@ export const ErrorPopup: FC<IProps> = ({text}) => {
     const dispatch = useDispatch()
 
     const onCloseClick = () => {
-        dispatch(closeErrorPop())
-        dispatch(closeErrorPopup())
+        dispatch(nullableCategoryStatus())
+        dispatch(nullableStatus())
     }
 
     return (

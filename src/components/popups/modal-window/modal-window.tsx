@@ -10,10 +10,10 @@ interface IProps {
 export const ModalWindow: FC<IProps> = ({ children }) => {
   const dispatch = useDispatch();
   const isBurgerNavOpen = useSelector((state: RootState) => state.popup.burgerNav);
-  const isBookErrorOpen = useSelector((state: RootState) => state.books.openErrorPop);
-  const isNavErrorOpen = useSelector((state: RootState) => state.nav.isErrorOpen);
-  const isVisible = isBurgerNavOpen || isBookErrorOpen || isNavErrorOpen;
-  const isError = isNavErrorOpen || isBookErrorOpen;
+  const statusCategory = useSelector((state: RootState) => state.nav.status)
+  const bookCategory = useSelector((state: RootState) => state.books.status)
+  const isError = statusCategory === 'rejected' || bookCategory === 'rejected';
+  const isVisible = isBurgerNavOpen || statusCategory === 'rejected' || bookCategory === 'rejected';
 
   const onWindowClick = (e: MouseEvent) => {
     if (e.target === e.currentTarget) {

@@ -13,6 +13,8 @@ const initialState: INavState = {
     isErrorOpen: false
 }
 
+ type StatusType = 'pendign' | 'fulfilled' | 'rejected' | null
+
 /* eslint-disable no-param-reassign */
 const navSlice = createSlice({
     name: 'nav',
@@ -32,6 +34,9 @@ const navSlice = createSlice({
         },
         closeErrorPopup: (state) => {
             state.isErrorOpen = false;
+        },
+        nullableCategoryStatus: (state) => {
+            state.status = null;
         }
     },
     extraReducers: (builder) => {
@@ -50,7 +55,7 @@ const navSlice = createSlice({
 })
 
 
-export const { changeActiveDirectory, changeActiveGenre, toggleGenresVisibility, setGenresVisibility, closeErrorPopup } = navSlice.actions;
+export const { changeActiveDirectory, changeActiveGenre, toggleGenresVisibility, setGenresVisibility, closeErrorPopup, nullableCategoryStatus } = navSlice.actions;
 
 /* eslint-disable import/no-default-export */
 export default navSlice.reducer;

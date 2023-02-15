@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { fetchBookById } from '../../store/slices/books/async-actions';
 import { BookSection } from '../../components';
@@ -11,6 +11,8 @@ import { ReactComponent as IconStarFill } from '../../assets/star-icon.svg';
 import { ReactComponent as IconStarUnfill } from '../../assets/star-icon-unfill.svg';
 import { ReactComponent as IconChevronVisible } from '../../assets/icon_chevron_visible.svg';
 import { useThunkDispatch } from '../../hooks/redux/dispatchers';
+import { nullableCategoryStatus } from '../../store/slices/nav/nav-slice';
+import { nullableStatus } from '../../store/slices/books/book-slice';
 
 
 
@@ -20,12 +22,15 @@ export const BookPage: FC = () => {
   const { booksId } = useParams();
 
   const { book, status } = useSelector((state: RootState) => state.books);
-  const dispatch = useThunkDispatch();
+  const thunkDispatch = useThunkDispatch();
+  const dispatch = useDispatch()
 
   /* eslint-disable */
 
   useEffect(() => {
-    const promise = dispatch(fetchBookById(Number.parseInt(booksId!)));
+    dispatch(nullableCategoryStatus())
+    dispatch(nullableStatus())
+    thunkDispatch(fetchBookById(Number.parseInt(booksId!)));
   }, [booksId]);
 
   /* eslint-enable */

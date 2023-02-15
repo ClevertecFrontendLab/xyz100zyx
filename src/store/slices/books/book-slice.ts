@@ -25,6 +25,9 @@ export const bookSlice = createSlice({
     closeErrorPop: (state) => {
       state.openErrorPop = false;
     },
+    nullableStatus: (state) => {
+      state.status = null;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchBooks.pending, (state) => {
@@ -42,7 +45,9 @@ export const bookSlice = createSlice({
       state.error = {...JSON.parse(action.payload as string)}
     });
     builder.addCase(fetchBookById.pending, (state) => {
+      console.log('now is ', state.status)
       state.status = 'pending';
+      console.log('now is ', state.status)
       state.error = null;
     });
     builder.addCase(fetchBookById.fulfilled, (state, action: PayloadAction<FetchedBook>) => {
@@ -59,5 +64,5 @@ export const bookSlice = createSlice({
   },
 });
 
-export const { closeErrorPop } = bookSlice.actions;
+export const { closeErrorPop, nullableStatus } = bookSlice.actions;
 export default bookSlice.reducer;

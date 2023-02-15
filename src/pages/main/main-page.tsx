@@ -10,10 +10,12 @@ export const MainPage: FC = () => {
   const [listView, setListView] = useState<DisplayType>('linear');
 
   const booksStatus = useSelector((state: RootState) => state.books.status);
+  const navStatus = useSelector((state: RootState) => state.nav.status);
+
 
   return (
     <div className={styles.wrapper}>
-      {booksStatus === 'fulfilled' && <FilterBar displayState={listView} onViewManagerClick={setListView} />}
+      {(booksStatus === 'fulfilled' && navStatus === 'fulfilled') && <FilterBar displayState={listView} onViewManagerClick={setListView} />}
       <BooksList displayTemplate={listView} />
     </div>
   );

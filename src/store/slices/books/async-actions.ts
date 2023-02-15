@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BookService } from '../../../services/book-service';
 import { FetchedBook, FetchedBooks } from '../../../types/data.types';
+import { nullableStatus } from './book-slice';
 
 /* eslint-disable prefer-arrow-callback */
 
