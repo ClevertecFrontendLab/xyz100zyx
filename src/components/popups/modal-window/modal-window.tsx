@@ -12,7 +12,7 @@ export const ModalWindow: FC<IProps> = ({ children }) => {
   const isBurgerNavOpen = useSelector((state: RootState) => state.popup.burgerNav);
   const isBookErrorOpen = useSelector((state: RootState) => state.books.openErrorPop);
   const isNavErrorOpen = useSelector((state: RootState) => state.nav.isErrorOpen);
-  const isVisible = isBurgerNavOpen || isBookErrorOpen || isNavErrorOpen
+  const isVisible = isBurgerNavOpen || isBookErrorOpen || isNavErrorOpen;
   const isError = isNavErrorOpen || isBookErrorOpen;
 
   const onWindowClick = (e: MouseEvent) => {

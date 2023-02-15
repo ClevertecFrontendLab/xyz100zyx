@@ -7,7 +7,7 @@ import {
   toggleGenresVisibility,
   setGenresVisibility,
 } from '../../store/slices/nav/nav-slice';
-import {fetchGenres} from '../../store/slices/nav/async-actions';
+import { fetchGenres } from '../../store/slices/nav/async-actions';
 import { close } from '../../store/slices/popup/burger-popup';
 import styles from './nav-menu.module.scss';
 import { ReactComponent as IconChevronVisible } from '../../assets/icon_chevron_visible.svg';
@@ -33,7 +33,7 @@ export const NavMenu: FC<IProps> = ({ dataTestIdBooks, dataTestIdContract, dataT
   const onLinkClick = (index: number) => {
     dispatch(changeActiveDirectory(0));
     dispatch(changeActiveGenre(index));
-    thunkDispatch(fetchBooks())
+    thunkDispatch(fetchBooks());
     dispatch(close());
   };
 
@@ -58,16 +58,16 @@ export const NavMenu: FC<IProps> = ({ dataTestIdBooks, dataTestIdContract, dataT
   };
 
   const closeComponent = () => {
-    dispatch(changeActiveDirectory(0))
-    dispatch(changeActiveGenre(0))
-  }
+    dispatch(changeActiveDirectory(0));
+    dispatch(changeActiveGenre(0));
+  };
 
   /* eslint-disable react-hooks/exhaustive-deps */
 
   useEffect(() => {
-    thunkDispatch(fetchGenres())
-    closeComponent()
-  }, [])
+    thunkDispatch(fetchGenres());
+    closeComponent();
+  }, []);
 
   return (
     <div className={styles.menu}>

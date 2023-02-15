@@ -23,7 +23,7 @@ export const BooksList: FC<IProps> = ({ displayTemplate }) => {
   /* eslint-disable react/jsx-no-useless-fragment */
   return (
     <>
-      {(status === 'fulfilled' && statusCategories === 'fulfilled') && (
+      {status === 'fulfilled' && statusCategories === 'fulfilled' && (
         <ul className={displayTemplate === 'linear' ? `${styles.list}` : `${styles.list} ${styles.list_list}`}>
           {books.map((book) =>
             displayTemplate === 'linear' ? (

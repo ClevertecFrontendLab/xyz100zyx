@@ -10,7 +10,6 @@ import { ErrorPopup } from '../../popups/error/error';
 
 export const Layout: FC = () => {
   const isBurgerNavOpen = useSelector((state: RootState) => state.popup.burgerNav);
-  const isErrorOpen = useSelector((state: RootState) => state.books.openErrorPop);
 
   return (
     <div className={styles.layout}>
@@ -18,7 +17,11 @@ export const Layout: FC = () => {
       <Outlet />
       <Footer />
       <ModalWindow>
-        {isBurgerNavOpen === true ? (<BurgerNav />) : <ErrorPopup text="Что-то пошло не так. Обновите страницу через некоторое время."/>}
+        {isBurgerNavOpen === true ? (
+          <BurgerNav />
+        ) : (
+          <ErrorPopup text='Что-то пошло не так. Обновите страницу через некоторое время.' />
+        )}
       </ModalWindow>
     </div>
   );

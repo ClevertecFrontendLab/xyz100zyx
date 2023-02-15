@@ -18,27 +18,24 @@ export const BookReview: FC<IProps> = ({ comment }) => (
         <img src={userReviewImg} alt='comment info' />
       </a>
       <span className={styles.user}>
-        <span className={styles.comment__name}>{comment.user.firstName} {comment.user.lastName}</span>
+        <span className={styles.comment__name}>
+          {comment.user.firstName} {comment.user.lastName}
+        </span>
         <span className={styles.comment__date}>{getCommentDate(comment.createdAt)}</span>
       </span>
     </div>
     <ul className={styles.comment__rating}>
-      {[...Array(5)].map((_, index) => index < Math.round(comment.rating) ? <li><IconStarFill /></li> : <li><IconStarUnfill /></li>)}
-      {/* <li>
-        <IconStarFill />
-      </li>
-      <li>
-        <IconStarFill />
-      </li>
-      <li>
-        <IconStarFill />
-      </li>
-      <li>
-        <IconStarFill />
-      </li>
-      <li>
-        <IconStarUnfill />
-      </li> */}
+      {[...Array(5)].map((_, index) =>
+        index < Math.round(comment.rating) ? (
+          <li>
+            <IconStarFill />
+          </li>
+        ) : (
+          <li>
+            <IconStarUnfill />
+          </li>
+        )
+      )}
     </ul>
     {comment.text && <p className={styles.comment__body}>{comment.text}</p>}
   </div>

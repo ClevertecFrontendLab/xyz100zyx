@@ -11,7 +11,7 @@ import { changeActiveGenre } from '../../store/slices/nav/nav-slice';
 export const Header: FC = () => {
   const dispatch = useDispatch();
   const isBurgerNavOpen = useSelector((state: RootState) => state.popup.burgerNav);
-  
+
   return (
     <header className={styles.header}>
       <Link to='/'>
