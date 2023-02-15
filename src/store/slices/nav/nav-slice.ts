@@ -37,6 +37,7 @@ const navSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchGenres.pending, (state) => {state.status = 'pending'})
         builder.addCase(fetchGenres.fulfilled, (state, action) => {
+            state.isHiddenGenres = false;
             state.genres = action.payload
             state.status = 'fulfilled'
         })

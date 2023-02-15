@@ -24,7 +24,8 @@ interface IProps {
 }
 
 export const NavMenu: FC<IProps> = ({ dataTestIdBooks, dataTestIdContract, dataTestIdShowcase, dataTestIdTerms }) => {
-  const { activeGenre, activeDirectory, isHiddenGenres, genres } = useSelector((state: RootState) => state.nav);
+  const { activeGenre, activeDirectory, isHiddenGenres, genres, status } = useSelector((state: RootState) => state.nav);
+  const statusBooks = useSelector((state: RootState) => state.books.status);
 
   const dispatch = useDispatch();
   const thunkDispatch = useThunkDispatch();
@@ -82,13 +83,13 @@ export const NavMenu: FC<IProps> = ({ dataTestIdBooks, dataTestIdContract, dataT
         }
       >
         <span>Витрина книг</span>
-        {activeDirectory === 0 && (
+        {(activeDirectory === 0 && status === 'fulfilled' && statusBooks==='fulfilled') && (
           <button onClick={(e) => onToggleButtonClick(e)} className={styles.menu__btn} type='button'>
             {!isHiddenGenres ? <IconChevronVisible /> : <IconChevronHidden />}
           </button>
         )}
       </div>
-      <ul className={!isHiddenGenres ? styles.menu__list : `${styles.menu__list} ${styles.menu__list__hidden}`}>
+      <ul className={(!isHiddenGenres && status === 'fulfilled' && statusBooks==='fulfilled') ? styles.menu__list : `${styles.menu__list} ${styles.menu__list__hidden}`}>
         {genres.map((category, index) => (
           <li
             data-test-id={index === 0 ? dataTestIdBooks : ''}
