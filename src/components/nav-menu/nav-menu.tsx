@@ -1,20 +1,20 @@
 import { FC, MouseEvent, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
 import {
   changeActiveDirectory,
   changeActiveGenre,
   toggleGenresVisibility,
   setGenresVisibility,
-  fetchGenres,
 } from '../../store/slices/nav/nav-slice';
+import {fetchGenres} from '../../store/slices/nav/async-actions';
 import { close } from '../../store/slices/popup/burger-popup';
 import styles from './nav-menu.module.scss';
 import { ReactComponent as IconChevronVisible } from '../../assets/icon_chevron_visible.svg';
 import { ReactComponent as IconChevronHidden } from '../../assets/nav_menu_chevron.svg';
 import { RootState } from '../../store/store';
-import { fetchBooks } from '../../store/slices/books/book-slice';
+import { fetchBooks } from '../../store/slices/books/async-actions';
+import { useThunkDispatch } from '../../hooks/redux/dispatchers';
 
 interface IProps {
   dataTestIdShowcase: string;
@@ -27,7 +27,7 @@ export const NavMenu: FC<IProps> = ({ dataTestIdBooks, dataTestIdContract, dataT
   const { activeGenre, activeDirectory, isHiddenGenres, genres } = useSelector((state: RootState) => state.nav);
 
   const dispatch = useDispatch();
-  const thunkDispatch = useDispatch<ThunkDispatch<RootState, any, AnyAction>>()
+  const thunkDispatch = useThunkDispatch();
   const navigate = useNavigate();
 
   const onLinkClick = (index: number) => {

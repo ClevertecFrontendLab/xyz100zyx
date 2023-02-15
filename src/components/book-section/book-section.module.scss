@@ -185,6 +185,19 @@
     margin-top: 32px;
     cursor: pointer;
 
+    &__delivery{
+      background: #f9f9fa;
+        border: 1px solid #bfc4c9;
+        color: #a7a7a7;
+        box-sizing: border-box;
+    }
+
+    &__booking{
+      background: #fff;
+        border: 1px solid #bfc4c9;
+        color: #363636;
+    }
+
     @media (max-width: 768px) {
       max-width: 306px;
     }

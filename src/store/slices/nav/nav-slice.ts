@@ -1,8 +1,7 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { INavState } from './nav-slice.types';
-import { FetchedError } from '../../../types/data.types';
-import { CategoryService } from '../../../services/category-service';
+import {fetchGenres} from './async-actions'
 
 const initialState: INavState = {
     activeDirectory: 0,
@@ -13,18 +12,6 @@ const initialState: INavState = {
     error: null,
     isErrorOpen: false
 }
-
-/* eslint-disable prefer-arrow-callback */
-export const fetchGenres = createAsyncThunk(
-    'nav/fetchGenres',
-    async function(_, {rejectWithValue}){
-        try{
-            return await CategoryService.getCategories()
-        }catch(error: any){
-            return rejectWithValue(error.message);
-        }
-    }
-)
 
 /* eslint-disable no-param-reassign */
 const navSlice = createSlice({
