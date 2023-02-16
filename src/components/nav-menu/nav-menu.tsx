@@ -8,13 +8,14 @@ import {
   setGenresVisibility,
 } from '../../store/slices/nav/nav-slice';
 import { fetchGenres } from '../../store/slices/nav/async-actions';
-import { close } from '../../store/slices/popup/burger-popup';
+import { close } from '../../store/slices/popup/burger-slice';
 import styles from './nav-menu.module.scss';
 import { ReactComponent as IconChevronVisible } from '../../assets/icon_chevron_visible.svg';
 import { ReactComponent as IconChevronHidden } from '../../assets/nav_menu_chevron.svg';
 import { RootState } from '../../store/store';
 import { fetchBooks } from '../../store/slices/books/async-actions';
 import { useThunkDispatch } from '../../hooks/redux/dispatchers';
+import { getCategoryCount } from '../../utils/categories.utils';
 
 interface IProps {
   dataTestIdShowcase: string;
@@ -26,6 +27,7 @@ interface IProps {
 export const NavMenu: FC<IProps> = ({ dataTestIdBooks, dataTestIdContract, dataTestIdShowcase, dataTestIdTerms }) => {
   const { activeGenre, activeDirectory, isHiddenGenres, genres, status } = useSelector((state: RootState) => state.nav);
   const statusBooks = useSelector((state: RootState) => state.books.status);
+  const books = useSelector((state: RootState) => state.books.books);
 
   const dispatch = useDispatch();
   const thunkDispatch = useThunkDispatch();
@@ -83,13 +85,19 @@ export const NavMenu: FC<IProps> = ({ dataTestIdBooks, dataTestIdContract, dataT
         }
       >
         <span>Витрина книг</span>
-        {(activeDirectory === 0 && status === 'fulfilled' && statusBooks==='fulfilled') && (
+        {activeDirectory === 0 && status === 'fulfilled' && statusBooks === 'fulfilled' && (
           <button onClick={(e) => onToggleButtonClick(e)} className={styles.menu__btn} type='button'>
             {!isHiddenGenres ? <IconChevronVisible /> : <IconChevronHidden />}
           </button>
         )}
       </div>
-      <ul className={(!isHiddenGenres && status === 'fulfilled' && statusBooks==='fulfilled') ? styles.menu__list : `${styles.menu__list} ${styles.menu__list__hidden}`}>
+      <ul
+        className={
+          !isHiddenGenres && status === 'fulfilled' && statusBooks === 'fulfilled'
+            ? styles.menu__list
+            : `${styles.menu__list} ${styles.menu__list__hidden}`
+        }
+      >
         {genres.map((category, index) => (
           <li
             data-test-id={index === 0 ? dataTestIdBooks : ''}
@@ -100,17 +108,16 @@ export const NavMenu: FC<IProps> = ({ dataTestIdBooks, dataTestIdContract, dataT
             onKeyDown={() => {}}
           >
             <Link className={styles.menu__link} to={`/books/${category.path}`}>
-              {index === activeGenre && activeDirectory === 0 ? (
-                <span className={`${styles.label} ${styles.label__active}`}>
-                  {category.name}
-                  <span className={styles.link__count}>{category.count || ''}</span>
-                </span>
-              ) : (
-                <span className={styles.label}>
-                  {category.name}
-                  <span className={styles.link__count}>{category.count || ''}</span>
-                </span>
-              )}
+              <span
+                className={
+                  index === activeGenre && activeDirectory === 0
+                    ? `${styles.label} ${styles.label__active}`
+                    : styles.label
+                }
+              >
+                {category.name}
+                <span className={styles.link__count}>{index !== 0 ? getCategoryCount(category.name, books) : ''}</span>
+              </span>
             </Link>
           </li>
         ))}

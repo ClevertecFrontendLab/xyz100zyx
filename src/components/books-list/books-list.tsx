@@ -16,11 +16,9 @@ export const BooksList: FC<IProps> = ({ displayTemplate }) => {
   const { status, books } = useSelector((state: RootState) => state.books);
   const statusCategories = useSelector((state: RootState) => state.nav.status);
 
-
-  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     dispatch(fetchBooks());
-  }, []);
+  }, [dispatch]);
 
   /* eslint-disable react/jsx-no-useless-fragment */
   return (

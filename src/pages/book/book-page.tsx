@@ -14,8 +14,6 @@ import { useThunkDispatch } from '../../hooks/redux/dispatchers';
 import { nullableCategoryStatus } from '../../store/slices/nav/nav-slice';
 import { nullableStatus } from '../../store/slices/books/book-slice';
 
-
-
 export const BookPage: FC = () => {
   const [isVisibleComments, setVisibleComments] = useState(true);
 
@@ -23,17 +21,13 @@ export const BookPage: FC = () => {
 
   const { book, status } = useSelector((state: RootState) => state.books);
   const thunkDispatch = useThunkDispatch();
-  const dispatch = useDispatch()
-
-  /* eslint-disable */
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(nullableCategoryStatus())
-    dispatch(nullableStatus())
-    thunkDispatch(fetchBookById(Number.parseInt(booksId!)));
-  }, [booksId]);
-
-  /* eslint-enable */
+    dispatch(nullableCategoryStatus());
+    dispatch(nullableStatus());
+    thunkDispatch(fetchBookById(Number(booksId!)));
+  }, [booksId, dispatch, thunkDispatch]);
 
   return status === 'fulfilled' ? (
     <section className={styles.page}>
@@ -59,13 +53,15 @@ export const BookPage: FC = () => {
         <h5 className={styles.section__label}>Рейтинг</h5>
         {/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */}
         <ul className={styles.rating}>
-          {book?.rating ?
-            [...Array(5)].map((_, index) =>
-              index < Math.round(book?.rating!) ? <IconStarFill key={book?.ISBN[index]} /> : <IconStarUnfill key={book?.ISBN[index]} />
-            )
-            :
-            [...Array(5)].map((_, index) => <IconStarUnfill key={book?.ISBN[index]} />)
-          }
+          {book?.rating
+            ? [...Array(5)].map((_, index) =>
+                index < Math.round(book?.rating!) ? (
+                  <IconStarFill key={book?.ISBN[index]} />
+                ) : (
+                  <IconStarUnfill key={book?.ISBN[index]} />
+                )
+              )
+            : [...Array(5)].map((_, index) => <IconStarUnfill key={book?.ISBN[index]} />)}
         </ul>
         <h5 className={styles.rating__text}>{book?.rating || 'ещё нет оценок'}</h5>
       </div>
@@ -131,7 +127,7 @@ export const BookPage: FC = () => {
             <IconChevronVisible />
           </div>
         </h5>
-        {(isVisibleComments && book?.comments) && (
+        {isVisibleComments && book?.comments && (
           <ul className={styles.reviews__list}>
             {book?.comments?.map((comment) => (
               <BookReview key={comment.id} comment={comment} />

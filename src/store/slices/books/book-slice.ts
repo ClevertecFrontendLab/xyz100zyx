@@ -9,25 +9,20 @@ const initialState: {
   book: FetchedBook | null;
   status: 'pending' | 'fulfilled' | 'rejected' | null;
   error: null | FetchedError;
-  openErrorPop: boolean;
 } = {
   books: [],
   book: null,
   error: null,
   status: null,
-  openErrorPop: false,
 }; 
 
 export const bookSlice = createSlice({
   name: 'books',
   initialState,
   reducers: {
-    closeErrorPop: (state) => {
-      state.openErrorPop = false;
-    },
     nullableStatus: (state) => {
       state.status = null;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchBooks.pending, (state) => {
@@ -41,7 +36,6 @@ export const bookSlice = createSlice({
     });
     builder.addCase(fetchBooks.rejected, (state, action) => {
       state.status = 'rejected';
-      state.openErrorPop = true;
       state.error = {...JSON.parse(action.payload as string)}
     });
     builder.addCase(fetchBookById.pending, (state) => {
@@ -57,12 +51,11 @@ export const bookSlice = createSlice({
     });
     builder.addCase(fetchBookById.rejected, (state, action) => {
       state.status = 'rejected';
-      state.openErrorPop = true;
       state.error = {...JSON.parse(action.payload as string)}
       console.log(state.error)
     });
   },
 });
 
-export const { closeErrorPop, nullableStatus } = bookSlice.actions;
+export const { nullableStatus } = bookSlice.actions;
 export default bookSlice.reducer;

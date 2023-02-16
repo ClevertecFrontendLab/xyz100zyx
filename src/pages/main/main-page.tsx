@@ -12,10 +12,11 @@ export const MainPage: FC = () => {
   const booksStatus = useSelector((state: RootState) => state.books.status);
   const navStatus = useSelector((state: RootState) => state.nav.status);
 
-
   return (
     <div className={styles.wrapper}>
-      {(booksStatus === 'fulfilled' && navStatus === 'fulfilled') && <FilterBar displayState={listView} onViewManagerClick={setListView} />}
+      {booksStatus === 'fulfilled' && navStatus === 'fulfilled' && (
+        <FilterBar displayState={listView} onViewManagerClick={setListView} />
+      )}
       <BooksList displayTemplate={listView} />
     </div>
   );

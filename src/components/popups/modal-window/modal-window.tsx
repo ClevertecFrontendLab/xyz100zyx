@@ -1,6 +1,6 @@
 import { FC, MouseEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { close } from '../../../store/slices/popup/burger-popup';
+import { close } from '../../../store/slices/popup/burger-slice';
 import { RootState } from '../../../store/store';
 import styles from './modal-window.module.scss';
 
@@ -10,8 +10,8 @@ interface IProps {
 export const ModalWindow: FC<IProps> = ({ children }) => {
   const dispatch = useDispatch();
   const isBurgerNavOpen = useSelector((state: RootState) => state.popup.burgerNav);
-  const statusCategory = useSelector((state: RootState) => state.nav.status)
-  const bookCategory = useSelector((state: RootState) => state.books.status)
+  const statusCategory = useSelector((state: RootState) => state.nav.status);
+  const bookCategory = useSelector((state: RootState) => state.books.status);
   const isError = statusCategory === 'rejected' || bookCategory === 'rejected';
   const isVisible = isBurgerNavOpen || statusCategory === 'rejected' || bookCategory === 'rejected';
 

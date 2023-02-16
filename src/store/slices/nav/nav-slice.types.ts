@@ -7,5 +7,5 @@ export interface INavState{
     genres: Category[],
     status: 'pending' | 'fulfilled' | 'rejected' | null,
     error: FetchedError | null,
-    isErrorOpen: boolean;
+    
 }

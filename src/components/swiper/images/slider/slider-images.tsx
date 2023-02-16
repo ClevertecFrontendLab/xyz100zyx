@@ -10,15 +10,15 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import 'swiper/css/pagination';
 import './slider-images.scss';
+import { HOST } from '../../../../utils/constants';
 
 interface IProps {
-  images: Array<{url: string}>;
+  images: Array<{ url: string }>;
 }
 
 export const SliderImages: FC<IProps> = ({ images }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass>();
 
-  /* eslint-disable react/jsx-no-useless-fragment */
   return (
     <>
       <Swiper
@@ -28,7 +28,7 @@ export const SliderImages: FC<IProps> = ({ images }) => {
         slidesPerView={1}
         thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
         modules={[FreeMode, Navigation, Thumbs, Pagination]}
-        pagination={{clickable: true}}
+        pagination={{ clickable: true }}
         className='mySwiper2'
       >
         {images && images?.length < 1 && (
@@ -38,7 +38,7 @@ export const SliderImages: FC<IProps> = ({ images }) => {
         )}
         {images?.map((img) => (
           <SwiperSlide key={img.url}>
-            <img src={`https://strapi.cleverland.by${img.url}`} alt='big preview'/>
+            <img src={`${HOST}${img.url}`} alt='big preview' />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -52,14 +52,15 @@ export const SliderImages: FC<IProps> = ({ images }) => {
           watchSlidesProgress={true}
           slideToClickedSlide={true}
           modules={[FreeMode, Navigation, Thumbs, Scrollbar]}
-          scrollbar={{ draggable: true, }}
+          scrollbar={{ draggable: true }}
           className='mySwiper'
         >
-          {images && images?.map((img) => (
-            <SwiperSlide data-test-id='slide-mini' key={img.url}>
-              <img src={`https://strapi.cleverland.by${img.url}`} alt='big preview'/>
-            </SwiperSlide>
-          ))}
+          {images &&
+            images?.map((img) => (
+              <SwiperSlide data-test-id='slide-mini' key={img.url}>
+                <img src={`${HOST}${img.url}`} alt='big preview' />
+              </SwiperSlide>
+            ))}
         </Swiper>
       )}
     </>

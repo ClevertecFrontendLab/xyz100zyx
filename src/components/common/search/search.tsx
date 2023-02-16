@@ -25,7 +25,7 @@ export const Search: FC<IProps> = ({ placeholder, label, mobileOpen, setMobileOp
       />
       {label && <label>{label}</label>}
       <input
-      data-test-id='input-search'
+        data-test-id='input-search'
         className={mobileOpen ? styles.input__mob__open : ''}
         placeholder={placeholder}
         value={value}

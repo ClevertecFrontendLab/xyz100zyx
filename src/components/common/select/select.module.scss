@@ -11,8 +11,8 @@
   max-width: fit-content;
   cursor: pointer;
 
-  &__mob{
-    @media(max-width:455px){
+  &__mob {
+    @media (max-width: 455px) {
       display: none;
     }
   }
@@ -31,12 +31,12 @@
     letter-spacing: 0.1px;
     color: #a7a7a7;
 
-    @media (max-width: 455px){
+    @media (max-width: 455px) {
       display: none;
     }
   }
 
-  @media (max-width: 455px){
+  @media (max-width: 455px) {
     max-width: fit-content;
     width: auto;
     padding: 8px;

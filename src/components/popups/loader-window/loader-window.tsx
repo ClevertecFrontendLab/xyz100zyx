@@ -11,7 +11,14 @@ export const LoaderWindow: FC = () => {
   return (
     <div
       data-test-id='loader'
-      className={(booksStatus === 'pending' && navStatus === 'pending') || (booksStatus === 'fulfilled' && navStatus === 'pending') || (booksStatus === 'pending' && navStatus === 'fulfilled') || (booksStatus === 'pending' && navStatus === null) ? styles.window : styles.window__none}
+      className={
+        (booksStatus === 'pending' && navStatus === 'pending') ||
+        (booksStatus === 'fulfilled' && navStatus === 'pending') ||
+        (booksStatus === 'pending' && navStatus === 'fulfilled') ||
+        (booksStatus === 'pending' && navStatus === null)
+          ? styles.window
+          : styles.window__none
+      }
     >
       <img src={iconLoader} className={styles.loader} alt='loader' />
     </div>

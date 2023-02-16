@@ -20,7 +20,7 @@ export const BookReview: FC<IProps> = ({ comment }) => (
         <span className={styles.comment__name}>
           {comment.user.firstName} {comment.user.lastName}
         </span>
-        <span className={styles.comment__date}>{comment.createdAt}</span>
+        <span className={styles.comment__date}>{getCommentDate(comment.createdAt)}</span>
       </span>
     </div>
     <ul className={styles.comment__rating}>

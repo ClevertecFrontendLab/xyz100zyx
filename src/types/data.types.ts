@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/array-type */
-
 export type FetchedBooks = {
   issueYear: string;
   rating?: number;

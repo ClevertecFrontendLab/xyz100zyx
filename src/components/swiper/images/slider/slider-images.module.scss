@@ -27,18 +27,18 @@
     justify-content: center;
   }
 
-  &:hover{
+  &:hover {
     transition: all 1s ease;
 
-    & .scr{
+    & .scr {
       display: block;
       transition: all 1s ease;
     }
   }
 
-  @media(max-width: 768px){
-    & div:first-child{
-        display: none;
+  @media (max-width: 768px) {
+    & div:first-child {
+      display: none;
     }
   }
 }
@@ -62,7 +62,7 @@
     width: 100% !important;
   }
 
-  @media(max-width: 768px){
+  @media (max-width: 768px) {
     display: none;
   }
 }

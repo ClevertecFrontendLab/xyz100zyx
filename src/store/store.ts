@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 /* eslint-disable import/no-named-as-default */
 import navSlice from "./slices/nav/nav-slice";
-import popupSlice from "./slices/popup/burger-popup";
+import popupSlice from "./slices/popup/burger-slice";
 import bookSlice from "./slices/books/book-slice";
 
 export const store = configureStore({
