@@ -6,6 +6,5 @@ export interface INavState{
     isHiddenGenres: boolean,
     genres: Category[],
     status: 'pending' | 'fulfilled' | 'rejected' | null,
-    error: FetchedError | null,
-    
+    error: FetchedError | null,    
 }

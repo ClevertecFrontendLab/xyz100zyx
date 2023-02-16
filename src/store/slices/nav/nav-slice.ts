@@ -1,7 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { useDispatch } from 'react-redux';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { INavState } from './nav-slice.types';
 import { fetchGenres } from './async-actions';
+import { AC } from '../abort-controller';
+import { rejectBookStatus } from '../books/book-slice';
 
 const initialState: INavState = {
   activeDirectory: 0,
@@ -32,6 +35,9 @@ const navSlice = createSlice({
     nullableCategoryStatus: (state) => {
       state.status = null;
     },
+    rejectCategoryStatus: (state) => {
+        state.status = 'rejected'
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchGenres.pending, (state) => {
@@ -44,6 +50,8 @@ const navSlice = createSlice({
     });
     builder.addCase(fetchGenres.rejected, (state, action) => {
       state.status = 'rejected';
+      rejectBookStatus()
+      AC.abort()
     });
   },
 });
@@ -54,6 +62,7 @@ export const {
   toggleGenresVisibility,
   setGenresVisibility,
   nullableCategoryStatus,
+  rejectCategoryStatus
 } = navSlice.actions;
 
 /* eslint-disable import/no-default-export */

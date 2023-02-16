@@ -68,8 +68,15 @@ export const NavMenu: FC<IProps> = ({ dataTestIdBooks, dataTestIdContract, dataT
   /* eslint-disable react-hooks/exhaustive-deps */
 
   useEffect(() => {
-    thunkDispatch(fetchGenres());
-    return closeComponent();
+    let ignore = false;
+    if(!ignore){
+      thunkDispatch(fetchGenres());
+    }
+
+    return () => {
+      ignore = true;
+      
+    }
   }, []);
 
   return (

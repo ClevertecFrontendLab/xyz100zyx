@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {fetchBookById, fetchBooks} from './async-actions';
 import { FetchedBook, FetchedBooks, FetchedError } from '../../../types/data.types';
+import { AC } from '../abort-controller';
+import { rejectCategoryStatus } from '../nav/nav-slice';
 
 /* eslint-disable */
 
@@ -23,6 +25,9 @@ export const bookSlice = createSlice({
     nullableStatus: (state) => {
       state.status = null;
     },
+    rejectBookStatus: (state) => {
+      state.status = 'rejected'
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchBooks.pending, (state) => {
@@ -35,8 +40,11 @@ export const bookSlice = createSlice({
       state.error = null;
     });
     builder.addCase(fetchBooks.rejected, (state, action) => {
+      console.log('f')
       state.status = 'rejected';
       state.error = {...JSON.parse(action.payload as string)}
+      rejectCategoryStatus()
+      AC.abort()
     });
     builder.addCase(fetchBookById.pending, (state) => {
       console.log('now is ', state.status)
@@ -57,5 +65,5 @@ export const bookSlice = createSlice({
   },
 });
 
-export const { nullableStatus } = bookSlice.actions;
+export const { nullableStatus, rejectBookStatus } = bookSlice.actions;
 export default bookSlice.reducer;
