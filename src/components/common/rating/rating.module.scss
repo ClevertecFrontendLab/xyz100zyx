@@ -1,0 +1,9 @@
+.rating{
+    max-width: 144px;
+    display: flex;
+    
+    & img{
+        max-width: 24px;
+        max-height: 24px;
+    }
+}

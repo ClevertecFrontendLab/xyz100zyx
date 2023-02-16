@@ -1,0 +1,26 @@
+.card {
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 768px){
+    display: none;
+  }
+
+  & .hello {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: right;
+    letter-spacing: 0.1px;
+    color: #363636;
+    padding-right: 16px;
+    white-space: nowrap;
+  }
+
+  & img{
+    max-width: 58px;
+    max-height: 58px;
+    width: 100%;
+  }
+}

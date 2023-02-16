@@ -1,0 +1,36 @@
+.bar {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  &__left {
+    display: flex;
+    gap: 16px;
+    max-width: 600px;
+    width: 100%;
+
+    &__mob {
+      @media (max-width: 455px) {
+        padding-bottom: 32px;
+      }
+    }
+  }
+
+  &__right {
+    display: flex;
+    gap: 16px;
+
+    &__mob {
+      @media (max-width: 455px) {
+        display: none;
+      }
+    }
+  }
+
+  @media (max-width: 320px) {
+    padding: 3px 0;
+  }
+}

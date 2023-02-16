@@ -1,0 +1,18 @@
+.layout {
+  max-width: 1142px;
+  padding: 0 16px;
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    max-width: 672px;
+  }
+
+  @media (max-width: 320px) {
+    max-width: 320px;
+  }
+}
