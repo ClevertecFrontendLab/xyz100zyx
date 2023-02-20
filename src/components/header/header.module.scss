@@ -5,6 +5,14 @@
     align-items: center;
     padding: 32px 0 15px 0;
 
+    & a{
+
+        @media (min-width: 769px){
+            max-width: 279px;
+            width: 100%;
+        }
+    }
+
     & .logo {
         margin-right: 62px;
     }

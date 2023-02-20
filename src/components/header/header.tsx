@@ -6,7 +6,6 @@ import { toggle } from '../../store/slices/popup/burger-slice';
 import styles from './header.module.scss';
 import logo from '../../assets/logo.svg';
 import { RootState } from '../../store/store';
-import { changeActiveGenre } from '../../store/slices/nav/nav-slice';
 
 export const Header: FC = () => {
   const dispatch = useDispatch();

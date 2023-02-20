@@ -2,8 +2,8 @@ import { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import styles from './main-page.module.scss';
-import { FilterBar } from '../../components/filter-bar/filter-bar';
-import { BooksList } from '../../components/books-list/books-list';
+import { FilterBar } from '../../components/widgets/filter-bar/filter-bar';
+import { BooksList } from '../../components/widgets/book-list/components/books-list/books-list';
 import { DisplayType } from '../../components/types';
 
 export const MainPage: FC = () => {

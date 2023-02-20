@@ -1,7 +1,7 @@
 import { Dispatch, FC, SetStateAction, useState } from 'react';
-import { Search, Select } from '../common';
-import { DisplayButton } from '../common/display-button/display-button';
-import { DisplayType } from '../types';
+import { Search, Select } from '../../common';
+import { DisplayButton } from '../../common/display-button/display-button';
+import { DisplayType } from '../../types';
 import styles from './filter-bar.module.scss';
 
 const viewFilterItems: Array<{ type: DisplayType; dataTestId: string }> = [

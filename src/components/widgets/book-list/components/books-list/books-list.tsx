@@ -1,11 +1,11 @@
 import { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import { RootState } from '../../../../../store/store';
 import styles from './books-list.module.scss';
-import { BookCardReg, BookCardFW } from '../common';
-import { DisplayType } from '../types';
-import { fetchBooks } from '../../store/slices/books/async-actions';
-import { useThunkDispatch } from '../../hooks/redux/dispatchers';
+import { BookCardReg, BookCardFW } from '../../../../entities';
+import { DisplayType } from '../../../../types';
+import { fetchBooks } from '../../../../../store/slices/books/async-actions';
+import { useThunkDispatch } from '../../../../../hooks/redux/dispatchers';
 
 interface IProps {
   displayTemplate: DisplayType;

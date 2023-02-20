@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 import styles from './layout-main-page.module.scss';
-import { NavMenu } from '../..';
+import { NavMenu } from '../../components/widgets/nav-menu/nav-menu';
 
 export const LayoutMainPage: FC = () => (
   <div className={styles.layout}>

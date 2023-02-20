@@ -6,16 +6,16 @@ import {
   changeActiveGenre,
   toggleGenresVisibility,
   setGenresVisibility,
-} from '../../store/slices/nav/nav-slice';
-import { fetchGenres } from '../../store/slices/nav/async-actions';
-import { close } from '../../store/slices/popup/burger-slice';
+} from '../../../store/slices/nav/nav-slice';
+import { fetchGenres } from '../../../store/slices/nav/async-actions';
+import { close } from '../../../store/slices/popup/burger-slice';
 import styles from './nav-menu.module.scss';
-import { ReactComponent as IconChevronVisible } from '../../assets/icon_chevron_visible.svg';
-import { ReactComponent as IconChevronHidden } from '../../assets/nav_menu_chevron.svg';
-import { RootState } from '../../store/store';
-import { fetchBooks } from '../../store/slices/books/async-actions';
-import { useThunkDispatch } from '../../hooks/redux/dispatchers';
-import { getCategoryCount } from '../../utils/categories.utils';
+import { ReactComponent as IconChevronVisible } from '../../../assets/icon_chevron_visible.svg';
+import { ReactComponent as IconChevronHidden } from '../../../assets/nav_menu_chevron.svg';
+import { RootState } from '../../../store/store';
+import { fetchBooks } from '../../../store/slices/books/async-actions';
+import { useThunkDispatch } from '../../../hooks/redux/dispatchers';
+import { getCategoryCount } from '../../../utils/categories.utils';
 
 interface IProps {
   dataTestIdShowcase: string;
@@ -60,11 +60,6 @@ export const NavMenu: FC<IProps> = ({ dataTestIdBooks, dataTestIdContract, dataT
     e.stopPropagation();
   };
 
-  const closeComponent = () => {
-    dispatch(changeActiveDirectory(0));
-    dispatch(changeActiveGenre(0));
-  };
-
   /* eslint-disable react-hooks/exhaustive-deps */
 
   useEffect(() => {
@@ -75,7 +70,7 @@ export const NavMenu: FC<IProps> = ({ dataTestIdBooks, dataTestIdContract, dataT
 
     return () => {
       ignore = true;
-      
+
     }
   }, []);
 

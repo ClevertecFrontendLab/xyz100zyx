@@ -1,11 +1,11 @@
 import { FC } from 'react';
-import { FetchedBooks } from '../../../../types/data.types';
-import { Rating } from '../../rating/rating';
+import { FetchedBooks } from '../../../../../types/data.types';
+import { Rating } from '../../../../common';
 import styles from './book-card.module.scss';
-import unbookImg from '../../../../assets/unbook-img.jpg';
-import { BookButton } from '../../../book-button/book-button';
-import { getDeliveredDate } from '../../../../utils/date.utils';
-import { HOST } from '../../../../utils/constants';
+import unbookImg from '../../../../../assets/unbook-img.jpg';
+import { BookButton } from '../book-button/book-button';
+import { getDeliveredDate } from '../../../../../utils/date.utils';
+import { HOST } from '../../../../../utils/constants';
 
 interface IProps {
   book: FetchedBooks;

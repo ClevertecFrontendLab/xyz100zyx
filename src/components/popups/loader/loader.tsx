@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import iconLoader from '../../../assets/loader-icon.svg';
-import styles from './loader-window.module.scss';
+import styles from './loader.module.scss';
 
 export const LoaderWindow: FC = () => {
   const booksStatus = useSelector((state: RootState) => state.books.status);

@@ -4,13 +4,12 @@ import { Provider } from 'react-redux';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { store } from './store/store';
 
-import { MainPage, BookPage } from './pages';
-import { Layout } from './components/layouts/layout/layout';
-import { LayoutMainPage } from './components/layouts';
-import { Terms } from './components';
+import { MainPage, BookPage, Terms } from './pages';
+import { Layout } from './layouts/layout/layout';
+import { LayoutMainPage } from './layouts';
+import { LoaderWindow } from './components/popups/loader/loader';
 
 import './index.scss';
-import { LoaderWindow } from './components/popups/loader-window/loader-window';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

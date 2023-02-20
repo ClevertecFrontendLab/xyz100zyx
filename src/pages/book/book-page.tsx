@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { fetchBookById } from '../../store/slices/books/async-actions';
 import { BookSection } from '../../components';
-import { BookReview } from '../../components/book-review/book-review';
+import { BookReview } from '../../components/widgets/book-review/book-review';
 import styles from './book-page.module.scss';
 import iconDivider from '../../assets/link-divider.svg';
 import { ReactComponent as IconStarFill } from '../../assets/star-icon.svg';
@@ -13,12 +13,13 @@ import { ReactComponent as IconChevronVisible } from '../../assets/icon_chevron_
 import { useThunkDispatch } from '../../hooks/redux/dispatchers';
 import { nullableCategoryStatus } from '../../store/slices/nav/nav-slice';
 import { nullableStatus } from '../../store/slices/books/book-slice';
+import {getCategoryName} from "../../utils/categories.utils";
 
 export const BookPage: FC = () => {
   const [isVisibleComments, setVisibleComments] = useState(true);
 
-  const { booksId } = useParams();
-
+  const { booksId, category } = useParams();
+  const {activeGenre, genres} = useSelector((state: RootState) => state.nav);
   const { book, status } = useSelector((state: RootState) => state.books);
   const thunkDispatch = useThunkDispatch();
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ export const BookPage: FC = () => {
       <div className={styles.nav}>
         <span className={styles.nav__links}>
           <a className={styles.nav__link} href='#'>
-            Бизнес книги
+            {activeGenre === 0 ? 'Все книги' : getCategoryName(category!, genres)}
           </a>
           <img src={iconDivider} alt='link divider' />
           <a className={styles.nav__link} href='#'>

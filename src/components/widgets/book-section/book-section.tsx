@@ -1,7 +1,7 @@
 import { FC, useRef } from 'react';
 import styles from './book-section.module.scss';
-import { FetchedBook } from '../../types/data.types';
-import { SliderImages } from '../swiper';
+import { FetchedBook } from '../../../types/data.types';
+import { SliderImages } from '../../entities';
 
 interface IProps {
   book: FetchedBook;

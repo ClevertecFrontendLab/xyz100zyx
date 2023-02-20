@@ -1,5 +1,3 @@
-export {BookCardFW} from './book-card';
-export {BookCardReg} from './book-card';
 export {DisplayButton} from './display-button/display-button';
 export {Rating} from './rating/rating';
 export {Search} from './search/search';

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import classNames from 'classnames';
-import { DisplayType } from '../types';
+import { DisplayType } from '../../../../types';
 import styles from './book-button.module.scss';
 
 interface IProps {

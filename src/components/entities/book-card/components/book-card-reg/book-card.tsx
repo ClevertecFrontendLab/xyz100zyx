@@ -1,12 +1,15 @@
 import { FC } from 'react';
+import {useSelector} from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { FetchedBooks } from '../../../../types/data.types';
+import {RootState} from "../../../../../store/store";
+import { FetchedBooks } from '../../../../../types/data.types';
 import styles from './book-card.module.scss';
-import { Rating } from '../../rating/rating';
-import unbookImg from '../../../../assets/unbook-img.jpg';
-import { BookButton } from '../../../book-button/book-button';
-import { getDeliveredDate } from '../../../../utils/date.utils';
-import { HOST } from '../../../../utils/constants';
+import { Rating } from '../../../../common';
+import unbookImg from '../../../../../assets/unbook-img.jpg';
+import { BookButton } from '../book-button/book-button';
+import { getDeliveredDate } from '../../../../../utils/date.utils';
+import { HOST } from '../../../../../utils/constants';
+
 
 interface IProps {
   book: FetchedBooks;
@@ -14,9 +17,10 @@ interface IProps {
 
 export const BookCardReg: FC<IProps> = ({ book }) => {
   const navigate = useNavigate();
+  const {activeGenre, genres} = useSelector((state: RootState) => state.nav);
 
   const onCardClick = () => {
-    navigate(`/books/all/${book.id}`);
+    navigate(`/books/${genres[activeGenre].path}/${book.id}`);
   };
 
   return (

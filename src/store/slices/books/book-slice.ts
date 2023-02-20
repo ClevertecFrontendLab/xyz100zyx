@@ -47,9 +47,7 @@ export const bookSlice = createSlice({
       AC.abort()
     });
     builder.addCase(fetchBookById.pending, (state) => {
-      console.log('now is ', state.status)
       state.status = 'pending';
-      console.log('now is ', state.status)
       state.error = null;
     });
     builder.addCase(fetchBookById.fulfilled, (state, action: PayloadAction<FetchedBook>) => {

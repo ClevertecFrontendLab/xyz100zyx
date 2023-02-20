@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import styles from './book-review.module.scss';
-import userReviewImg from '../../assets/user-review.jpg';
-import { ReactComponent as IconStarFill } from '../../assets/star-icon.svg';
-import { ReactComponent as IconStarUnfill } from '../../assets/star-icon-unfill.svg';
-import { Review } from '../../types/data.types';
-import { getCommentDate } from '../../utils/date.utils';
+import userReviewImg from '../../../assets/user-review.jpg';
+import { ReactComponent as IconStarFill } from '../../../assets/star-icon.svg';
+import { ReactComponent as IconStarUnfill } from '../../../assets/star-icon-unfill.svg';
+import { Review } from '../../../types/data.types';
+import { getCommentDate } from '../../../utils/date.utils';
 
 interface IProps {
   comment: Review;
