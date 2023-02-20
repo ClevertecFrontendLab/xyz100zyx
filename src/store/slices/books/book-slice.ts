@@ -6,16 +6,23 @@ import { rejectCategoryStatus } from '../nav/nav-slice';
 
 /* eslint-disable */
 
+const enum sort {
+  ASC = 'asc',
+  DESC = 'desc'
+}
+
 const initialState: {
   books: FetchedBooks[];
   book: FetchedBook | null;
   status: 'pending' | 'fulfilled' | 'rejected' | null;
   error: null | FetchedError;
+  sorted: sort
 } = {
   books: [],
   book: null,
   error: null,
   status: null,
+  sorted: sort.DESC
 }; 
 
 export const bookSlice = createSlice({
@@ -27,6 +34,9 @@ export const bookSlice = createSlice({
     },
     rejectBookStatus: (state) => {
       state.status = 'rejected'
+    },
+    changeSortedType: (state) => {
+      state.sorted = state.sorted === sort.DESC ? sort.ASC : sort.DESC
     }
   },
   extraReducers: (builder) => {
@@ -63,5 +73,5 @@ export const bookSlice = createSlice({
   },
 });
 
-export const { nullableStatus, rejectBookStatus } = bookSlice.actions;
+export const { nullableStatus, rejectBookStatus, changeSortedType } = bookSlice.actions;
 export default bookSlice.reducer;

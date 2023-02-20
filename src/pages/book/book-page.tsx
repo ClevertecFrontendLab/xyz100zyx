@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { fetchBookById } from '../../store/slices/books/async-actions';
@@ -14,6 +14,7 @@ import { useThunkDispatch } from '../../hooks/redux/dispatchers';
 import { nullableCategoryStatus } from '../../store/slices/nav/nav-slice';
 import { nullableStatus } from '../../store/slices/books/book-slice';
 import {getCategoryName} from "../../utils/categories.utils";
+import { FetchedBooks } from '../../types/data.types';
 
 export const BookPage: FC = () => {
   const [isVisibleComments, setVisibleComments] = useState(true);
@@ -34,9 +35,9 @@ export const BookPage: FC = () => {
     <section className={styles.page}>
       <div className={styles.nav}>
         <span className={styles.nav__links}>
-          <a className={styles.nav__link} href='#'>
+          <Link to={`/books/${category}`} className={styles.nav__link} >
             {activeGenre === 0 ? 'Все книги' : getCategoryName(category!, genres)}
-          </a>
+          </Link>
           <img src={iconDivider} alt='link divider' />
           <a className={styles.nav__link} href='#'>
             {book?.title}
