@@ -31,11 +31,11 @@ export const BooksList: FC<IProps> = ({ displayTemplate }) => {
 
     if (sortedType === sort.ASC) {
       sortedBooks = [...unfilteredBooks].sort((cur, next) =>
-        !cur.rating && !next.rating ? -1 : !cur.rating ? -1 : !next.rating ? 1 : next.rating - cur.rating ? -1 : 1
+        !cur.rating && !next.rating ? -1 : !cur.rating ? -1 : !next.rating ? 1 : cur.rating - next.rating ? cur.rating - next.rating : -1
       );
     } else {
       sortedBooks = [...unfilteredBooks].sort((cur, next) =>
-        !cur.rating && !next.rating ? -1 : !cur.rating ? 1 : !next.rating ? -1 : cur.rating - next.rating ? cur.rating - next.rating : -1
+        !cur.rating && !next.rating ? -1 : !cur.rating ? 1 : !next.rating ? -1 : cur.rating - next.rating ? next.rating - cur.rating : -1
       );
     }
 
