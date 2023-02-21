@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useEffect } from 'react';
+import { FC, MouseEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -7,13 +7,11 @@ import {
   toggleGenresVisibility,
   setGenresVisibility,
 } from '../../../store/slices/nav/nav-slice';
-import { fetchGenres } from '../../../store/slices/nav/async-actions';
 import { close } from '../../../store/slices/popup/burger-slice';
 import styles from './nav-menu.module.scss';
 import { ReactComponent as IconChevronVisible } from '../../../assets/icon_chevron_visible.svg';
 import { ReactComponent as IconChevronHidden } from '../../../assets/nav_menu_chevron.svg';
 import { RootState } from '../../../store/store';
-import { fetchBooks } from '../../../store/slices/books/async-actions';
 import { useThunkDispatch } from '../../../hooks/redux/dispatchers';
 import { getCategoryCount } from '../../../utils/categories.utils';
 
@@ -22,9 +20,18 @@ interface IProps {
   dataTestIdBooks: string;
   dataTestIdTerms: string;
   dataTestIdContract: string;
+  dataTestIdLinksPrefix: string;
+  dataTestIdCountPrefix: string;
 }
 
-export const NavMenu: FC<IProps> = ({ dataTestIdBooks, dataTestIdContract, dataTestIdShowcase, dataTestIdTerms }) => {
+export const NavMenu: FC<IProps> = ({
+  dataTestIdBooks,
+  dataTestIdContract,
+  dataTestIdShowcase,
+  dataTestIdTerms,
+  dataTestIdLinksPrefix,
+  dataTestIdCountPrefix,
+}) => {
   const { activeGenre, activeDirectory, isHiddenGenres, genres, status } = useSelector((state: RootState) => state.nav);
   const statusBooks = useSelector((state: RootState) => state.books.status);
   const books = useSelector((state: RootState) => state.books.books);
@@ -36,7 +43,6 @@ export const NavMenu: FC<IProps> = ({ dataTestIdBooks, dataTestIdContract, dataT
   const onLinkClick = (index: number) => {
     dispatch(changeActiveDirectory(0));
     dispatch(changeActiveGenre(index));
-    thunkDispatch(fetchBooks());
     dispatch(close());
   };
 
@@ -59,20 +65,6 @@ export const NavMenu: FC<IProps> = ({ dataTestIdBooks, dataTestIdContract, dataT
     dispatch(toggleGenresVisibility());
     e.stopPropagation();
   };
-
-  /* eslint-disable react-hooks/exhaustive-deps */
-
-  useEffect(() => {
-    let ignore = false;
-    if(!ignore){
-      thunkDispatch(fetchGenres());
-    }
-
-    return () => {
-      ignore = true;
-
-    }
-  }, []);
 
   return (
     <div className={styles.menu}>
@@ -102,7 +94,6 @@ export const NavMenu: FC<IProps> = ({ dataTestIdBooks, dataTestIdContract, dataT
       >
         {genres.map((category, index) => (
           <li
-            data-test-id={index === 0 ? dataTestIdBooks : ''}
             role='presentation'
             className={styles.menu__item}
             key={category.id}
@@ -110,15 +101,24 @@ export const NavMenu: FC<IProps> = ({ dataTestIdBooks, dataTestIdContract, dataT
             onKeyDown={() => {}}
           >
             <Link className={styles.menu__link} to={`/books/${category.path}`}>
-              <span
-                className={
-                  index === activeGenre && activeDirectory === 0
-                    ? `${styles.label} ${styles.label__active}`
-                    : styles.label
-                }
-              >
-                {category.name}
-                <span className={styles.link__count}>{index !== 0 ? getCategoryCount(category.name, books) : ''}</span>
+              <span className={styles.menu__link_info}>
+                <span
+                  data-test-id={`${dataTestIdLinksPrefix}-${category.id === 0 ? 'books' : category.path}`}
+                  role='presentation'
+                  className={
+                    index === activeGenre && activeDirectory === 0
+                      ? `${styles.label} ${styles.label__active}`
+                      : styles.label
+                  }
+                >
+                  {category.name}
+                </span>
+                <span
+                  data-test-id={`${dataTestIdCountPrefix}-${category.id === 0 ? 'books' : category.path}`}
+                  className={styles.link__count}
+                >
+                  {index !== 0 ? getCategoryCount(category.name, books) : ''}
+                </span>
               </span>
             </Link>
           </li>

@@ -11,6 +11,8 @@ export const LayoutMainPage: FC = () => (
         dataTestIdContract='navigation-contract'
         dataTestIdShowcase='navigation-showcase'
         dataTestIdTerms='navigation-terms'
+        dataTestIdLinksPrefix='navigation'
+        dataTestIdCountPrefix='navigation-book-count-for'
       />
     </div>
     <Outlet />

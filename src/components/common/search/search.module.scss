@@ -10,9 +10,16 @@
   border-radius: 599px;
   align-items: center;
 
-  & img {
+  & div:first-of-type{
     max-width: 16px;
     max-height: 16px;
+    height: 100%;
+    width: 100%;
+    background: url("../../../assets/search-icon.svg");
+
+    @media (max-width: 455px){
+      width: 16px;
+    }
   }
 
   & .mobile_open {
@@ -32,6 +39,9 @@
     color: #363636;
     mix-blend-mode: normal;
     width: 100%;
+    caret-color: rgba(248, 54, 0, 1);
+    
+    ;
 
     &::placeholder {
       font-family: 'Montserrat';
@@ -78,5 +88,15 @@
     max-width: fit-content;
     width: auto;
     padding: 8px;
+  }
+
+  &:focus-within{
+    & div:first-of-type{
+      background: url("../../../assets/search-icon-active.svg");
+    }
+
+    & input::placeholder{
+      display: none;
+    }
   }
 }

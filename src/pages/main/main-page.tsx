@@ -1,16 +1,31 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import styles from './main-page.module.scss';
 import { FilterBar } from '../../components/widgets/filter-bar/filter-bar';
 import { BooksList } from '../../components/widgets/book-list/components/books-list/books-list';
 import { DisplayType } from '../../components/types';
+import { useThunkDispatch } from '../../hooks/redux/dispatchers';
+import { fetchGenres } from '../../store/slices/nav/async-actions';
+import { fetchBooks } from '../../store/slices/books/async-actions';
 
 export const MainPage: FC = () => {
   const [listView, setListView] = useState<DisplayType>('linear');
 
   const booksStatus = useSelector((state: RootState) => state.books.status);
   const navStatus = useSelector((state: RootState) => state.nav.status);
+  const thunkDispatch = useThunkDispatch()
+
+  /* eslint-disable react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    if(navStatus === 'rejected' || navStatus === null){
+      thunkDispatch(fetchGenres());
+    }
+    if(booksStatus === null || booksStatus === 'rejected'){
+      thunkDispatch(fetchBooks())
+    }
+  }, [thunkDispatch])
 
   return (
     <div className={styles.wrapper}>

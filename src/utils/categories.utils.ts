@@ -12,3 +12,9 @@ export const getCategoryName = (path: string, categories: Category[]) => {
     const category =  categories.find((item) => item.path === path);
     return category ? category.name : '...'
 }
+
+export const getCurrentCategoryId = (path: string, categories: Category[]) => {
+    console.log(path, categories)
+    const category =  categories.find((item) => item.path === path);
+    return category?.id
+}

@@ -17,7 +17,7 @@ export const BookSection: FC<IProps> = ({ book }) => {
           <SliderImages images={book?.images} />
         </div>
         <div className={styles.book_info}>
-          <h3 className={styles.book__title}>{book?.title}</h3>
+          <h3 data-test-id='book-title' className={styles.book__title}>{book?.title}</h3>
           <p className={styles.book__author}>
             {book?.authors && book.authors.map((author, index) => (index !== 0 ? `${author}, ` : `${author}`))},{' '}
             {book?.issueYear}

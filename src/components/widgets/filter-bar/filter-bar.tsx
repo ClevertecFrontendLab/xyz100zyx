@@ -29,7 +29,7 @@ export const FilterBar: FC<IProps> = ({ onViewManagerClick, displayState }) => {
         <Search
           setMobileOpen={setMobileSearch}
           mobileOpen={isOpenMobileSearch}
-          placeholder='Поиск книги или автора...'
+          placeholder='Поиск книги или автора…'
         />
         <Select mobileOpen={isOpenMobileSearch} />
       </div>

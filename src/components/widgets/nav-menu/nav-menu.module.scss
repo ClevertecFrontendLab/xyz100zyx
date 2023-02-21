@@ -113,20 +113,21 @@
         background-clip: text;
         text-fill-color: transparent;
       }
+    }
 
-      & .link__count {
-        font-style: normal;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 24px;
-        letter-spacing: 0.1px;
-        background: #a7a7a7 !important;
-        -webkit-background-clip: text !important;
-        -webkit-text-fill-color: #a7a7a7;
-        width: 100%;
-        padding-left: 6px;
-        background: transparent;
-      }
+    & .link__count {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 24px;
+      letter-spacing: 0.1px;
+      background: #a7a7a7 !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: #a7a7a7;
+      width: 100%;
+      padding-left: 6px;
+      background: transparent;
+      padding-left: 8px;
     }
   }
 }

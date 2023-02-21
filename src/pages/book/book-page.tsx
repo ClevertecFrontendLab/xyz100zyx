@@ -11,35 +11,50 @@ import { ReactComponent as IconStarFill } from '../../assets/star-icon.svg';
 import { ReactComponent as IconStarUnfill } from '../../assets/star-icon-unfill.svg';
 import { ReactComponent as IconChevronVisible } from '../../assets/icon_chevron_visible.svg';
 import { useThunkDispatch } from '../../hooks/redux/dispatchers';
-import { nullableCategoryStatus } from '../../store/slices/nav/nav-slice';
+import { changeActiveGenre, nullableCategoryStatus } from '../../store/slices/nav/nav-slice';
 import { nullableStatus } from '../../store/slices/books/book-slice';
-import {getCategoryName} from "../../utils/categories.utils";
-import { FetchedBooks } from '../../types/data.types';
+import {getCategoryName, getCurrentCategoryId} from "../../utils/categories.utils";
+import { fetchGenres } from '../../store/slices/nav/async-actions';
 
 export const BookPage: FC = () => {
   const [isVisibleComments, setVisibleComments] = useState(true);
 
   const { booksId, category } = useParams();
   const {activeGenre, genres} = useSelector((state: RootState) => state.nav);
-  const { book, status } = useSelector((state: RootState) => state.books);
+  const navStatus = useSelector((state: RootState) => state.nav.status)
+  const { book, books, status } = useSelector((state: RootState) => state.books);
   const thunkDispatch = useThunkDispatch();
   const dispatch = useDispatch();
 
+  const onLinkClick = () => {
+    dispatch(nullableStatus());
+  }
+
+  /* eslint-disable react-hooks/exhaustive-deps */
+
   useEffect(() => {
-    dispatch(nullableCategoryStatus());
     dispatch(nullableStatus());
     thunkDispatch(fetchBookById(Number(booksId!)));
+    if(navStatus === 'rejected' || navStatus === null){
+      thunkDispatch(fetchGenres())
+    }
   }, [booksId, dispatch, thunkDispatch]);
+
+  useEffect(() => {
+    if(!books.length){
+      dispatch(changeActiveGenre(getCurrentCategoryId(category!, genres)!))
+    }
+  }, [genres])
 
   return status === 'fulfilled' ? (
     <section className={styles.page}>
       <div className={styles.nav}>
         <span className={styles.nav__links}>
-          <Link to={`/books/${category}`} className={styles.nav__link} >
-            {activeGenre === 0 ? 'Все книги' : getCategoryName(category!, genres)}
+          <Link data-test-id='breadcrumbs-link' onClick={onLinkClick} to={`/books/${category}`} className={styles.nav__link} >
+            {(activeGenre === 0 && books.length) ? 'Все книги' : getCategoryName(category!, genres)}
           </Link>
           <img src={iconDivider} alt='link divider' />
-          <a className={styles.nav__link} href='#'>
+          <a data-test-id='book-name' className={styles.nav__link} href='#'>
             {book?.title}
           </a>
         </span>

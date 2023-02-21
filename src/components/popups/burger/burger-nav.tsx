@@ -19,6 +19,8 @@ export const BurgerNav: FC = () => {
           dataTestIdShowcase='burger-showcase'
           dataTestIdContract='burger-contract'
           dataTestIdTerms='burger-terms'
+          dataTestIdLinksPrefix='burger'
+          dataTestIdCountPrefix='burger-book-count-for'
         />
       </div>
       <span className={styles.navigation__divider} />

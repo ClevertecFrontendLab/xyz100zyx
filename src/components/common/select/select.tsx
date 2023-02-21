@@ -21,7 +21,7 @@ export const Select: FC<IProps> = ({ mobileOpen }) => {
   return (
     <div role='presentation' onClick={onSortButtonClick} className={!mobileOpen ? styles.select : `${styles.select} ${styles.select__mob}`}>
       <img src={sortedType === sort.DESC ? selectIconDesc : selectIconAsc} alt='sort icon' />
-      <span>По рейтингу</span>
+      <span role='presentation' data-test-id='sort-rating-button'>По рейтингу</span>
     </div>
   );
 };

@@ -4,8 +4,6 @@ import { RootState } from '../../../../../store/store';
 import styles from './books-list.module.scss';
 import { BookCardReg, BookCardFW } from '../../../../entities';
 import { DisplayType } from '../../../../types';
-import { fetchBooks } from '../../../../../store/slices/books/async-actions';
-import { useThunkDispatch } from '../../../../../hooks/redux/dispatchers';
 import { FetchedBooks } from '../../../../../types/data.types';
 import { sort } from '../../../../../store/slices/books/book-slice';
 
@@ -18,13 +16,8 @@ export const BooksList: FC<IProps> = ({ displayTemplate }) => {
   const [books, setBooks] = useState<FetchedBooks[]>([]);
   const { activeGenre, genres } = useSelector((state: RootState) => state.nav);
 
-  const dispatch = useThunkDispatch();
   const { status, sortedType } = useSelector((state: RootState) => state.books);
   const statusCategories = useSelector((state: RootState) => state.nav.status);
-
-  useEffect(() => {
-    dispatch(fetchBooks());
-  }, [dispatch]);
 
   useEffect(() => {
     let sortedBooks;
@@ -64,7 +57,7 @@ export const BooksList: FC<IProps> = ({ displayTemplate }) => {
             )}
           </ul>
         ) : (
-          <span className={styles.non_search}>В этой категории книг ещё нет</span>
+          <span data-test-id='empty-category' className={styles.non_search}>В этой категории книг ещё нет</span>
         ))}
     </>
   );
