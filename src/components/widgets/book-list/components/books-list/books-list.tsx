@@ -15,7 +15,7 @@ export const BooksList: FC<IProps> = ({ displayTemplate }) => {
   const unfilteredBooks = useSelector((state: RootState) => state.books.books);
   const [books, setBooks] = useState<FetchedBooks[]>([]);
   const { activeGenre, genres } = useSelector((state: RootState) => state.nav);
-
+  const {inputValue} = useSelector((state: RootState) => state.filter);
   const { status, sortedType } = useSelector((state: RootState) => state.books);
   const statusCategories = useSelector((state: RootState) => state.nav.status);
 
@@ -32,6 +32,11 @@ export const BooksList: FC<IProps> = ({ displayTemplate }) => {
       );
     }
 
+    if(inputValue){
+        const buffer = sortedBooks.filter((book) => book.title.toLowerCase().includes(inputValue.toLocaleLowerCase()))
+        sortedBooks = buffer;
+    }
+
     if (activeGenre !== 0) {
       const activeGenreName = genres.find((item) => item.id === activeGenre)?.name;
       const filteredBooks = sortedBooks.filter((book) => book.categories.includes(activeGenreName!));
@@ -39,7 +44,8 @@ export const BooksList: FC<IProps> = ({ displayTemplate }) => {
     } else {
       setBooks(sortedBooks);
     }
-  }, [activeGenre, genres, unfilteredBooks, sortedType]);
+
+  }, [activeGenre, genres, unfilteredBooks, sortedType, inputValue]);
 
   /* eslint-disable react/jsx-no-useless-fragment */
   return (
@@ -56,6 +62,8 @@ export const BooksList: FC<IProps> = ({ displayTemplate }) => {
               )
             )}
           </ul>
+        ) : inputValue ? (
+          <span data-test-id='search-result-not-found' className={styles.non_search}>По запросу ничего не найдено</span>
         ) : (
           <span data-test-id='empty-category' className={styles.non_search}>В этой категории книг ещё нет</span>
         ))}

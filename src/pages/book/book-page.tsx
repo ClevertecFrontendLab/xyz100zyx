@@ -15,6 +15,7 @@ import { changeActiveGenre, nullableCategoryStatus } from '../../store/slices/na
 import { nullableStatus } from '../../store/slices/books/book-slice';
 import {getCategoryName, getCurrentCategoryId} from "../../utils/categories.utils";
 import { fetchGenres } from '../../store/slices/nav/async-actions';
+import { changeInputValue } from '../../store/slices/filter/filter-slice';
 
 export const BookPage: FC = () => {
   const [isVisibleComments, setVisibleComments] = useState(true);
@@ -34,6 +35,7 @@ export const BookPage: FC = () => {
 
   useEffect(() => {
     dispatch(nullableStatus());
+    dispatch(changeInputValue(''))
     thunkDispatch(fetchBookById(Number(booksId!)));
     if(navStatus === 'rejected' || navStatus === null){
       thunkDispatch(fetchGenres())
@@ -41,6 +43,7 @@ export const BookPage: FC = () => {
   }, [booksId, dispatch, thunkDispatch]);
 
   useEffect(() => {
+    dispatch(changeInputValue(''))
     if(!books.length){
       dispatch(changeActiveGenre(getCurrentCategoryId(category!, genres)!))
     }
