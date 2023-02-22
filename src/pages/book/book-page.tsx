@@ -11,19 +11,19 @@ import { ReactComponent as IconStarFill } from '../../assets/star-icon.svg';
 import { ReactComponent as IconStarUnfill } from '../../assets/star-icon-unfill.svg';
 import { ReactComponent as IconChevronVisible } from '../../assets/icon_chevron_visible.svg';
 import { useThunkDispatch } from '../../hooks/redux/dispatchers';
-import { changeActiveGenre, nullableCategoryStatus } from '../../store/slices/nav/nav-slice';
 import { nullableStatus } from '../../store/slices/books/book-slice';
 import {getCategoryName, getCurrentCategoryId} from "../../utils/categories.utils";
 import { fetchGenres } from '../../store/slices/nav/async-actions';
-import { changeInputValue } from '../../store/slices/filter/filter-slice';
+import { changeInputValue, changeActiveGenre } from '../../store/slices/filter/filter-slice';
 
 export const BookPage: FC = () => {
   const [isVisibleComments, setVisibleComments] = useState(true);
 
   const { booksId, category } = useParams();
-  const {activeGenre, genres} = useSelector((state: RootState) => state.nav);
+  const {genres} = useSelector((state: RootState) => state.nav);
   const navStatus = useSelector((state: RootState) => state.nav.status)
   const { book, books, status } = useSelector((state: RootState) => state.books);
+  const {activeGenre} = useSelector((state:RootState) => state.filter)
   const thunkDispatch = useThunkDispatch();
   const dispatch = useDispatch();
 

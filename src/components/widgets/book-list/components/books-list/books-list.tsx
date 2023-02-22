@@ -5,7 +5,7 @@ import styles from './books-list.module.scss';
 import { BookCardReg, BookCardFW } from '../../../../entities';
 import { DisplayType } from '../../../../types';
 import { FetchedBooks } from '../../../../../types/data.types';
-import { sort } from '../../../../../store/slices/books/book-slice';
+import { SortType } from '../../../../../store/slices/filter/filter.types';
 
 interface IProps {
   displayTemplate: DisplayType;
@@ -14,27 +14,44 @@ interface IProps {
 export const BooksList: FC<IProps> = ({ displayTemplate }) => {
   const unfilteredBooks = useSelector((state: RootState) => state.books.books);
   const [books, setBooks] = useState<FetchedBooks[]>([]);
-  const { activeGenre, genres } = useSelector((state: RootState) => state.nav);
-  const {inputValue} = useSelector((state: RootState) => state.filter);
-  const { status, sortedType } = useSelector((state: RootState) => state.books);
+  const { genres } = useSelector((state: RootState) => state.nav);
+  const { inputValue, activeGenre } = useSelector((state: RootState) => state.filter);
+  const { status } = useSelector((state: RootState) => state.books);
+  const { sortedType } = useSelector((state: RootState) => state.filter);
   const statusCategories = useSelector((state: RootState) => state.nav.status);
 
   useEffect(() => {
     let sortedBooks;
 
-    if (sortedType === sort.ASC) {
+    if (sortedType === SortType.ASC) {
       sortedBooks = [...unfilteredBooks].sort((cur, next) =>
-        !cur.rating && !next.rating ? -1 : !cur.rating ? -1 : !next.rating ? 1 : cur.rating - next.rating ? cur.rating - next.rating : -1
+        !cur.rating && !next.rating
+          ? -1
+          : !cur.rating
+          ? -1
+          : !next.rating
+          ? 1
+          : cur.rating - next.rating
+          ? cur.rating - next.rating
+          : -1
       );
     } else {
       sortedBooks = [...unfilteredBooks].sort((cur, next) =>
-        !cur.rating && !next.rating ? -1 : !cur.rating ? 1 : !next.rating ? -1 : cur.rating - next.rating ? next.rating - cur.rating : -1
+        !cur.rating && !next.rating
+          ? -1
+          : !cur.rating
+          ? 1
+          : !next.rating
+          ? -1
+          : cur.rating - next.rating
+          ? next.rating - cur.rating
+          : -1
       );
     }
 
-    if(inputValue){
-        const buffer = sortedBooks.filter((book) => book.title.toLowerCase().includes(inputValue.toLocaleLowerCase()))
-        sortedBooks = buffer;
+    if (inputValue) {
+      const buffer = sortedBooks.filter((book) => book.title.toLowerCase().includes(inputValue.toLocaleLowerCase()));
+      sortedBooks = buffer;
     }
 
     if (activeGenre !== 0) {
@@ -44,7 +61,6 @@ export const BooksList: FC<IProps> = ({ displayTemplate }) => {
     } else {
       setBooks(sortedBooks);
     }
-
   }, [activeGenre, genres, unfilteredBooks, sortedType, inputValue]);
 
   /* eslint-disable react/jsx-no-useless-fragment */
@@ -63,9 +79,13 @@ export const BooksList: FC<IProps> = ({ displayTemplate }) => {
             )}
           </ul>
         ) : inputValue ? (
-          <span data-test-id='search-result-not-found' className={styles.non_search}>По запросу ничего не найдено</span>
+          <span data-test-id='search-result-not-found' className={styles.non_search}>
+            По запросу ничего не найдено
+          </span>
         ) : (
-          <span data-test-id='empty-category' className={styles.non_search}>В этой категории книг ещё нет</span>
+          <span data-test-id='empty-category' className={styles.non_search}>
+            В этой категории книг ещё нет
+          </span>
         ))}
     </>
   );

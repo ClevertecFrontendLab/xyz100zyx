@@ -18,8 +18,8 @@ interface IProps {
 
 export const BookCardReg: FC<IProps> = ({ book }) => {
   const navigate = useNavigate();
-  const {activeGenre, genres} = useSelector((state: RootState) => state.nav);
-  const inputValue = useSelector((state: RootState) => state.filter.inputValue);
+  const {genres} = useSelector((state: RootState) => state.nav);
+  const {inputValue, activeGenre} = useSelector((state: RootState) => state.filter);
 
   const onCardClick = () => {
     navigate(`/books/${genres[activeGenre].path}/${book.id}`);

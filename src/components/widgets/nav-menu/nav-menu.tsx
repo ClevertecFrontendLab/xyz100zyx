@@ -3,10 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   changeActiveDirectory,
-  changeActiveGenre,
   toggleGenresVisibility,
   setGenresVisibility,
 } from '../../../store/slices/nav/nav-slice';
+import { changeActiveGenre } from '../../../store/slices/filter/filter-slice';
 import { close } from '../../../store/slices/popup/burger-slice';
 import styles from './nav-menu.module.scss';
 import { ReactComponent as IconChevronVisible } from '../../../assets/icon_chevron_visible.svg';
@@ -32,12 +32,12 @@ export const NavMenu: FC<IProps> = ({
   dataTestIdLinksPrefix,
   dataTestIdCountPrefix,
 }) => {
-  const { activeGenre, activeDirectory, isHiddenGenres, genres, status } = useSelector((state: RootState) => state.nav);
+  const { activeDirectory, isHiddenGenres, genres, status } = useSelector((state: RootState) => state.nav);
   const statusBooks = useSelector((state: RootState) => state.books.status);
   const books = useSelector((state: RootState) => state.books.books);
+  const {activeGenre} = useSelector((state: RootState) => state.filter);
 
   const dispatch = useDispatch();
-  const thunkDispatch = useThunkDispatch();
   const navigate = useNavigate();
 
   const onLinkClick = (index: number) => {

@@ -16,13 +16,11 @@ const initialState: {
   book: FetchedBook | null;
   status: 'pending' | 'fulfilled' | 'rejected' | null;
   error: null | FetchedError;
-  sortedType: sort
 } = {
   books: [],
   book: null,
   error: null,
   status: null,
-  sortedType: sort.DESC
 }; 
 
 export const bookSlice = createSlice({
@@ -35,9 +33,6 @@ export const bookSlice = createSlice({
     rejectBookStatus: (state) => {
       state.status = 'rejected'
     },
-    toggleSortedType: (state) => {
-      state.sortedType = state.sortedType === sort.DESC ? sort.ASC : sort.DESC
-    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchBooks.pending, (state) => {
@@ -68,10 +63,9 @@ export const bookSlice = createSlice({
     builder.addCase(fetchBookById.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = {...JSON.parse(action.payload as string)}
-      console.log(state.error)
     });
   },
 });
 
-export const { nullableStatus, rejectBookStatus, toggleSortedType } = bookSlice.actions;
+export const { nullableStatus, rejectBookStatus } = bookSlice.actions;
 export default bookSlice.reducer;
