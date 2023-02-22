@@ -21,7 +21,7 @@ const initialState: {
   book: null,
   error: null,
   status: null,
-}; 
+};
 
 export const bookSlice = createSlice({
   name: 'books',
@@ -45,7 +45,6 @@ export const bookSlice = createSlice({
       state.error = null;
     });
     builder.addCase(fetchBooks.rejected, (state, action) => {
-      console.log('f')
       state.status = 'rejected';
       state.error = {...JSON.parse(action.payload as string)}
       rejectCategoryStatus()
