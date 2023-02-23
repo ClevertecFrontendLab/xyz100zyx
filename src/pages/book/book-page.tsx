@@ -47,7 +47,7 @@ export const BookPage: FC = () => {
 
             isNeedFirstUpdate.current = false;
         }
-    }, [booksId, dispatch, thunkDispatch]);
+    }, []);
 
     useEffect(() => {
         if (isNeedSecondUpdate.current === true) {
@@ -57,7 +57,7 @@ export const BookPage: FC = () => {
             }
             isNeedSecondUpdate.current = false;
         }
-    }, [genres])
+    }, [])
 
     return status === 'fulfilled' ? (
         <section className={styles.page}>
