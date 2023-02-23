@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react';
+import {FC, useEffect, useRef, useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../store/store';
@@ -19,6 +19,9 @@ import {changeInputValue, changeActiveGenre} from '../../store/slices/filter/fil
 export const BookPage: FC = () => {
     const [isVisibleComments, setVisibleComments] = useState(true);
 
+    const isNeedFirstUpdate = useRef(true);
+    const isNeedSecondUpdate = useRef(true);
+
     const {booksId, category} = useParams();
     const {genres} = useSelector((state: RootState) => state.nav);
     const navStatus = useSelector((state: RootState) => state.nav.status)
@@ -34,22 +37,29 @@ export const BookPage: FC = () => {
     /* eslint-disable react-hooks/exhaustive-deps */
 
     useEffect(() => {
-        thunkDispatch(fetchBookById(Number(booksId!)));
-/*         dispatch(nullableStatus()); */
-        dispatch(changeInputValue(''))
+        if(isNeedFirstUpdate.current === true){
+            thunkDispatch(fetchBookById(Number(booksId!)));
+            /*         dispatch(nullableStatus()); */
+            dispatch(changeInputValue(''))
 
-        if (navStatus === 'rejected' || navStatus === null) {
-            thunkDispatch(fetchGenres())
+            if (navStatus === 'rejected' || navStatus === null) {
+                thunkDispatch(fetchGenres())
+            }
+
+            console.log('123')
+
+            isNeedFirstUpdate.current = false;
         }
-        console.log('need')
     }, [booksId, dispatch, thunkDispatch]);
 
     useEffect(() => {
-        dispatch(changeInputValue(''))
-        if (!books.length) {
-            dispatch(changeActiveGenre(getCurrentCategoryId(category!, genres)!))
+        if(isNeedSecondUpdate.current === true){
+            dispatch(changeInputValue(''))
+            if (!books.length) {
+                dispatch(changeActiveGenre(getCurrentCategoryId(category!, genres)!))
+            }
+            isNeedSecondUpdate.current = false;
         }
-        console.log('not need')
     }, [genres])
 
     return status === 'fulfilled' ? (
