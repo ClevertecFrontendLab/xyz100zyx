@@ -2,12 +2,11 @@ import { FC, MouseEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { close } from '../../../store/slices/popup/burger-slice';
 import { RootState } from '../../../store/store';
+import { BurgerNav } from '../burger';
+import { ErrorPopup } from '../error/error';
 import styles from './modal-window.module.scss';
 
-interface IProps {
-  children: JSX.Element;
-}
-export const ModalWindow: FC<IProps> = ({ children }) => {
+export const ModalWindow: FC = () => {
   const dispatch = useDispatch();
   const isBurgerNavOpen = useSelector((state: RootState) => state.popup.burgerNav);
   const statusCategory = useSelector((state: RootState) => state.nav.status);
@@ -33,7 +32,8 @@ export const ModalWindow: FC<IProps> = ({ children }) => {
           : `${styles.window} ${styles.window__none}`
       }
     >
-      {children}
+      <BurgerNav />
+      {isError && <ErrorPopup text='Что-то пошло не так. Обновите страницу через некоторое время.' />}
     </div>
   );
 };

@@ -6,6 +6,11 @@ import { rejectCategoryStatus } from '../nav/nav-slice';
 
 /* eslint-disable */
 
+export const enum sort {
+  ASC = 'asc',
+  DESC = 'desc'
+}
+
 const initialState: {
   books: FetchedBooks[];
   book: FetchedBook | null;
@@ -16,7 +21,7 @@ const initialState: {
   book: null,
   error: null,
   status: null,
-}; 
+};
 
 export const bookSlice = createSlice({
   name: 'books',
@@ -27,7 +32,7 @@ export const bookSlice = createSlice({
     },
     rejectBookStatus: (state) => {
       state.status = 'rejected'
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchBooks.pending, (state) => {
@@ -40,16 +45,13 @@ export const bookSlice = createSlice({
       state.error = null;
     });
     builder.addCase(fetchBooks.rejected, (state, action) => {
-      console.log('f')
       state.status = 'rejected';
       state.error = {...JSON.parse(action.payload as string)}
       rejectCategoryStatus()
       AC.abort()
     });
     builder.addCase(fetchBookById.pending, (state) => {
-      console.log('now is ', state.status)
       state.status = 'pending';
-      console.log('now is ', state.status)
       state.error = null;
     });
     builder.addCase(fetchBookById.fulfilled, (state, action: PayloadAction<FetchedBook>) => {
@@ -60,7 +62,6 @@ export const bookSlice = createSlice({
     builder.addCase(fetchBookById.rejected, (state, action) => {
       state.status = 'rejected';
       state.error = {...JSON.parse(action.payload as string)}
-      console.log(state.error)
     });
   },
 });

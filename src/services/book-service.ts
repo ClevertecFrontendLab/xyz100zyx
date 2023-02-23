@@ -9,6 +9,7 @@ export abstract class BookService {
         JSON.stringify({ message: err.message, status: err.status, name: err.name, details: err.details })
       );
     });
+    
     return response.data;
   }
 

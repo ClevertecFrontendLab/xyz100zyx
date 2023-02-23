@@ -9,7 +9,7 @@ interface IProps {
 export const Rating: FC<IProps> = ({ rating }) => (
   <>
     {[...Array(5)].map((_, index) =>
-      index < Math.round(rating!) ? (
+      index < Math.floor(rating!) ? (
         <img key={Math.round(index)} src={iconStar} alt='star icon' />
       ) : (
         <img key={Math.round(index)} src={iconOutlinedStar} alt='star icon' />

@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { useDispatch } from 'react-redux';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { INavState } from './nav-slice.types';
 import { fetchGenres } from './async-actions';
@@ -8,7 +7,6 @@ import { rejectBookStatus } from '../books/book-slice';
 
 const initialState: INavState = {
   activeDirectory: 0,
-  activeGenre: 0,
   isHiddenGenres: true,
   genres: [],
   status: null,
@@ -22,9 +20,6 @@ const navSlice = createSlice({
   reducers: {
     changeActiveDirectory: (state, action: PayloadAction<number>) => {
       state.activeDirectory = action.payload;
-    },
-    changeActiveGenre: (state, action: PayloadAction<number>) => {
-      state.activeGenre = action.payload;
     },
     toggleGenresVisibility: (state) => {
       state.isHiddenGenres = !state.isHiddenGenres;
@@ -58,7 +53,6 @@ const navSlice = createSlice({
 
 export const {
   changeActiveDirectory,
-  changeActiveGenre,
   toggleGenresVisibility,
   setGenresVisibility,
   nullableCategoryStatus,
