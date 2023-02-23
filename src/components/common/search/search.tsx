@@ -13,7 +13,6 @@ interface IProps {
 }
 
 export const Search: FC<IProps> = ({ placeholder, label, mobileOpen, setMobileOpen }) => {
-  const [isInFocus, setInFocus] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useDispatch();
@@ -22,12 +21,10 @@ export const Search: FC<IProps> = ({ placeholder, label, mobileOpen, setMobileOp
   const onFocus = () => {
     inputRef.current?.focus();
     console.log(inputRef.current === document.activeElement)
-    setInFocus(true)
   };
 
   const onBlur = () => {
     inputRef.current?.blur();
-    setInFocus(false)
   };
 
   const onChange = (value: string) => {

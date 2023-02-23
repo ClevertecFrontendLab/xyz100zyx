@@ -12,7 +12,6 @@ import styles from './nav-menu.module.scss';
 import { ReactComponent as IconChevronVisible } from '../../../assets/icon_chevron_visible.svg';
 import { ReactComponent as IconChevronHidden } from '../../../assets/nav_menu_chevron.svg';
 import { RootState } from '../../../store/store';
-import { useThunkDispatch } from '../../../hooks/redux/dispatchers';
 import { getCategoryCount } from '../../../utils/categories.utils';
 
 interface IProps {
@@ -71,7 +70,7 @@ export const NavMenu: FC<IProps> = ({
       <div
         data-test-id={dataTestIdShowcase}
         role='presentation'
-        onClick={(e) => onDirClick(0)}
+        onClick={() => onDirClick(0)}
         className={
           activeDirectory === 0
             ? `${styles.menu__label} ${styles.menu__label__first} ${styles.menu__label_active}`

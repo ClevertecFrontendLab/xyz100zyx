@@ -5,13 +5,12 @@ import styles from './book-button.module.scss';
 
 interface IProps {
   text: string;
-  onClick?: () => void;
   type: BookButtonType;
   displayType?: DisplayType;
 }
 
 type BookButtonType = 'available' | 'added' | 'unavailable';
-export const BookButton: FC<IProps> = ({ text, onClick, type, displayType }) => (
+export const BookButton: FC<IProps> = ({ text, type, displayType }) => (
   <button
     className={classNames(
       styles.button,

@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './select.module.scss';
 import selectIconDesc from '../../../assets/icon_sort.svg';

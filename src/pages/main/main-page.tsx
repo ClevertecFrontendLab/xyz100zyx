@@ -28,6 +28,7 @@ export const MainPage: FC = () => {
         }
         isNeedUpdate.current = false
     }
+    console.log(navStatus, 'loool', booksStatus)
   }, [thunkDispatch, booksStatus, navStatus])
 
   return (

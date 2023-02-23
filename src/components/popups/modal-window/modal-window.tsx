@@ -6,9 +6,6 @@ import { BurgerNav } from '../burger';
 import { ErrorPopup } from '../error/error';
 import styles from './modal-window.module.scss';
 
-interface IProps {
-  children: JSX.Element;
-}
 export const ModalWindow: FC = () => {
   const dispatch = useDispatch();
   const isBurgerNavOpen = useSelector((state: RootState) => state.popup.burgerNav);
