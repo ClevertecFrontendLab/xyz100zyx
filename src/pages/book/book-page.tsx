@@ -37,23 +37,20 @@ export const BookPage: FC = () => {
     /* eslint-disable react-hooks/exhaustive-deps */
 
     useEffect(() => {
-        if(isNeedFirstUpdate.current === true){
+        if (isNeedFirstUpdate.current === true) {
             thunkDispatch(fetchBookById(Number(booksId!)));
-            /*         dispatch(nullableStatus()); */
             dispatch(changeInputValue(''))
 
             if (navStatus === 'rejected' || navStatus === null) {
                 thunkDispatch(fetchGenres())
             }
 
-            console.log('123')
-
             isNeedFirstUpdate.current = false;
         }
     }, [booksId, dispatch, thunkDispatch]);
 
     useEffect(() => {
-        if(isNeedSecondUpdate.current === true){
+        if (isNeedSecondUpdate.current === true) {
             dispatch(changeInputValue(''))
             if (!books.length) {
                 dispatch(changeActiveGenre(getCurrentCategoryId(category!, genres)!))

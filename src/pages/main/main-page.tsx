@@ -18,8 +18,6 @@ export const MainPage: FC = () => {
   const navStatus = useSelector((state: RootState) => state.nav.status);
   const thunkDispatch = useThunkDispatch()
 
-  /* eslint-disable react-hooks/exhaustive-deps */
-
   useEffect(() => {
     if(isNeedUpdate.current === true){
         if(navStatus === 'rejected' || navStatus === null){
@@ -30,7 +28,7 @@ export const MainPage: FC = () => {
         }
         isNeedUpdate.current = false
     }
-  }, [thunkDispatch])
+  }, [thunkDispatch, booksStatus, navStatus])
 
   return (
     <div className={styles.wrapper}>

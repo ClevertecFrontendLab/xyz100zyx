@@ -6,14 +6,19 @@ import { toggle } from '../../store/slices/popup/burger-slice';
 import styles from './header.module.scss';
 import logo from '../../assets/logo.svg';
 import { RootState } from '../../store/store';
+import {nullableStatus} from '../../store/slices/books/book-slice';
 
 export const Header: FC = () => {
   const dispatch = useDispatch();
   const isBurgerNavOpen = useSelector((state: RootState) => state.popup.burgerNav);
 
+  const onLogoClick = () => {
+      dispatch(nullableStatus());
+  }
+
   return (
     <header className={styles.header}>
-      <Link to='/'>
+      <Link onClick={onLogoClick} to='/'>
         <img className={styles.logo} src={logo} alt='logo' />
       </Link>
       <div
