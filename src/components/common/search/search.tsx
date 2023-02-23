@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useRef, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './search.module.scss';
 import { ReactComponent as InputClose } from '../../../assets/input-close.svg';

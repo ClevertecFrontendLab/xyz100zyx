@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import styles from './main-page.module.scss';
@@ -18,19 +18,6 @@ export const MainPage: FC = () => {
   const booksStatus = useSelector((state: RootState) => state.books.status);
   const navStatus = useSelector((state: RootState) => state.nav.status);
   const thunkDispatch = useThunkDispatch();
-
-  // useEffect(() => {
-  //   if(isNeedUpdate.current === true){
-  //       if(navStatus === 'rejected' || navStatus === null){
-  //           thunkDispatch(fetchGenres());
-  //       }
-  //       if(booksStatus === null || booksStatus === 'rejected'){
-  //           thunkDispatch(fetchBooks())
-  //       }
-  //       isNeedUpdate.current = false
-  //   }
-  //   console.log(navStatus, 'loool', booksStatus)
-  // }, [thunkDispatch, booksStatus, navStatus])
 
   useEffectOnce(() => {
     if (isNeedUpdate.current === true) {

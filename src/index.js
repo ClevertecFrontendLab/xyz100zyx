@@ -13,6 +13,7 @@ import './index.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <StrictMode>
     <Provider store={store}>
       <HashRouter>
         <Routes>
@@ -29,4 +30,5 @@ root.render(
       </HashRouter>
       <LoaderWindow />
     </Provider>
+  </StrictMode>
 );
