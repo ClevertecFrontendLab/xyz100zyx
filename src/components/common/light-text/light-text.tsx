@@ -2,7 +2,7 @@ import styles from './styles.module.scss';
 
 /* eslint-disable react/jsx-no-useless-fragment */
 
-export const LightText = (filter: string, text: string) => {
+export const LightText = (filter: string, text: string, dataTestId: string, isForLoginForm = false) => {
   if (!filter) return <>{text}</>;
   const regExp = new RegExp(filter, 'ig');
   const matchValues = text.match(regExp);
@@ -13,7 +13,7 @@ export const LightText = (filter: string, text: string) => {
         return (
           <>
             {str}
-            <span data-test-id='highlight-matches' className={styles.colored}>
+            <span data-test-id={dataTestId} className={!isForLoginForm ? styles.colored : styles.colored__form}>
               {colored}
             </span>
           </>

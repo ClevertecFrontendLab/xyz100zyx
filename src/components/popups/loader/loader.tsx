@@ -7,6 +7,7 @@ import styles from './loader.module.scss';
 export const LoaderWindow: FC = () => {
   const booksStatus = useSelector((state: RootState) => state.books.status);
   const navStatus = useSelector((state: RootState) => state.nav.status);
+  const authStatus = useSelector((state: RootState) => state.auth.status)
 
   return (
     <div
@@ -15,7 +16,8 @@ export const LoaderWindow: FC = () => {
         (booksStatus === 'pending' && navStatus === 'pending') ||
         (booksStatus === 'fulfilled' && navStatus === 'pending') ||
         (booksStatus === 'pending' && navStatus === 'fulfilled') ||
-        (booksStatus === 'pending' && navStatus === null)
+        (booksStatus === 'pending' && navStatus === null) ||
+        authStatus === 'pending'
           ? styles.window
           : styles.window__none
       }

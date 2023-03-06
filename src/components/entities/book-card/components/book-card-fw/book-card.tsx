@@ -18,10 +18,10 @@ export const BookCardFW: FC<IProps> = ({ book }) => (
       <p className={styles.card__title}>{book.title}</p>
       <p className={styles.card__authors}>
         {book.authors.map((author, index) =>
-          index === 0 ? (
-            <span className={styles.author}>{author}</span>
+          index  ? (
+              <span className={styles.author}>, {author}</span>
           ) : (
-            <span className={styles.author}>, {author}</span>
+              <span className={styles.author}>{author}</span>
           )
         )}
         , {book.issueYear}

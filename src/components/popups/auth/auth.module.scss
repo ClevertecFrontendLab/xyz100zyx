@@ -1,0 +1,74 @@
+.popup{
+    max-width: 600px;
+    width: 100%;
+    padding: 48px 92px;
+    background: #FFFFFF;
+    border-radius: 16px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    letter-spacing: 0.1px;
+    color: #363636;
+    text-align: center;
+    margin-top: 159px;
+
+    &__title{
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 30px;
+        margin-bottom: 32px;
+        max-width: 418px;
+        text-align: center;
+        width: 100%;
+        max-width: 100%;
+
+        @media(max-width: 416px){
+            font-size: 18px;
+            line-height: 28px;
+            margin-bottom: 24px;
+        }
+    }
+
+    &__subtitle{
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 32px;
+
+        &_forgot{
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 416px) {
+            font-size: 15px;
+            line-height: 20px;
+            margin-bottom: 24px;
+        }
+    }
+
+    &__btn{
+        border: none;
+        outline: none;
+        background: linear-gradient(231.58deg, #F83600 -53.35%, #F9D423 297.76%);
+        border-radius: 30px;
+        width: 100%;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 150%;
+        letter-spacing: 0.2px;
+        text-transform: uppercase;
+        color: #FFFFFF;
+        padding: 14px;
+        cursor: pointer;
+
+        @media (max-width: 416px) {
+            font-size: 12px;
+            line-height: 18px;
+            padding: 11px;
+
+        }
+    }
+
+    @media(max-width: 416px){
+        padding: 42px 16px;
+    }
+}

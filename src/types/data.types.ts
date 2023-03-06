@@ -96,10 +96,13 @@ export type Category = {
 };
 
 export type FetchedError = {
-  status: number;
-  name: string;
-  message: string;
-  details: Record<any, any>;
+  error: {
+    status: number;
+    name: string;
+    message: string;
+    details: Record<any, any>;
+  };
+  data: null;
 };
 
 export type Review = {
@@ -112,5 +115,22 @@ export type Review = {
     firstName: string;
     lastName: string;
     avatarUrl: string;
+  };
+};
+
+export type User = {
+  jwt: string;
+  user: {
+    id: number;
+    username: string;
+    email: string;
+    provider: string;
+    confirmed: boolean;
+    blocked: boolean;
+    createdAt: string;
+    updatedAt: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
   };
 };
