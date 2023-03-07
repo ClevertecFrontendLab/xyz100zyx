@@ -9,6 +9,7 @@ import { useThunkDispatch } from '../../../../hooks/redux/dispatchers';
 import { RootState } from '../../../../store/store';
 import { setThirdStepFields } from '../../../../store/slices/forms/register';
 import { registration } from '../../../../store/slices/auth/async-actions';
+import {ColoredError} from "./components/colored-error";
 
 interface IFormRegister {
   phone: string;
@@ -36,83 +37,86 @@ export const RegisterThirdStep: FC = () => {
     watch();
   }, [watch]);
 
-  console.log(getFieldState('phone'));
-
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <Controller
-        control={control}
-        name='phone'
-        render={({ field: { name, onBlur, onChange, ref, value }, fieldState: { isTouched, error } }) => (
-          <Input
-            inputedValue={value}
-            label='phone'
-            labelText='Номер телефона'
-            register={register('phone')}
-            required={true}
-            setFocus={setPhoneFocus}
-            isFocus={phoneFocus}
-            ref={ref}
-            maskedOptions={{
-              keepCharPositions: true,
-              placeholderChar: 'x',
-              mask: [
-                '+',
-                '3',
-                '7',
-                '5',
-                ' ',
-                '(',
-                /\d/,
-                /\d/,
-                ')',
-                ' ',
-                /\d/,
-                /\d/,
-                /\d/,
-                '-',
-                /\d/,
-                /\d/,
-                '-',
-                /\d/,
-                /\d/,
-              ],
-              onChange,
-              onBlur,
-            }}
+      <div className={styles.form__field}>
+          <Controller
+              control={control}
+              name='phone'
+              render={({ field: { name, onBlur, onChange, ref, value }, fieldState: { isTouched, error } }) => (
+                  <Input
+                      inputedValue={value}
+                      label='phone'
+                      labelText='Номер телефона'
+                      register={register('phone')}
+                      required={true}
+                      setFocus={setPhoneFocus}
+                      isFocus={phoneFocus}
+                      ref={ref}
+                      maskedOptions={{
+                          keepCharPositions: true,
+                          placeholderChar: 'x',
+                          mask: [
+                              '+',
+                              '3',
+                              '7',
+                              '5',
+                              ' ',
+                              '(',
+                              /\d/,
+                              /\d/,
+                              ')',
+                              ' ',
+                              /\d/,
+                              /\d/,
+                              /\d/,
+                              '-',
+                              /\d/,
+                              /\d/,
+                              '-',
+                              /\d/,
+                              /\d/,
+                          ],
+                          onChange,
+                          onBlur,
+                      }}
+                  />
+              )}
           />
-        )}
-      />
-      {getValues('phone') && getFieldState('phone').error?.message === 'В формате +375 (xx) xxx-xx-xx' && (
-        <p className={styles.form__prompt}>
-          <span className={styles.form__prompt_colored}>{getFieldState('phone').error?.message}</span>
-        </p>
-      )}
-      {!getValues('phone') && getFieldState('phone').isDirty && (
-        <p className={styles.form__prompt}>
-          <span className={styles.form__prompt_colored}>Поле не может быть пустым</span>
-        </p>
-      )}
-      {(!getFieldState('phone').isDirty || !getFieldState('phone').error) && <p className={styles.form__prompt} />}
-      <Input
-        inputedValue={getValues('email')}
-        label='email'
-        labelText='E-mail'
-        register={register('email')}
-        required={true}
-      />
-      {getValues('email') && getFieldState('email').error?.message === 'Введите корректный e-mail' && (
-        <p className={styles.form__prompt}>
-          <span className={styles.form__prompt_colored}>{getFieldState('email').error?.message}</span>
-        </p>
-      )}
-      {!getValues('email') && getFieldState('email').isDirty && (
-        <p className={styles.form__prompt}>
-          <span className={styles.form__prompt_colored}>Поле не может быть пустым</span>
-        </p>
-      )}
-      {!getFieldState('email').error?.message && <p className={styles.form__prompt} />}
-
+          {getValues('phone') && getFieldState('phone').error?.message === 'В формате +375 (xx) xxx-xx-xx' && (
+              /* <p className={styles.form__prompt}>
+                <span className={styles.form__prompt_colored}>{getFieldState('phone').error?.message}</span>
+              </p> */
+              <ColoredError text={getFieldState('phone').error?.message || ''} />
+          )}
+          {!getValues('phone') && getFieldState('phone').isDirty && (
+              /* <p className={styles.form__prompt}>
+                <span className={styles.form__prompt_colored}>Поле не может быть пустым</span>
+              </p> */
+              <ColoredError text='Поле не может быть пустым' />
+          )}
+      </div>
+      <div className={styles.form__field}>
+          <Input
+              inputedValue={getValues('email')}
+              label='email'
+              labelText='E-mail'
+              register={register('email')}
+              required={true}
+          />
+          {getValues('email') && getFieldState('email').error?.message === 'Введите корректный e-mail' && (
+              /* <p className={styles.form__prompt}>
+                <span className={styles.form__prompt_colored}>{getFieldState('email').error?.message}</span>
+              </p> */
+              <ColoredError text={getFieldState('email').error?.message || ''} />
+          )}
+          {!getValues('email') && getFieldState('email').isDirty && (
+              /* <p className={styles.form__prompt}>
+                <span className={styles.form__prompt_colored}>Поле не может быть пустым</span>
+              </p> */
+              <ColoredError text='Поле не может быть пустым' />
+          )}
+      </div>
       <button
         disabled={!formState.isValid}
         type='submit'

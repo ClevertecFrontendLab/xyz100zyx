@@ -6,10 +6,11 @@ import { registerSchemaFirst } from '../../../../utils/validations/register.vali
 import styles from '../register/register-form.module.scss';
 import { Input } from '../../../common/input/input';
 import { LightText } from '../../../common/light-text/light-text';
-import { getRegisterPassErrorText } from './errors/helpers';
-import { ERROR_ALL_TEXT, ERROR_LENGTH_NUMBER } from './errors/errors';
+import { getRegisterPassErrorText } from './utils/helpers';
+import { ERROR_ALL_TEXT, ERROR_LENGTH_NUMBER } from './utils/errors';
 import { ColoredPasswordError } from './components/colored-error-password';
 import { setFirstStepFields } from '../../../../store/slices/forms/register';
+import {ColoredError} from "./components/colored-error";
 
 interface IFormRegister {
   login: string;
@@ -42,50 +43,56 @@ export const RegisterFirstStep: FC<IProps> = ({ step, setStep }) => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <Input
-        inputedValue={getValues('login')}
-        labelText='Придумайте логин для входа'
-        label='login'
-        register={register('login')}
-        required={false}
-        invalid={getFieldState('login').invalid}
-        setFocus={setLoginFocus}
-      />
-        {!loginFocus && getFieldState('login').isDirty && formState.errors.login?.message && (
-        <p className={styles.form__prompt}>
-          <span className={styles.form__prompt_colored}>Используйте для логина латинский алфавит и цифры</span>
-        </p>
-      )}
-      {getFieldState('login').isDirty && formState.errors.login?.message && loginFocus && (
-        <p className={styles.form__prompt}>
-          {LightText( formState.errors.login?.message || '', 'Используйте для логина латинский алфавит и цифры', '', true)}
-        </p>
-      )}
-      {(!getFieldState('login').isDirty || !formState.errors.login?.message) && (
-        <p className={styles.form__prompt}>Используйте для логина латинский алфавит и цифры</p>
-      )}
-      <Input
-        inputedValue={getValues('password')}
-        labelText='Пароль'
-        label='password'
-        register={register('password')}
-        required={false}
-        isPass={true}
-        invalid={getFieldState('password').invalid}
-        setFocus={setPasswordFocus}
-      />
-      {!passwordFocus && getFieldState('password').isDirty && formState.errors.password?.message && (
-        <p className={styles.form__prompt}>
-          <span className={styles.form__prompt_colored}>{ERROR_ALL_TEXT}</span>
-        </p>
-      )}
-      {getFieldState('password').isDirty &&
-        formState.errors.password?.message &&
-        passwordFocus &&
-        ColoredPasswordError(getRegisterPassErrorText(getValues('password')), true)}
-      {(!getFieldState('password').isDirty || !formState.errors.password?.message) && (
-        <p className={styles.form__prompt}>{ERROR_ALL_TEXT}</p>
-      )}
+      <div className={styles.form__field}>
+          <Input
+              inputedValue={getValues('login')}
+              labelText='Придумайте логин для входа'
+              label='login'
+              register={register('login')}
+              required={false}
+              invalid={getFieldState('login').invalid}
+              setFocus={setLoginFocus}
+          />
+          {!loginFocus && getFieldState('login').isDirty && formState.errors.login?.message && (
+              /* <p className={styles.form__prompt}>
+                <span className={styles.form__prompt_colored}>Используйте для логина латинский алфавит и цифры</span>
+              </p> */
+              <ColoredError text='Используйте для логина латинский алфавит и цифры' />
+          )}
+          {getFieldState('login').isDirty && formState.errors.login?.message && loginFocus && (
+              <p className={styles.form__prompt}>
+                  {LightText( formState.errors.login?.message || '', 'Используйте для логина латинский алфавит и цифры', '', true)}
+              </p>
+          )}
+          {(!getFieldState('login').isDirty || !formState.errors.login?.message) && (
+              <p className={styles.form__prompt}>Используйте для логина латинский алфавит и цифры</p>
+          )}
+      </div>
+      <div className={styles.form__field}>
+          <Input
+              inputedValue={getValues('password')}
+              labelText='Пароль'
+              label='password'
+              register={register('password')}
+              required={false}
+              isPass={true}
+              invalid={getFieldState('password').invalid}
+              setFocus={setPasswordFocus}
+          />
+          {!passwordFocus && getFieldState('password').isDirty && formState.errors.password?.message && (
+              /* <p className={styles.form__prompt}>
+                <span className={styles.form__prompt_colored}>{ERROR_ALL_TEXT}</span>
+              </p> */
+              <ColoredError text={ERROR_ALL_TEXT} />
+          )}
+          {getFieldState('password').isDirty &&
+              formState.errors.password?.message &&
+              passwordFocus &&
+              ColoredPasswordError(getRegisterPassErrorText(getValues('password')), true)}
+          {(!getFieldState('password').isDirty || !formState.errors.password?.message) && (
+              <p className={styles.form__prompt}>{ERROR_ALL_TEXT}</p>
+          )}
+      </div>
       {step === 3 ? (
         <input type='submit' className={styles.form__submit} value='ЗАРЕГИСТРИРОВАТЬСЯ' />
       ) : (

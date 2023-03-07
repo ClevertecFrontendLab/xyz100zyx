@@ -20,6 +20,7 @@ interface IProps {
   maskedOptions?: MaskedInputProps;
   ref?: React.LegacyRef<MaskedInput>;
   isFocus?: boolean;
+  isNeedCheck?: boolean
 }
 
 export const Input: FC<IProps> = ({
@@ -34,6 +35,7 @@ export const Input: FC<IProps> = ({
   maskedOptions,
   ref,
   isFocus,
+    isNeedCheck
 }) => {
   const [isHiddenPassword, setHiddenPassword] = useState(true);
   const { error } = useSelector((state: RootState) => state.auth);
@@ -81,7 +83,7 @@ export const Input: FC<IProps> = ({
           onBlur={onBlurHandler}
         />
       )}
-      {isPass && !invalid && inputedValue && path === 'register' && (
+      {isPass && !invalid && inputedValue && (path === 'register' || isNeedCheck) && (
         <img src={successPasswordSvg} className={styles.wrapper__success} alt='Success password validation' />
       )}
       {isPass ? (

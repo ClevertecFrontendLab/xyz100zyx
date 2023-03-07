@@ -11,6 +11,14 @@
 .form {
   margin-top: 32px;
 
+    &__field{
+        position: relative;
+
+        &:not(:first-of-type){
+            margin-top: 36px;
+        }
+    }
+
   &__link_forgot {
     font-weight: 500;
     font-size: 12px;
@@ -18,7 +26,6 @@
     letter-spacing: 0.2px;
     color: #a7a7a7;
     mix-blend-mode: normal;
-    padding-left: 12px;
   }
 
   &__submit {
@@ -51,6 +58,7 @@
     line-height: 16px;
     letter-spacing: 0.2px;
     color: #f42c4f;
+      margin-top: 20px;
 
     &_link {
       color: rgba(54, 54, 54, 1);
@@ -60,14 +68,13 @@
 
   &__prompt {
     padding: 2px 4px 2px 12px;
-    margin-bottom: 36px;
     font-weight: 500;
     font-size: 12px;
     line-height: 16px;
     letter-spacing: 0.2px;
 
     @media (max-width: 496px) {
-      margin-bottom: 32px;
+
     }
   }
 }

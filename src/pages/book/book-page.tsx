@@ -1,5 +1,5 @@
 import {FC, useEffect, useRef, useState} from 'react';
-import {Link, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../store/store';
 import {fetchBookById} from '../../store/slices/books/async-actions';
@@ -30,6 +30,7 @@ export const BookPage: FC = () => {
     const {activeGenre} = useSelector((state: RootState) => state.filter)
     const thunkDispatch = useThunkDispatch();
     const dispatch = useDispatch();
+    const navigate = useNavigate()
 
     const onLinkClick = () => {
         dispatch(nullableStatus());
@@ -60,6 +61,10 @@ export const BookPage: FC = () => {
             console.log(activeGenre, category, genres)
         }
     }, [genres])
+
+    useEffect(() => {
+        if(!localStorage.getItem('token')) navigate('/auth');
+    }, [])
 
     return status === 'fulfilled' ? (
         <section className={styles.page}>

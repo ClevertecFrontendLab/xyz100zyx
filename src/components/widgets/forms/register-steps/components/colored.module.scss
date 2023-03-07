@@ -7,17 +7,11 @@
   color: #a7a7a7;
   mix-blend-mode: normal;
   padding: 2px 4px 2px 12px;
-  margin-bottom: 48px;
+    position: absolute;
+    top: -1;
+    left: 0;
 
   &__error {
     color: #f42c4f;
-  }
-
-  @media (max-width: 320px) {
-    margin-bottom: 34px;
-  }
-
-  @media (max-width: 320px) {
-    margin-bottom: 10px;
   }
 }

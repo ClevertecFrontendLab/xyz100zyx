@@ -11,5 +11,5 @@ export const forgotSchemaSecond = yup.object({
         .matches(new RegExp('(?=.*[0-9])', 'g'), 'и цифрой')
         .matches(new RegExp('(?=.*[0-9])(?=.*[А-ЯA-Z])', 'g'), 'с заглавной буквой и цифрой')
         .min(8, 'не менее 8 символов').required('Поле не может быть пустым'),
-        passwordConfirmation: yup.string().required('Поле не может быть пустым')
+    passwordConfirmation: yup.string().required('Поле не может быть пустым')
 })

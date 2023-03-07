@@ -1,9 +1,9 @@
-import { ERROR_ALL, ERROR_CAPITAL, ERROR_CAPITAL_NUMBER, ERROR_LENGTH, ERROR_LENGTH_CAPITAL, ERROR_LENGTH_NUMBER, ERROR_NUMBER } from '../errors/errors';
+import { ERROR_ALL, ERROR_CAPITAL, ERROR_CAPITAL_NUMBER, ERROR_LENGTH, ERROR_LENGTH_CAPITAL, ERROR_LENGTH_NUMBER, ERROR_NUMBER } from '../utils/errors';
 
 import styles from './colored.module.scss';
 
 export const ColoredPasswordError = (errorText: string, isInFocus: boolean) => {
-    
+
     switch(errorText){
         case '':
             return <p className={styles.prompt}>Пароль не менее 8 символов, с заглавной буквой и цифрой</p>
