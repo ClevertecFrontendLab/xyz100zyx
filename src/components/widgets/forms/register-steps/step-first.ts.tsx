@@ -42,7 +42,7 @@ export const RegisterFirstStep: FC<IProps> = ({ step, setStep }) => {
   }, [watch]);
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+    <form data-test-id='register-form' className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.form__field}>
           <Input
               inputedValue={getValues('login')}
@@ -52,6 +52,7 @@ export const RegisterFirstStep: FC<IProps> = ({ step, setStep }) => {
               required={false}
               invalid={getFieldState('login').invalid}
               setFocus={setLoginFocus}
+              name='username'
           />
           {!loginFocus && getFieldState('login').isDirty && formState.errors.login?.message && (
               /* <p className={styles.form__prompt}>
@@ -78,6 +79,7 @@ export const RegisterFirstStep: FC<IProps> = ({ step, setStep }) => {
               isPass={true}
               invalid={getFieldState('password').invalid}
               setFocus={setPasswordFocus}
+              name='password'
           />
           {!passwordFocus && getFieldState('password').isDirty && formState.errors.password?.message && (
               /* <p className={styles.form__prompt}>

@@ -20,7 +20,7 @@ export const FormWrapper: FC = () => {
   }
 
   return (
-    <div className={path === 'forgot-pass' ? `${styles.wrapper} ${styles.wrapper__forgot}` : styles.wrapper}>
+    <div data-test-id='auth' className={path === 'forgot-pass' ? `${styles.wrapper} ${styles.wrapper__forgot}` : styles.wrapper}>
       {path === 'forgot-pass' && (
         <div className={styles.forgot}>
           <div role='presentation' onClick={onLoginButtonClick} className={styles.forgot__action}>

@@ -20,6 +20,12 @@ interface PayloadSendEmailMessage{
     email: string
 }
 
+interface PayloadResetPassword{
+    password: string,
+    passwordConfirmation: string,
+    code: string
+}
+
 export const login = createAsyncThunk<User, PayloadStateLogin, {rejectValue: string}>(
     'auth/login',
     async ({login, password}, {rejectWithValue}: any) => {
@@ -51,5 +57,16 @@ export const rememberPassword = createAsyncThunk<{status: boolean}, PayloadSendE
             return rejectWithValue(message);
         }
     }
-    
+
+)
+
+export const resetPassword = createAsyncThunk<User, PayloadResetPassword, {rejectValue: string}>(
+    'auth/resetPassword',
+    async ({password, passwordConfirmation, code}, {rejectWithValue}: any) => {
+        try{
+            return await AuthService.resetPassword(password, passwordConfirmation, code)
+        }catch({message}: any){
+            return rejectWithValue(message);
+        }
+    }
 )

@@ -7,10 +7,12 @@ import { AuthErrorPopup } from '../../../../components/popups/auth/auth-error';
 import { setAllNull } from '../../../../store/slices/auth/auth-slice';
 import { RegisterSuccessPopup } from '../../../../components/popups/auth/register-success';
 import { ForgotSuccessPopup } from '../../../../components/popups/auth/forgot-success';
+import {ResetSuccessPopup} from "../../../../components/popups/auth/reset-success";
 
 export const AuthPage: FC = () => {
   const { error, status } = useSelector((state: RootState) => state.auth);
-  const path = useLocation().pathname.slice(1);
+  const location = useLocation()
+  const path = location.pathname.slice(1);
   const dispatch = useDispatch();
 
   /* eslint-disable react-hooks/exhaustive-deps */
@@ -27,7 +29,7 @@ export const AuthPage: FC = () => {
           <AuthErrorPopup />
         ) : path === 'register' && status === 'fulfilled' ? (
           <RegisterSuccessPopup />
-        ) : path === 'forgot-pass' && status === 'fulfilled' ? <ForgotSuccessPopup /> : (
+        ): path==='forgot-pass' && location.search && status === 'fulfilled' ? <ResetSuccessPopup /> : path === 'forgot-pass' && status === 'fulfilled' ? <ForgotSuccessPopup /> : (
           <Outlet />
         )}
       </div>

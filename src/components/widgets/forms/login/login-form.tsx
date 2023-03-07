@@ -54,7 +54,7 @@ export const LoginForm: FC = () => {
     return (
         <>
             <p className={styles.title}>Вход в личный кабинет</p>
-            <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            <form data-test-id='auth-form' className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <div className={styles.form__field}>
                     <Input
                         inputedValue={getValues('login')}
@@ -64,6 +64,7 @@ export const LoginForm: FC = () => {
                         required={false}
                         invalid={getFieldState('login').invalid}
                         setFocus={setLoginFocus}
+                        name='identifier'
                     />
                     {getFieldState('login').error &&
                         <ColoredError text={getFieldState('login').error?.message || ''}/>}
@@ -79,6 +80,7 @@ export const LoginForm: FC = () => {
                         isPass={true}
                         invalid={getFieldState('password').invalid}
                         setFocus={setPasswordFocus}
+                        name='password'
                     />
                     {getFieldState('password').error &&
                         <ColoredError text={getFieldState('password').error?.message || ''}/>}

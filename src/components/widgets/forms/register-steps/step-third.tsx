@@ -38,7 +38,7 @@ export const RegisterThirdStep: FC = () => {
   }, [watch]);
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+    <form data-test-id='register-form' className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.form__field}>
           <Controller
               control={control}
@@ -47,6 +47,7 @@ export const RegisterThirdStep: FC = () => {
                   <Input
                       inputedValue={value}
                       label='phone'
+                      name='phone'
                       labelText='Номер телефона'
                       register={register('phone')}
                       required={true}
@@ -100,6 +101,7 @@ export const RegisterThirdStep: FC = () => {
           <Input
               inputedValue={getValues('email')}
               label='email'
+              name='email'
               labelText='E-mail'
               register={register('email')}
               required={true}

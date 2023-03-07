@@ -47,13 +47,15 @@ export const RegisterSecondStep: FC<IProps> = ({step, setStep}) => {
 
 
     return (
-        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <form data-test-id='register-form' className={styles.form} onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.form__field}>
                 <Input inputedValue={getValues('name')} labelText='Имя'
                        label='name' register={register('name')}
                        required={false}
                        invalid={getFieldState('name').invalid}
-                       setFocus={setNameFocus}/>
+                       setFocus={setNameFocus}
+                       name='firstName'
+                />
                 {/* <p className={styles.form__prompt}>{formState.errors.name && LightText(formState.errors.name?.message || '', 'Поле не может быть пустым', '', true)}</p> */}
                 {formState.errors.name &&
                     <ColoredError text={formState.errors.name.message || ''}/>}
@@ -63,8 +65,11 @@ export const RegisterSecondStep: FC<IProps> = ({step, setStep}) => {
                        register={register('surname')}
                        required={false}
                        invalid={getFieldState('surname').invalid}
-                       setFocus={setSurnameFocus}/>
-                {formState.errors.surname && <ColoredError text={formState.errors.surname.message || ''} />}
+                       setFocus={setSurnameFocus}
+                        name='lastName'
+                />
+                {formState.errors.surname &&
+                    <ColoredError text={formState.errors.surname.message || ''}/>}
             </div>
             {step === 3 ?
                 <input type="submit" className={styles.form__submit} value='ЗАРЕГИСТРИРОВАТЬСЯ'/> :

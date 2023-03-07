@@ -15,6 +15,7 @@ import {ERROR_ALL_TEXT} from "../register-steps/utils/errors";
 import {ColoredPasswordError} from "../register-steps/components/colored-error-password";
 import {getRegisterPassErrorText} from "../register-steps/utils/helpers";
 import {ColoredError} from "../register-steps/components/colored-error";
+import {resetPassword} from "../../../../store/slices/auth/async-actions";
 
 interface IFormForgotSecond {
     password: string,
@@ -37,7 +38,7 @@ export const ForgotFormSecond: FC = () => {
     const checkAvailableButton = (deps: boolean[]) => deps.every(dep => dep===true)
 
     const onSubmit: SubmitHandler<IFormForgotSecond> = (data) => {
-        console.log({data, search: location.search.slice(6)})
+        thunkDispatch(resetPassword({password: data.password, passwordConfirmation: data.passwordConfirmation, code: location.search.slice(6)}))
     };
 
     useEffect(() => {
@@ -49,7 +50,7 @@ export const ForgotFormSecond: FC = () => {
     return (
         <>
             <p className={styles.title}>Восстановление пароля</p>
-            <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            <form data-test-id='reset-password-form' className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <div className={styles.form__field}>
                     <Input
                         inputedValue={getValues('password')}
@@ -61,6 +62,7 @@ export const ForgotFormSecond: FC = () => {
                         invalid={getFieldState('password').invalid}
                         setFocus={setPasswordFocus}
                         isNeedCheck={true}
+                        name='password'
                     />
                     {!passwordFocus && getFieldState('password').isDirty && formState.errors.password?.message && (
                         /* <p className={styles.form__prompt}>
@@ -90,6 +92,7 @@ export const ForgotFormSecond: FC = () => {
                         invalid={getFieldState('passwordConfirmation').invalid}
                         setFocus={setPasswordConfirmFocus}
                         isNeedCheck={false}
+                        name='passwordConfirmation'
                     />
                     {getFieldState('passwordConfirmation').isDirty && !!getValues('passwordConfirmation') && !passwordConfirmFocus && getValues('passwordConfirmation') !== getValues('password') && (
                         /* <p className={styles.form__prompt}>

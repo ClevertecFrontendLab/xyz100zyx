@@ -39,7 +39,7 @@ export const ForgotFormFirst: FC = () => {
     return !location.search ? (
         <>
             <p className={styles.title}>Восстановление пароля</p>
-            <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            <form data-test-id='send-email-form' className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <div className={styles.form__field}>
                     <Input
                         inputedValue={getValues('email')}
@@ -47,6 +47,7 @@ export const ForgotFormFirst: FC = () => {
                         labelText='E-mail'
                         register={register('email')}
                         required={true}
+                        name='email'
                     />
                     {getValues('email') && getFieldState('email').error?.message === 'Введите корректный e-mail' && (
                         /* <p className={styles.form__prompt}>

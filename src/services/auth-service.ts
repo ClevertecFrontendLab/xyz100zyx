@@ -44,4 +44,12 @@ export abstract class AuthService {
     });
     return response?.data;
   }
+
+  static async resetPassword(password: string, passwordConfirmation: string, code: string){
+      const response = await api.post<User | FetchedError>('/api/auth/reset-password', {password, passwordConfirmation, code}).catch((err) => {
+          const { data } = err.response;
+          throw new AxiosError(JSON.stringify(data));
+      });
+      return response?.data;
+  }
 }
