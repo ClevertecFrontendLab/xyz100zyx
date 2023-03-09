@@ -48,7 +48,7 @@ export const AuthErrorPopup: FC = () => {
         return (
             <div data-test-id='status-block' className={styles.popup}>
                 <p className={styles.popup__title}>Данные не сохранились</p>
-                <p className={styles.popup__subtitle}>Что-то пошло не так и ваша регистрация  не завершилась. Попробуйте ещё раз</p>
+                <p className={styles.popup__subtitle}>Что-то пошло не так и ваша регистрация не завершилась. Попробуйте ещё раз</p>
                 <button onClick={onButtonRegisterRepeatClick} type='button' className={styles.popup__btn}>повторить</button>
             </div>
         )

@@ -1,5 +1,5 @@
 import {yupResolver} from '@hookform/resolvers/yup';
-import {FC, useEffect} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {SubmitHandler} from 'react-hook-form/dist/types';
 import {useSelector} from 'react-redux';
@@ -23,6 +23,8 @@ export const ForgotFormFirst: FC = () => {
         mode: 'onChange',
     });
 
+    const [focus, setFocus] = useState(false);
+    const [isTouched, setTouched] = useState(false);
     const navigate = useNavigate();
     const {error} = useSelector((state: RootState) => state.auth);
     const location = useLocation()
@@ -31,6 +33,13 @@ export const ForgotFormFirst: FC = () => {
     const onSubmit: SubmitHandler<IFormForgotFirst> = (data) => {
         thunkDispatch(rememberPassword(data))
     };
+
+    const onToggleFocus = () => {
+        setFocus(prev => !prev);
+        if(!isTouched){
+            setTouched(true)
+        }
+    }
 
     useEffect(() => {
         watch();
@@ -48,20 +57,19 @@ export const ForgotFormFirst: FC = () => {
                         register={register('email')}
                         required={true}
                         name='email'
+                        setFocus={onToggleFocus}
                     />
                     {getValues('email') && getFieldState('email').error?.message === 'Введите корректный e-mail' && (
                         <ColoredError dataTestId='hint' text={getFieldState('email').error?.message || ''}/>
                     )}
-                    {!getValues('email') && getFieldState('email').isDirty && (
-                        <ColoredError dataTestId='hint' text='Поле не может быть пустым'/>
-                    )}
                     {!getFieldState('email').error && !error &&
+                        (!focus && getValues('email') && !isTouched) &&
                         <p data-test-id='hint' className={styles.form__prompt}>На это email будет отправлено письмо с
                             инструкциями по восстановлению пароля</p>}
                     {getValues('email') && error && (
                         <ColoredError dataTestId='hint' text={error?.error?.message || 'error'}/>
                     )}
-
+                    {isTouched && !focus && !getValues('email') && <ColoredError dataTestId='hint' text='Поле не может быть пустым'/>}
                 </div>
                 <button
                     type='submit'

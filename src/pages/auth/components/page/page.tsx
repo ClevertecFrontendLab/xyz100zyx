@@ -22,8 +22,8 @@ export const AuthPage: FC = () => {
   }, [path]);
 
   return (
-    <div data-test-id='auth' className={styles.page}>
-      <div className={styles.page__container}>
+    <div className={styles.page}>
+      <div data-test-id='auth' className={styles.page__container}>
         <h3 className={styles.page__title}>Cleverland</h3>
         {error && (path === 'registration' || (path === 'auth' && error?.error?.status !== 400)) ? (
           <AuthErrorPopup />

@@ -10,13 +10,13 @@ export const ColoredPasswordError = (errorText: string, isInFocus: boolean) => {
             break;
         case ERROR_ALL:
             console.log(errorText)
-            return <p className={styles.prompt}>Пароль <span data-test-id='hint' className={styles.prompt__error}>не менее 8 символов</span>, с <span className={styles.prompt__error}>заглавной буквой</span> и <span className={styles.prompt__error}>цифрой</span></p>
+            return <p className={styles.prompt}>Пароль <span data-test-id='hint' className={styles.prompt__error}>не менее 8 символов</span>, с <span data-test-id='hint' className={styles.prompt__error}>заглавной буквой</span> и <span data-test-id='hint' className={styles.prompt__error}>цифрой</span></p>
             break;
         case ERROR_LENGTH_CAPITAL:
-            return <p className={styles.prompt}>Пароль <span data-test-id='hint' className={styles.prompt__error}>не менее 8 символов</span>, с <span className={styles.prompt__error}>заглавной буквой</span> и цифрой</p>
+            return <p className={styles.prompt}>Пароль <span data-test-id='hint' className={styles.prompt__error}>не менее 8 символов</span>, с <span data-test-id='hint' className={styles.prompt__error}>заглавной буквой</span> и цифрой</p>
             break;
         case ERROR_LENGTH_NUMBER:
-            return <p className={styles.prompt}>Пароль <span data-test-id='hint' className={styles.prompt__error}>не менее 8 символов</span>, с заглавной буквой и <span className={styles.prompt__error}>цифрой</span></p>
+            return <p className={styles.prompt}>Пароль <span data-test-id='hint' className={styles.prompt__error}>не менее 8 символов</span>, с заглавной буквой и <span data-test-id='hint' className={styles.prompt__error}>цифрой</span></p>
             break;
         case ERROR_CAPITAL_NUMBER:
             return <p className={styles.prompt}>Пароль не менее 8 символов, с <span data-test-id='hint' className={styles.prompt__error}>заглавной буквой</span> и <span data-test-id='hint' className={styles.prompt__error}>цифрой</span></p>

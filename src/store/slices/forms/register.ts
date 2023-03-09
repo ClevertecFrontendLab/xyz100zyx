@@ -23,9 +23,9 @@ export const registerSlice = createSlice({
       state.regData.username = payload.username
       state.regData.password = payload.password;
     },
-    setSecondStepFields: (state, { payload }: PayloadAction<{ name: string; surname: string }>) => {
-      state.regData.firstName = payload.name;
-      state.regData.lastName = payload.surname;
+    setSecondStepFields: (state, { payload }: PayloadAction<{ firstName: string; lastName: string }>) => {
+      state.regData.firstName = payload.firstName;
+      state.regData.lastName = payload.lastName;
     },
     setThirdStepFields: (state, { payload }: PayloadAction<{ phone: string; email: string }>) => {
       state.regData.phone = payload.phone;

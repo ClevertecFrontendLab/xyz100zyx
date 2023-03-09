@@ -33,6 +33,7 @@ export const RegisterFirstStep: FC<IProps> = ({step, setStep}) => {
     } = useForm<IFormRegister>({
         resolver: yupResolver(registerSchemaFirst, {abortEarly: false}),
         mode: 'onChange',
+        criteriaMode: 'all'
     });
 
     const [loginFocus, setLoginFocus] = useState<boolean>(false);
@@ -66,6 +67,8 @@ export const RegisterFirstStep: FC<IProps> = ({step, setStep}) => {
         watch();
     }, [watch]);
 
+    console.log(getFieldState('username'))
+
     return (
         <form data-test-id='register-form' className={styles.form}
               onSubmit={handleSubmit(onSubmit)}>
@@ -80,9 +83,9 @@ export const RegisterFirstStep: FC<IProps> = ({step, setStep}) => {
                     setFocus={onLoginFocusToggle}
                     name='username'
                 />
-                {(isTouchedLogin && !loginFocus && !getValues('username').length) && <ColoredError dataTestId='hint'
+                {(!getFieldState('username').error && isTouchedLogin && !loginFocus && !getValues('username')) || (getFieldState('username').error?.types?.required && !loginFocus) && <ColoredError dataTestId='hint'
                                                                                                                                          text='Поле не может быть пустым'/>}
-                {(!loginFocus && formState.errors.username?.message && getValues('username').length) && (
+                {(!loginFocus && formState.errors.username?.message && getValues('username')) && (
                     <ColoredError dataTestId='hint'
                                   text='Используйте для логина латинский алфавит и цифры'/>
                 )}
@@ -91,7 +94,7 @@ export const RegisterFirstStep: FC<IProps> = ({step, setStep}) => {
                         {LightText(formState.errors.username?.message || '', 'Используйте для логина латинский алфавит и цифры', 'hint', true)}
                     </p>
                 )}
-                {(!formState.errors.username?.message) && !(isTouchedLogin && !loginFocus && !getValues('username').length) && (
+                {(!getFieldState('username').error) || (!isTouchedLogin && !loginFocus && !getValues('username')) && (
                     <p data-test-id='hint' className={styles.form__prompt}>Используйте для логина
                         латинский алфавит и цифры</p>
                 )}
@@ -117,7 +120,7 @@ export const RegisterFirstStep: FC<IProps> = ({step, setStep}) => {
                     formState.errors.password?.message &&
                     passwordFocus &&
                     ColoredPasswordError(getRegisterPassErrorText(getValues('password')), true)}
-                {(!formState.errors.password?.message && !(isTouchedPassword && !passwordFocus && !getValues('password').length)) && (
+                {(!getFieldState('password').isDirty || !formState.errors.password?.message) && (
                     <p data-test-id='hint' className={styles.form__prompt}>{ERROR_ALL_TEXT}</p>
                 )}
             </div>

@@ -31,11 +31,27 @@ export const ForgotFormSecond: FC = () => {
 
     const [passwordFocus, setPasswordFocus] = useState(false)
     const [passwordConfirmFocus, setPasswordConfirmFocus] = useState(false)
+    const [isPasswordTouched, setPasswordTouched] = useState(false);
+    const [isPasswordConfirmTouched, setPasswordConfirmTouched] = useState(false);
     const navigate = useNavigate();
     const location = useLocation()
     const {error} = useSelector((state: RootState) => state.auth);
     const thunkDispatch = useThunkDispatch();
     const checkAvailableButton = (deps: boolean[]) => deps.every(dep => dep===true)
+
+    const togglePasswordFocus = () => {
+        setPasswordFocus(prev => !prev);
+        if(!isPasswordTouched){
+            setPasswordTouched(true)
+        }
+    }
+
+    const togglePasswordConfirmFocus = () => {
+        setPasswordConfirmFocus(prev => !prev);
+        if(!isPasswordConfirmTouched){
+            setPasswordConfirmTouched(true)
+        }
+    }
 
     const onSubmit: SubmitHandler<IFormForgotSecond> = (data) => {
         thunkDispatch(resetPassword({password: data.password, passwordConfirmation: data.passwordConfirmation, code: location.search.slice(6)}))
@@ -58,11 +74,11 @@ export const ForgotFormSecond: FC = () => {
                         required={false}
                         isPass={true}
                         invalid={getFieldState('password').invalid}
-                        setFocus={setPasswordFocus}
+                        setFocus={togglePasswordFocus}
                         isNeedCheck={true}
                         name='password'
                     />
-                    {!passwordFocus && getFieldState('password').isDirty && formState.errors.password?.message && (
+                    {getValues('password') && !passwordFocus && getFieldState('password').isDirty && formState.errors.password?.message && (
 
                         <ColoredError dataTestId='hint' text={ERROR_ALL_TEXT} />
                     )}
@@ -70,12 +86,13 @@ export const ForgotFormSecond: FC = () => {
                         formState.errors.password?.message &&
                         passwordFocus &&
                         ColoredPasswordError(getRegisterPassErrorText(getValues('password')), true)}
-                    {(!getFieldState('password').isDirty || getFieldState('password').isDirty) && !formState.errors.password?.message && (
+                    {!formState.errors.password?.message && !(!passwordFocus && isPasswordTouched && !getValues('password')) && (
                         <p data-test-id='hint' className={styles.form__prompt}>{ERROR_ALL_TEXT}</p>
                     )}
                     {(!getFieldState('password').isDirty && formState.errors.password?.message) && (
                         <ColoredError dataTestId='hint' text='Поле не может быть пустым' />
                     )}
+                    {!passwordFocus && isPasswordTouched && !getValues('password') && <ColoredError text='Поле не может быть пустым' dataTestId='hint'/>}
                 </div>
                 <div className={styles.form__field}>
                     <Input
@@ -86,7 +103,7 @@ export const ForgotFormSecond: FC = () => {
                         required={false}
                         isPass={true}
                         invalid={getFieldState('passwordConfirmation').invalid}
-                        setFocus={setPasswordConfirmFocus}
+                        setFocus={togglePasswordConfirmFocus}
                         isNeedCheck={false}
                         name='passwordConfirmation'
                     />
@@ -96,6 +113,7 @@ export const ForgotFormSecond: FC = () => {
                     {getFieldState('passwordConfirmation').error && !passwordConfirmFocus && (
                         <ColoredError dataTestId='hint' text={getFieldState('passwordConfirmation').error!.message || ''} />
                     )}
+                    {!getFieldState('passwordConfirmation').error && !passwordConfirmFocus && isPasswordConfirmTouched && !getValues('passwordConfirmation') && <ColoredError text='Поле не может быть пустым' dataTestId='hint'/>}
                 </div>
                 <button
                     type='submit'
