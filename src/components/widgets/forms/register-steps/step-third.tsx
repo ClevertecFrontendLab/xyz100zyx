@@ -88,13 +88,13 @@ export const RegisterThirdStep: FC = () => {
               /* <p className={styles.form__prompt}>
                 <span className={styles.form__prompt_colored}>{getFieldState('phone').error?.message}</span>
               </p> */
-              <ColoredError text={getFieldState('phone').error?.message || ''} />
+              <ColoredError dataTestId='hint' text={getFieldState('phone').error?.message || ''} />
           )}
           {!getValues('phone') && getFieldState('phone').isDirty && (
               /* <p className={styles.form__prompt}>
                 <span className={styles.form__prompt_colored}>Поле не может быть пустым</span>
               </p> */
-              <ColoredError text='Поле не может быть пустым' />
+              <ColoredError dataTestId='hint' text='Поле не может быть пустым' />
           )}
       </div>
       <div className={styles.form__field}>
@@ -110,13 +110,13 @@ export const RegisterThirdStep: FC = () => {
               /* <p className={styles.form__prompt}>
                 <span className={styles.form__prompt_colored}>{getFieldState('email').error?.message}</span>
               </p> */
-              <ColoredError text={getFieldState('email').error?.message || ''} />
+              <ColoredError dataTestId='hint' text={getFieldState('email').error?.message || ''} />
           )}
           {!getValues('email') && getFieldState('email').isDirty && (
               /* <p className={styles.form__prompt}>
                 <span className={styles.form__prompt_colored}>Поле не может быть пустым</span>
               </p> */
-              <ColoredError text='Поле не может быть пустым' />
+              <ColoredError dataTestId='hint' text='Поле не может быть пустым' />
           )}
       </div>
       <button

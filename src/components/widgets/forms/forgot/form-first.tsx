@@ -3,7 +3,7 @@ import {FC, useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {SubmitHandler} from 'react-hook-form/dist/types';
 import {useSelector} from 'react-redux';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {Navigate, useLocation, useNavigate} from 'react-router-dom';
 import {useThunkDispatch} from '../../../../hooks/redux/dispatchers';
 import {rememberPassword} from '../../../../store/slices/auth/async-actions';
 import {RootState} from '../../../../store/store';
@@ -36,7 +36,7 @@ export const ForgotFormFirst: FC = () => {
         watch();
     }, [watch]);
 
-    return !location.search ? (
+    return localStorage.getItem('token') ? <Navigate to='/' /> :  !location.search ? (
         <>
             <p className={styles.title}>Восстановление пароля</p>
             <form data-test-id='send-email-form' className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -50,20 +50,17 @@ export const ForgotFormFirst: FC = () => {
                         name='email'
                     />
                     {getValues('email') && getFieldState('email').error?.message === 'Введите корректный e-mail' && (
-                        /* <p className={styles.form__prompt}>
-                          <span className={styles.form__prompt_colored}>{getFieldState('email').error?.message}</span>
-                        </p> */
-                        <ColoredError text={getFieldState('email').error?.message || ''}/>
+                        <ColoredError dataTestId='hint' text={getFieldState('email').error?.message || ''}/>
                     )}
                     {!getValues('email') && getFieldState('email').isDirty && (
-                        /* <p className={styles.form__prompt}>
-                          <span className={styles.form__prompt_colored}>Поле не может быть пустым</span>
-                        </p> */
-                        <ColoredError text='Поле не может быть пустым'/>
+                        <ColoredError dataTestId='hint' text='Поле не может быть пустым'/>
                     )}
-                    {!getFieldState('email').error?.message &&
-                        <p className={styles.form__prompt}>На это email будет отправлено письмо с
+                    {!getFieldState('email').error && !error &&
+                        <p data-test-id='hint' className={styles.form__prompt}>На это email будет отправлено письмо с
                             инструкциями по восстановлению пароля</p>}
+                    {getValues('email') && error && (
+                        <ColoredError dataTestId='hint' text={error?.error?.message || 'error'}/>
+                    )}
 
                 </div>
                 <button

@@ -19,8 +19,8 @@ export const registerSlice = createSlice({
   name: 'register',
   initialState,
   reducers: {
-    setFirstStepFields: (state, { payload }: PayloadAction<{ login: string; password: string }>) => {
-      state.regData.username = payload.login
+    setFirstStepFields: (state, { payload }: PayloadAction<{ username: string; password: string }>) => {
+      state.regData.username = payload.username
       state.regData.password = payload.password;
     },
     setSecondStepFields: (state, { payload }: PayloadAction<{ name: string; surname: string }>) => {

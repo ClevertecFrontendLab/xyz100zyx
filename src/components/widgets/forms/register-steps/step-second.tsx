@@ -58,7 +58,7 @@ export const RegisterSecondStep: FC<IProps> = ({step, setStep}) => {
                 />
                 {/* <p className={styles.form__prompt}>{formState.errors.name && LightText(formState.errors.name?.message || '', 'Поле не может быть пустым', '', true)}</p> */}
                 {formState.errors.name &&
-                    <ColoredError text={formState.errors.name.message || ''}/>}
+                    <ColoredError dataTestId='hint' text={formState.errors.name.message || ''}/>}
             </div>
             <div className={styles.form__field}>
                 <Input inputedValue={getValues('surname')} labelText='Фамилия' label='surname'
@@ -69,7 +69,7 @@ export const RegisterSecondStep: FC<IProps> = ({step, setStep}) => {
                         name='lastName'
                 />
                 {formState.errors.surname &&
-                    <ColoredError text={formState.errors.surname.message || ''}/>}
+                    <ColoredError dataTestId='hint' text={formState.errors.surname.message || ''}/>}
             </div>
             {step === 3 ?
                 <input type="submit" className={styles.form__submit} value='ЗАРЕГИСТРИРОВАТЬСЯ'/> :

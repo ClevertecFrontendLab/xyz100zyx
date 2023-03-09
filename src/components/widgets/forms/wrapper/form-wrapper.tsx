@@ -11,7 +11,7 @@ export const FormWrapper: FC = () => {
     if(path === 'forgot-pass'){
       navigate('/auth')
     }else{
-      navigate(path !== 'register' ? '/register' : '/auth')
+      navigate(path !== 'registration' ? '/registration' : '/auth')
     }
   }
 
@@ -20,7 +20,7 @@ export const FormWrapper: FC = () => {
   }
 
   return (
-    <div data-test-id='auth' className={path === 'forgot-pass' ? `${styles.wrapper} ${styles.wrapper__forgot}` : styles.wrapper}>
+    <div className={path === 'forgot-pass' ? `${styles.wrapper} ${styles.wrapper__forgot}` : styles.wrapper}>
       {path === 'forgot-pass' && (
         <div className={styles.forgot}>
           <div role='presentation' onClick={onLoginButtonClick} className={styles.forgot__action}>
@@ -32,10 +32,10 @@ export const FormWrapper: FC = () => {
       <Outlet />
       <div className={styles.wrapper__other}>
         <span className={styles.wrapper__urge}>
-          {path === 'register' ? 'Есть учётная запись?' : 'Нет учётной записи?'}
+          {path === 'registration' ? 'Есть учётная запись?' : 'Нет учётной записи?'}
         </span>
         <div className={styles.wrapper__other_right}>
-          <span role='presentation' onClick={onOtherPageClick} className={styles.wrapper__action}>{path === 'register' ? 'Войти' : 'Регистрация'}</span>
+          <span role='presentation' onClick={onOtherPageClick} className={styles.wrapper__action}>{path === 'registration' ? 'Войти' : 'Регистрация'}</span>
           <ArrowSvg />
         </div>
       </div>

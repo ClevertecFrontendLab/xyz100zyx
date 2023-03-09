@@ -45,8 +45,6 @@ export const ForgotFormSecond: FC = () => {
         watch();
     }, [watch]);
 
-    console.log(getFieldState('passwordConfirmation'), getValues())
-
     return (
         <>
             <p className={styles.title}>Восстановление пароля</p>
@@ -65,20 +63,18 @@ export const ForgotFormSecond: FC = () => {
                         name='password'
                     />
                     {!passwordFocus && getFieldState('password').isDirty && formState.errors.password?.message && (
-                        /* <p className={styles.form__prompt}>
-                            <span className={styles.form__prompt_colored}>{ERROR_ALL_TEXT}</span>
-                        </p> */
-                        <ColoredError text={ERROR_ALL_TEXT} />
+
+                        <ColoredError dataTestId='hint' text={ERROR_ALL_TEXT} />
                     )}
                     {getFieldState('password').isDirty &&
                         formState.errors.password?.message &&
                         passwordFocus &&
                         ColoredPasswordError(getRegisterPassErrorText(getValues('password')), true)}
                     {(!getFieldState('password').isDirty || getFieldState('password').isDirty) && !formState.errors.password?.message && (
-                        <p className={styles.form__prompt}>{ERROR_ALL_TEXT}</p>
+                        <p data-test-id='hint' className={styles.form__prompt}>{ERROR_ALL_TEXT}</p>
                     )}
                     {(!getFieldState('password').isDirty && formState.errors.password?.message) && (
-                        <ColoredError text='Поле не может быть пустым' />
+                        <ColoredError dataTestId='hint' text='Поле не может быть пустым' />
                     )}
                 </div>
                 <div className={styles.form__field}>
@@ -95,16 +91,10 @@ export const ForgotFormSecond: FC = () => {
                         name='passwordConfirmation'
                     />
                     {getFieldState('passwordConfirmation').isDirty && !!getValues('passwordConfirmation') && !passwordConfirmFocus && getValues('passwordConfirmation') !== getValues('password') && (
-                        /* <p className={styles.form__prompt}>
-                            <span className={styles.form__prompt_colored}>Пароли не совпадают</span>
-                        </p> */
-                        <ColoredError text='Пароли не совпадают' />
+                        <ColoredError dataTestId='hint' text='Пароли не совпадают' />
                     )}
                     {getFieldState('passwordConfirmation').error && !passwordConfirmFocus && (
-                        /* <p className={styles.form__prompt}>
-                            <span className={styles.form__prompt_colored}>{getFieldState('passwordConfirmation').error!.message}</span>
-                        </p> */
-                        <ColoredError text={getFieldState('passwordConfirmation').error!.message || ''} />
+                        <ColoredError dataTestId='hint' text={getFieldState('passwordConfirmation').error!.message || ''} />
                     )}
                 </div>
                 <button

@@ -26,6 +26,7 @@ export abstract class AuthService {
       const { data } = err.response;
       throw new AxiosError(JSON.stringify(data));
     });
+    console.log('asdajsbjsdgdsg')
     return response?.data;
   }
 

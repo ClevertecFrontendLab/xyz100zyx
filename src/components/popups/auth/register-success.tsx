@@ -10,7 +10,7 @@ export const RegisterSuccessPopup: FC = () => {
     }
 
     return (
-        <div className={`${styles.popup} ${styles.popup__forgot}`}>
+        <div data-test-id='status-block' className={`${styles.popup} ${styles.popup__forgot}`}>
             <p className={styles.popup__title}>Регистрация успешна</p>
             <p className={styles.popup__subtitle}>Регистрация прошла успешно. Зайдите  в личный кабинет, используя свои логин и пароль</p>
             <button onClick={onButtonLoginClick} type='button' className={styles.popup__btn}>Вход</button>

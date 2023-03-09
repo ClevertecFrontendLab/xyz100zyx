@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const registerSchemaFirst = yup.object({
-    login: yup.string().matches(new RegExp(/^[a-zA-Z0-9]+$/), 'Используйте для логина латинский алфавит и цифры').matches(new RegExp('[a-zA-Z]+', 'g'), 'латинский алфавит').matches(new RegExp('[0-9]+', 'g'), 'и цифры').required('Поле не может быть пустым'),
+    username: yup.string().matches(new RegExp(/^[a-zA-Z0-9]+$/), 'Используйте для логина латинский алфавит и цифры').matches(new RegExp('[a-zA-Z]+', 'g'), 'латинский алфавит').matches(new RegExp('[0-9]+', 'g'), 'и цифры').required('Поле не может быть пустым'),
     password: yup.string()
         .matches(new RegExp('(?=.*[0-9])(?=.*[А-ЯA-Z]){8,}', 'g'), 'Пароль не менее 8 символов, с заглавной буквой и цифрой')
         .matches(new RegExp('(?=.*[А-ЯA-Z])', 'g'), 'с заглавной буквой')

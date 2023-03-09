@@ -10,7 +10,7 @@ export const ResetSuccessPopup: FC = () => {
     }
 
     return (
-        <div className={`${styles.popup} ${styles.popup__forgot}`}>
+        <div data-test-id='status-block' className={`${styles.popup} ${styles.popup__forgot}`}>
             <p className={styles.popup__title}>Новые данные сохранены</p>
             <p className={styles.popup__subtitle}>Зайдите в личный кабинет, используя свои логин и новый пароль</p>
             <button onClick={onButtonLoginClick} type='button' className={styles.popup__btn}>Вход</button>

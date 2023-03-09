@@ -37,7 +37,7 @@ export const Input: FC<IProps> = ({
   ref,
   isFocus,
     isNeedCheck,
-    name
+    name,
 }) => {
   const [isHiddenPassword, setHiddenPassword] = useState(true);
   const { error } = useSelector((state: RootState) => state.auth);
@@ -88,10 +88,10 @@ export const Input: FC<IProps> = ({
         />
       )}
       {isPass && !invalid && inputedValue && (path === 'register' || isNeedCheck) && (
-        <img src={successPasswordSvg} className={styles.wrapper__success} alt='Success password validation' />
+        <img data-test-id='checkmark' src={successPasswordSvg} className={styles.wrapper__success} alt='Success password validation' />
       )}
-      {isPass ? (
-        <button type='button' className={styles.wrapper__toggle} onClick={(e) => onToggleClick(e)}>
+      {isPass && inputedValue ? (
+        <button data-test-id={isHiddenPassword ? 'eye-closed' : 'eye-opened'} type='button' className={styles.wrapper__toggle} onClick={(e) => onToggleClick(e)}>
           {isHiddenPassword ? <ClosedEyeSvg /> : <OpenEyeSvg />}
         </button>
       ) : null}

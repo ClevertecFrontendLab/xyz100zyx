@@ -24,7 +24,7 @@ export const AuthErrorPopup: FC = () => {
     const onButtonRegisterRepeatClick = () => {
         dispatch(setAllNull())
         if(error?.error.status === 400){
-            navigate('/register')
+            navigate('/registration')
         }else{
             thunkDispatch(registration(regData))
         }
@@ -34,9 +34,9 @@ export const AuthErrorPopup: FC = () => {
         dispatch(setAllNull())
     }
 
-    if(path === 'register' && error?.error.status===400){
+    if(path === 'registration' && error?.error?.status===400){
         return (
-            <div className={styles.popup}>
+            <div data-test-id='status-block' className={styles.popup}>
                 <p className={styles.popup__title}>Данные не сохранились</p>
                 <p className={styles.popup__subtitle}>Такой логин или e-mail уже записан в системе. Попробуйте зарегистрироваться по другому логину или e-mail</p>
                 <button onClick={onButtonRegisterRepeatClick} type='button' className={styles.popup__btn}>назад к регистрации</button>
@@ -44,9 +44,9 @@ export const AuthErrorPopup: FC = () => {
         )
     }
 
-    if(path === 'register'){
+    if(path === 'registration'){
         return (
-            <div className={styles.popup}>
+            <div data-test-id='status-block' className={styles.popup}>
                 <p className={styles.popup__title}>Данные не сохранились</p>
                 <p className={styles.popup__subtitle}>Что-то пошло не так и ваша регистрация  не завершилась. Попробуйте ещё раз</p>
                 <button onClick={onButtonRegisterRepeatClick} type='button' className={styles.popup__btn}>повторить</button>
@@ -54,9 +54,9 @@ export const AuthErrorPopup: FC = () => {
         )
     }
 
-    if(path === 'auth' && error?.error.status!==400){
+    if(path === 'auth' && error?.error?.status!==400){
         return (
-            <div className={styles.popup}>
+            <div data-test-id='status-block' className={styles.popup}>
                 <p className={styles.popup__title}>Вход не выполнен</p>
                 <p className={styles.popup__subtitle}>Что-то пошло не так. Попробуйте ещё раз</p>
                 <button onClick={onButtonLoginRepeatClick} type='button' className={styles.popup__btn}>Повторить</button>
@@ -66,7 +66,7 @@ export const AuthErrorPopup: FC = () => {
 
     if(path=== 'forgot-pass' && location.search ){
         return (
-            <div className={styles.popup}>
+            <div data-test-id='status-block' className={styles.popup}>
                 <p className={styles.popup__title}>Данные не сохранились</p>
                 <p className={styles.popup__subtitle}>Что-то пошло не так. Попробуйте ещё раз</p>
                 <button onClick={onButtonLoginRepeatClick} type='button' className={styles.popup__btn}>Повторить</button>
@@ -75,7 +75,7 @@ export const AuthErrorPopup: FC = () => {
     }
 
     return (
-        <div className={styles.popup}>
+        <div data-test-id='status-block' className={styles.popup}>
             <p className={styles.popup__title}>Вход не выполнен</p>
             <p className={styles.popup__subtitle}>Что-то пошло не так. Попробуйте ещё раз</p>
             <button onClick={onButtonLoginRepeatClick} type='button' className={styles.popup__btn}>Повторить</button>

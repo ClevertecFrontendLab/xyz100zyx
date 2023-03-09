@@ -3,7 +3,7 @@ import { AuthService } from "../../../services/auth-service";
 import { FetchedError, User } from "../../../types/data.types";
 
 interface PayloadStateLogin{
-    login: string,
+    identifier: string,
     password: string
 }
 
@@ -28,9 +28,9 @@ interface PayloadResetPassword{
 
 export const login = createAsyncThunk<User, PayloadStateLogin, {rejectValue: string}>(
     'auth/login',
-    async ({login, password}, {rejectWithValue}: any) => {
+    async ({identifier, password}, {rejectWithValue}: any) => {
         try{
-            return await AuthService.login({identifier: login, password})
+            return await AuthService.login({identifier, password})
         }catch({message}: any){
             return rejectWithValue(message);
         }

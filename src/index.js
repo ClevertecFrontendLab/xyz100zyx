@@ -34,7 +34,7 @@ root.render(
           <Route path='/' element={<AuthPage />}>
             <Route path='/' element={<FormWrapper />}>
               <Route path='/auth' element={<LoginForm />} />
-              <Route path='/register' element={<RegisterForm />} />
+              <Route path='/registration' element={<RegisterForm />} />
               <Route path='/forgot-pass' element={<ForgotFormFirst />} />
             </Route>
           </Route>

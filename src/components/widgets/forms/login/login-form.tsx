@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link, useNavigate, Navigate} from 'react-router-dom';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {Input} from '../../../common/input/input';
 import styles from './login-form.module.scss';
@@ -9,11 +9,10 @@ import {loginSchema} from '../../../../utils/validations/login.validation';
 import {useThunkDispatch} from '../../../../hooks/redux/dispatchers';
 import {login} from '../../../../store/slices/auth/async-actions';
 import {RootState} from '../../../../store/store';
-import {LightText} from '../../../common/light-text/light-text';
 import {ColoredError} from "../register-steps/components/colored-error";
 
 export interface IFormLogin {
-    login: string;
+    identifier: string;
     password: string;
 }
 
@@ -24,7 +23,8 @@ export const LoginForm: FC = () => {
         getFieldState,
         watch,
         getValues,
-        formState
+        formState,
+        control
     } = useForm<IFormLogin>({
         resolver: yupResolver(loginSchema),
         mode: 'all',
@@ -32,17 +32,34 @@ export const LoginForm: FC = () => {
 
     const [loginFocus, setLoginFocus] = useState<boolean>(false)
     const [passwordFocus, setPasswordFocus] = useState<boolean>(false)
+    const [isDirtyLogin, setDirtyLogin] = useState<boolean>(false)
+    const [isDirtyPassword, setDirtyPassword] = useState<boolean>(false)
     const navigate = useNavigate()
 
     const {error} = useSelector((state: RootState) => state.auth);
     const thunkDispatch = useThunkDispatch();
 
     const onSubmit: SubmitHandler<IFormLogin> = (data) => {
-        console.log(data)
         thunkDispatch(login(data)).then(() => {
             if (localStorage.getItem('token')) navigate('/books/all')
         });
     };
+
+    const onLoginFocusToggle = () => {
+        setLoginFocus(prev => !prev)
+        if (!isDirtyLogin) {
+            setDirtyLogin(true)
+        }
+
+    }
+
+    const onPasswordFocusToggle = () => {
+        setPasswordFocus(prev => !prev)
+        if (!isDirtyPassword) {
+            setDirtyPassword(true)
+        }
+
+    }
 
     useEffect(() => {
         watch();
@@ -51,24 +68,27 @@ export const LoginForm: FC = () => {
 
     /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 
-    return (
+    return !localStorage.getItem('token') ? (
         <>
             <p className={styles.title}>Вход в личный кабинет</p>
-            <form data-test-id='auth-form' className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            <form data-test-id='auth-form' className={styles.form}
+                  onSubmit={handleSubmit(onSubmit)}>
                 <div className={styles.form__field}>
                     <Input
-                        inputedValue={getValues('login')}
+                        inputedValue={getValues('identifier')}
                         labelText='Логин'
-                        label='login'
-                        register={register('login')}
+                        label='identifier'
+                        register={register('identifier')}
                         required={false}
-                        invalid={getFieldState('login').invalid}
-                        setFocus={setLoginFocus}
+                        invalid={getFieldState('identifier').invalid}
+                        setFocus={onLoginFocusToggle}
                         name='identifier'
                     />
-                    {getFieldState('login').error &&
-                        <ColoredError text={getFieldState('login').error?.message || ''}/>}
-                    {/* <p className={styles.form__prompt}>{getFieldState('login').error && LightText(getFieldState('login').error?.message!, getFieldState('login').error?.message!, '', true)}</p> */}
+                    {getFieldState('identifier').error &&
+                        <ColoredError dataTestId='hint'
+                                      text={getFieldState('identifier').error?.message || ''}/>}
+                    {(!getFieldState('identifier').error && isDirtyLogin && !loginFocus && !getValues('identifier').length) && <ColoredError dataTestId='hint'
+                                                                                                                             text='Поле не может быть пустым'/>}
                 </div>
                 <div className={styles.form__field}>
                     <Input
@@ -79,16 +99,18 @@ export const LoginForm: FC = () => {
                         required={false}
                         isPass={true}
                         invalid={getFieldState('password').invalid}
-                        setFocus={setPasswordFocus}
+                        setFocus={onPasswordFocusToggle}
                         name='password'
                     />
                     {getFieldState('password').error &&
-                        <ColoredError text={getFieldState('password').error?.message || ''}/>}
-                    {/* <p className={styles.form__prompt}>{getFieldState('password').error && LightText(getFieldState('password').error?.message!, getFieldState('password').error?.message!, '', true)}</p> */}
-                </div>
-                {error?.error.status === 400 ? (
+                        <ColoredError dataTestId='hint'
+                                      text={getFieldState('password').error?.message || ''}/>}
+                    {(!getFieldState('password').error && isDirtyPassword && !passwordFocus && !getValues('password').length) && <ColoredError dataTestId='hint' text='Поле не может быть пустым' />}
+
+                        </div>
+                {error?.error?.status === 400 ? (
                     <p className={styles.form__error}>
-                        Неверный логин или пароль!
+                        <span data-test-id='hint'>Неверный логин или пароль!</span>
                         <Link className={styles.form__error_link} to='/forgot-pass'>
                             Восстановить?
                         </Link>
@@ -100,8 +122,10 @@ export const LoginForm: FC = () => {
                         </Link>
                     </p>
                 )}
-                <input type='submit' className={styles.form__submit} value='Вход'/>
+                <button onClick={() => onSubmit} type='submit'
+                        className={styles.form__submit}>Вход
+                </button>
             </form>
         </>
-    );
+    ) : <Navigate to='/'/>;
 };
