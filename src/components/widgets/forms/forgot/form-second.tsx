@@ -33,11 +33,17 @@ export const ForgotFormSecond: FC = () => {
     const [passwordConfirmFocus, setPasswordConfirmFocus] = useState(false)
     const [isPasswordTouched, setPasswordTouched] = useState(false);
     const [isPasswordConfirmTouched, setPasswordConfirmTouched] = useState(false);
-    const navigate = useNavigate();
     const location = useLocation()
     const {error} = useSelector((state: RootState) => state.auth);
     const thunkDispatch = useThunkDispatch();
-    const checkAvailableButton = (deps: boolean[]) => deps.every(dep => dep===true)
+    const checkAvailableButton = (deps: boolean[]) => deps.every(dep => dep)
+    const checkDisableClickButton = (): boolean => {
+        const firstCond = checkAvailableButton([getValues('password') === getValues('passwordConfirmation'), !getFieldState('passwordConfirmation').error, !getFieldState('password').error])
+        const secondCond = checkAvailableButton([!passwordConfirmFocus, !getFieldState('password').error, Boolean(getValues('password'))]);
+        if(firstCond && secondCond) return false;
+        if((firstCond && !secondCond) || (!firstCond && secondCond)) return false
+        return true
+    }
 
     const togglePasswordFocus = () => {
         setPasswordFocus(prev => !prev);
@@ -54,12 +60,17 @@ export const ForgotFormSecond: FC = () => {
     }
 
     const onSubmit: SubmitHandler<IFormForgotSecond> = (data) => {
-        thunkDispatch(resetPassword({password: data.password, passwordConfirmation: data.passwordConfirmation, code: location.search.slice(6)}))
+        console.log('click')
+        if(getValues('password') === getValues('passwordConfirmation')){
+            thunkDispatch(resetPassword({password: data.password, passwordConfirmation: data.passwordConfirmation, code: location.search.slice(6)}))
+        }
     };
 
     useEffect(() => {
         watch();
     }, [watch]);
+
+    console.log(passwordConfirmFocus, 'not in func')
 
     return (
         <>
@@ -117,8 +128,8 @@ export const ForgotFormSecond: FC = () => {
                 </div>
                 <button
                     type='submit'
-                    className={checkAvailableButton([getValues('password') === getValues('passwordConfirmation'), !getFieldState('passwordConfirmation').error, !getFieldState('password').error]) ? styles.form__btn : `${styles.form__btn} ${styles.form__btn_error}`}
-                    disabled={!checkAvailableButton([getValues('password') === getValues('passwordConfirmation'), !getFieldState('passwordConfirmation').error, !getFieldState('password').error])}
+                    className={checkAvailableButton([getValues('password') === getValues('passwordConfirmation') ,!getFieldState('passwordConfirmation').error, !getFieldState('password').error]) || checkAvailableButton([passwordConfirmFocus, !getFieldState('password').error, Boolean(getValues('password'))]) ? styles.form__btn : `${styles.form__btn} ${styles.form__btn_error}`}
+                    disabled={checkDisableClickButton()}
                 >
                     Сохранить изменения
                 </button>

@@ -22,7 +22,7 @@ type LoginResponse = {
 
 export abstract class AuthService {
   static async login(dto: LoginDto) {
-    const response = await api.post<User | FetchedError>('/api/auth/locall', dto).catch((err) => {
+    const response = await api.post<User | FetchedError>('/api/auth/local', dto).catch((err) => {
       const { data } = err.response;
       throw new AxiosError(JSON.stringify(data));
     });

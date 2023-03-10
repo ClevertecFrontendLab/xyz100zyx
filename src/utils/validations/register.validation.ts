@@ -1,12 +1,16 @@
 import * as yup from "yup";
 
 export const registerSchemaFirst = yup.object({
-    username: yup.string().matches(new RegExp('[a-zA-Z]+', 'g'), 'латинский алфавит').matches(new RegExp('[0-9]+', 'g'), 'и цифры').required('Поле не может быть пустым'),
+    username: yup.string()
+        .matches(new RegExp('[a-zA-Z]+', 'g'), 'латинский алфавит')
+        .matches(new RegExp('[0-9]+', 'g'), 'цифры')
+        /* .matches(new RegExp(/^[^а-яё]+$/iu), 'латинский алфавит') */
+        .required('Поле не может быть пустым'),
     password: yup.string()
-        .matches(new RegExp('(?=.*[0-9])(?=.*[А-ЯA-Z]){8,}', 'g'), 'Пароль не менее 8 символов, с заглавной буквой и цифрой')
-        .matches(new RegExp('(?=.*[А-ЯA-Z])', 'g'), 'с заглавной буквой')
+        .matches(new RegExp('(?=.*[0-9])(?=.*[A-Z]){8,}', 'g'), 'Пароль не менее 8 символов, с заглавной буквой и цифрой')
+        .matches(new RegExp('(?=.*[A-Z])', 'g'), 'с заглавной буквой')
         .matches(new RegExp('(?=.*[0-9])', 'g'), 'и цифрой')
-        .matches(new RegExp('(?=.*[0-9])(?=.*[А-ЯA-Z])', 'g'), 'с заглавной буквой и цифрой')
+        .matches(new RegExp('(?=.*[0-9])(?=.*[A-Z])', 'g'), 'с заглавной буквой и цифрой')
         .min(8, 'не менее 8 символов')
 })
 

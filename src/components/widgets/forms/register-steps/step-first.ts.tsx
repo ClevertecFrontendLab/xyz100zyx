@@ -67,7 +67,6 @@ export const RegisterFirstStep: FC<IProps> = ({step, setStep}) => {
         watch();
     }, [watch]);
 
-    console.log(getFieldState('username'))
 
     return (
         <form data-test-id='register-form' className={styles.form}
@@ -83,21 +82,45 @@ export const RegisterFirstStep: FC<IProps> = ({step, setStep}) => {
                     setFocus={onLoginFocusToggle}
                     name='username'
                 />
-                {(!getFieldState('username').error && isTouchedLogin && !loginFocus && !getValues('username')) || (getFieldState('username').error?.types?.required && !loginFocus) && <ColoredError dataTestId='hint'
+                {(isTouchedLogin && !loginFocus && !getValues('username').length) && <ColoredError dataTestId='hint'
                                                                                                                                          text='Поле не может быть пустым'/>}
                 {(!loginFocus && formState.errors.username?.message && getValues('username')) && (
                     <ColoredError dataTestId='hint'
                                   text='Используйте для логина латинский алфавит и цифры'/>
                 )}
-                {getFieldState('username').isDirty && formState.errors.username?.message && loginFocus && (
-                    <p className={styles.form__prompt}>
-                        {LightText(formState.errors.username?.message || '', 'Используйте для логина латинский алфавит и цифры', 'hint', true)}
+                {(getFieldState('username').isDirty && Array.isArray(getFieldState('username').error?.types?.matches) && loginFocus) && (
+                    <p data-test-id='hint' className={styles.form__prompt}>
+                        {/* LightText(formState.errors.username?.message || '', 'Используйте для логина латинский алфавит и цифры', '', true) */}
+                        Используйте для логина <span className={styles.form__prompt_colored}>латинский алфавит</span> и <span className={styles.form__prompt_colored}>цифры</span>
                     </p>
                 )}
-                {(!getFieldState('username').error) || (!isTouchedLogin && !loginFocus && !getValues('username')) && (
-                    <p data-test-id='hint' className={styles.form__prompt}>Используйте для логина
-                        латинский алфавит и цифры</p>
+                {/* getFieldState('username').isDirty && !(Array.isArray(getFieldState('username').error?.types?.matches)) && loginFocus && (
+                    (getFieldState('username').error?.message==='латинский алфавит' && getValues('username').match(new RegExp(/^[^а-яё]+$/iu))) ? (<p data-test-id='hint' className={styles.form__prompt}>Используйте для логина <span className={styles.form__prompt_colored}>латинский алфавит</span> и <span className={styles.form__prompt_colored}>цифры</span>
+                    </p>) : (getFieldState('username').error?.message==='латинский алфавит') ?  (<p data-test-id='hint' className={styles.form__prompt}>
+                        Используйте для логина <span className={styles.form__prompt_colored}>латинский алфавит</span> и цифры
+                    </p>) : (getFieldState('username').error?.message==='латинский алфавит') ? (<p data-test-id='hint' className={styles.form__prompt}>
+                        Используйте для логина латинский алфавит и <span className={styles.form__prompt_colored}>цифры</span>
+                    </p>) : null
+                ) */}
+                {(getFieldState('username').isDirty && loginFocus && getFieldState('username').error?.types?.matches === 'латинский алфавит' && !getValues('username').match(new RegExp(/^[^а-яё]+$/iu))) && (
+                    <p data-test-id='hint' className={styles.form__prompt}>
+                        Используйте для логина латинский алфавит и <span style={{color: 'rgb(167, 167, 167)'}} className={styles.form__prompt_colored}>цифры</span>
+                    </p>
                 )}
+                {(getFieldState('username').isDirty && loginFocus && getFieldState('username').error?.types?.matches === 'латинский алфавит' && getValues('username').match(new RegExp(/^[^а-яё]+$/iu))) && (
+                    <p data-test-id='hint' className={styles.form__prompt}>
+                        Используйте для логина <span className={styles.form__prompt_colored}>латинский алфавит</span> и цифры
+                    </p>
+                )}
+                {(getFieldState('username').isDirty && loginFocus && getFieldState('username').error?.types?.matches === 'цифры') && (
+                    <p data-test-id='hint' className={styles.form__prompt}>
+                        Используйте для логина латинский алфавит и <span className={styles.form__prompt_colored}>цифры</span>
+                    </p>
+                )}
+                {((!getFieldState('username').error) || (!isTouchedLogin && !loginFocus && !getValues('username'))) && (
+                    <p data-test-id='hint' className={styles.form__prompt}>Используйте для логина латинский алфавит и цифры</p>
+                )}
+
             </div>
             <div className={styles.form__field}>
                 <Input
@@ -110,17 +133,18 @@ export const RegisterFirstStep: FC<IProps> = ({step, setStep}) => {
                     invalid={getFieldState('password').invalid}
                     setFocus={onPasswordFocusToggle}
                     name='password'
+                    isNeedCheck={true}
                 />
-                {(!getFieldState('password').error && isTouchedPassword && !passwordFocus && !getValues('password').length) && <ColoredError dataTestId='hint'
+                {(isTouchedPassword && !passwordFocus && !getValues('password').length) && <ColoredError dataTestId='hint'
                                                                                                                                          text='Поле не может быть пустым'/>}
-                {!passwordFocus && getFieldState('password').isDirty && formState.errors.password?.message && (
+                {(!passwordFocus && getFieldState('password').isDirty && formState.errors.password?.message && getValues('password')) && (
                     <ColoredError dataTestId='hint' text={ERROR_ALL_TEXT}/>
                 )}
-                {getFieldState('password').isDirty &&
+                {(getFieldState('password').isDirty &&
                     formState.errors.password?.message &&
-                    passwordFocus &&
+                    passwordFocus) &&
                     ColoredPasswordError(getRegisterPassErrorText(getValues('password')), true)}
-                {(!getFieldState('password').isDirty || !formState.errors.password?.message) && (
+                {((!isTouchedPassword || !formState.errors.password?.message && getValues('password')) || (!getFieldState('password').error && passwordFocus)) && (
                     <p data-test-id='hint' className={styles.form__prompt}>{ERROR_ALL_TEXT}</p>
                 )}
             </div>

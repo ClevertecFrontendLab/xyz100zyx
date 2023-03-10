@@ -6,33 +6,34 @@ export const ColoredPasswordError = (errorText: string, isInFocus: boolean) => {
 
     switch(errorText){
         case '':
+            console.log('work for right')
             return <p data-test-id='hint' className={styles.prompt}>Пароль не менее 8 символов, с заглавной буквой и цифрой</p>
             break;
         case ERROR_ALL:
             console.log(errorText)
-            return <p className={styles.prompt}>Пароль <span data-test-id='hint' className={styles.prompt__error}>не менее 8 символов</span>, с <span data-test-id='hint' className={styles.prompt__error}>заглавной буквой</span> и <span data-test-id='hint' className={styles.prompt__error}>цифрой</span></p>
+            return <p data-test-id='hint' className={styles.prompt}>Пароль <span className={styles.prompt__error}>не менее 8 символов</span>, с <span className={styles.prompt__error}>заглавной буквой</span> и <span className={styles.prompt__error}>цифрой</span></p>
             break;
         case ERROR_LENGTH_CAPITAL:
-            return <p className={styles.prompt}>Пароль <span data-test-id='hint' className={styles.prompt__error}>не менее 8 символов</span>, с <span data-test-id='hint' className={styles.prompt__error}>заглавной буквой</span> и цифрой</p>
+            return <p data-test-id='hint' className={styles.prompt}>Пароль <span className={styles.prompt__error}>не менее 8 символов</span>, с <span className={styles.prompt__error}>заглавной буквой</span> и <span>цифрой</span></p>
             break;
         case ERROR_LENGTH_NUMBER:
-            return <p className={styles.prompt}>Пароль <span data-test-id='hint' className={styles.prompt__error}>не менее 8 символов</span>, с заглавной буквой и <span data-test-id='hint' className={styles.prompt__error}>цифрой</span></p>
+            return <p data-test-id='hint' className={styles.prompt}>Пароль <span className={styles.prompt__error}>не менее 8 символов</span>, с <span>заглавной буквой</span> и <span className={styles.prompt__error}>цифрой</span></p>
             break;
         case ERROR_CAPITAL_NUMBER:
-            return <p className={styles.prompt}>Пароль не менее 8 символов, с <span data-test-id='hint' className={styles.prompt__error}>заглавной буквой</span> и <span data-test-id='hint' className={styles.prompt__error}>цифрой</span></p>
+            return <p data-test-id='hint' className={styles.prompt}>Пароль <span>не менее 8 символов</span>, с <span className={styles.prompt__error}>заглавной буквой</span> и <span className={styles.prompt__error}>цифрой</span></p>
             break;
         case ERROR_CAPITAL:
-            return <p className={styles.prompt}>Пароль не менее 8 символов, с <span data-test-id='hint' className={styles.prompt__error}>заглавной буквой</span> и цифрой</p>
+            return <p data-test-id='hint' className={styles.prompt}>Пароль <span>не менее 8 символов</span>, с <span className={styles.prompt__error}>заглавной буквой</span> и <span>цифрой</span></p>
             break;
         case ERROR_LENGTH:
-            return <p className={styles.prompt}>Пароль <span data-test-id='hint' className={styles.prompt__error}>не менее 8 символов</span>, с заглавной буквой и цифрой</p>
+            return <p data-test-id='hint' className={styles.prompt}>Пароль <span className={styles.prompt__error}>не менее 8 символов</span>, с <span>заглавной буквой</span> и <span>цифрой</span></p>
             break;
         case ERROR_NUMBER:
-            return <p className={styles.prompt}>Пароль не менее 8 символов, с заглавной буквой и <span data-test-id='hint' className={styles.prompt__error}>цифрой</span></p>
+            return <p data-test-id='hint' className={styles.prompt}>Пароль <span>не менее 8 символов</span>, с <span>заглавной буквой</span> и <span className={styles.prompt__error}>цифрой</span></p>
             break;
     }
     if(errorText && !isInFocus){
         return <p className={styles.prompt}><span data-test-id='hint' className={styles.prompt__error}>Пароль не менее 8 символов, с заглавной буквой и цифрой</span></p>
     }
-    return <p className={styles.prompt} />
+
 }

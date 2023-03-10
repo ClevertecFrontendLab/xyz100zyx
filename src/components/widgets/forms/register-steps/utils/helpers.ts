@@ -24,6 +24,7 @@ export const getRegisterPassErrorText = (value: string) => {
         res = ERROR_LENGTH_NUMBER
     }
     else if(value?.length >= 8 && value.match(new RegExp('(?=.*[А-ЯA-Z])', 'g')) && value.match(new RegExp('(?=.*[0-9])'))){
+        console.log('right')
         res = ''
     }
     else{
