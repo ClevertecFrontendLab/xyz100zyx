@@ -129,7 +129,7 @@ export const ForgotFormSecond: FC = () => {
                 <button
                     type='submit'
                     className={checkAvailableButton([getValues('password') === getValues('passwordConfirmation') ,!getFieldState('passwordConfirmation').error, !getFieldState('password').error]) || checkAvailableButton([passwordConfirmFocus, !getFieldState('password').error, Boolean(getValues('password'))]) ? styles.form__btn : `${styles.form__btn} ${styles.form__btn_error}`}
-                    disabled={checkDisableClickButton()}
+                    disabled={(!passwordConfirmFocus && (!!getFieldState('passwordConfirmation').error || !!getFieldState('password').error || getValues('password') !== getValues('passwordConfirmation')))}
                 >
                     Сохранить изменения
                 </button>
