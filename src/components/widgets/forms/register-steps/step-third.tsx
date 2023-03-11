@@ -20,6 +20,7 @@ export const RegisterThirdStep: FC = () => {
   const { register, handleSubmit, formState, watch, getValues, getFieldState, control } = useForm<IFormRegister>({
     mode: 'all',
     resolver: yupResolver(registerSchemaThird),
+      criteriaMode: 'all'
   });
 
   const [phoneFocus, setPhoneFocus] = useState(true);
@@ -29,13 +30,15 @@ export const RegisterThirdStep: FC = () => {
 
   const onSubmit: SubmitHandler<IFormRegister> = (data) => {
     dispatch(setThirdStepFields(data));
-    console.log(data)
     thunkDispatch(registration({...regData, ...data}))
   };
 
   useEffect(() => {
     watch();
   }, [watch]);
+
+  console.log('phone: ', getFieldState('phone'), getValues('phone'))
+  console.log('email: ', getFieldState('email'), getValues('email'))
 
   return (
     <form data-test-id='register-form' className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -120,9 +123,9 @@ export const RegisterThirdStep: FC = () => {
           )}
       </div>
       <button
-        disabled={!formState.isValid}
+        disabled={getFieldState('phone').invalid || getFieldState('email').invalid}
         type='submit'
-        className={formState.isValid ? styles.form__btn : `${styles.form__btn} ${styles.form__btn_error}`}
+        className={!(getFieldState('phone').invalid || getFieldState('email').invalid) ? styles.form__btn : `${styles.form__btn} ${styles.form__btn_error}`}
       >
         Зарегистрироваться
       </button>

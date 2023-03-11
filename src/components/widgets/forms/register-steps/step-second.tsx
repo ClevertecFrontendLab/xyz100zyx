@@ -61,8 +61,6 @@ export const RegisterSecondStep: FC<IProps> = ({step, setStep}) => {
         watch()
     }, [watch])
 
-    console.log(isTouchedFirstName, getValues('firstName'), nameFocus)
-
 
     return (
         <form data-test-id='register-form' className={styles.form} onSubmit={handleSubmit(onSubmit)}>

@@ -1,4 +1,4 @@
-import { AxiosError, AxiosResponse } from 'axios';
+import {AxiosError, AxiosResponse} from 'axios';
 import { api } from '../api/config';
 import { FetchedError, User } from '../types/data.types';
 
@@ -23,8 +23,12 @@ type LoginResponse = {
 export abstract class AuthService {
   static async login(dto: LoginDto) {
     const response = await api.post<User | FetchedError>('/api/auth/local', dto).catch((err) => {
-      const { data } = err.response;
-      throw new AxiosError(JSON.stringify(data));
+        const { data } = err.response;
+        console.log(err.response)
+        if(data){
+            throw new AxiosError(JSON.stringify(data));
+        }
+      throw new AxiosError(JSON.stringify({data: null, error: {status: err.response.status, message: err.response.message, details: {}, name: err.response.message}}));
     });
     return response?.data;
   }
@@ -32,7 +36,10 @@ export abstract class AuthService {
   static async registration(dto: RegisterDto) {
     const response = await api.post<User | FetchedError>('/api/auth/local/register', dto).catch((err) => {
       const { data } = err.response;
-      throw new AxiosError(JSON.stringify(data));
+      if(data){
+          throw new AxiosError(JSON.stringify(data));
+      }
+        throw new AxiosError(JSON.stringify({data: null, error: {status: err.response.status, message: err.response.message, details: {}, name: err.response.message}}));
     });
     return response?.data;
   }

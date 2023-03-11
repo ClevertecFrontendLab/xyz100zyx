@@ -34,6 +34,8 @@ export const AuthErrorPopup: FC = () => {
         dispatch(setAllNull())
     }
 
+    console.log('auth error')
+
     if(path === 'registration' && error?.error?.status===400){
         return (
             <div data-test-id='status-block' className={styles.popup}>
