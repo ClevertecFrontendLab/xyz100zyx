@@ -1,6 +1,5 @@
 import {FC, useEffect, useState} from 'react';
-import {useLocation, useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useLocation} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {SubmitHandler} from "react-hook-form/dist/types";
@@ -9,7 +8,6 @@ import {Input} from "../../../common/input/input";
 import {
     forgotSchemaSecond
 } from "../../../../utils/validations/forgot.validation";
-import {RootState} from "../../../../store/store";
 import {useThunkDispatch} from "../../../../hooks/redux/dispatchers";
 import {ERROR_ALL_TEXT} from "../register-steps/utils/errors";
 import {ColoredPasswordError} from "../register-steps/components/colored-error-password";
@@ -24,7 +22,14 @@ interface IFormForgotSecond {
 }
 
 export const ForgotFormSecond: FC = () => {
-    const {register, handleSubmit, getFieldState, watch, getValues, formState} = useForm<IFormForgotSecond>({
+    const {
+        register,
+        handleSubmit,
+        getFieldState,
+        watch,
+        getValues,
+        formState
+    } = useForm<IFormForgotSecond>({
         resolver: yupResolver(forgotSchemaSecond),
         mode: 'onChange',
     });
@@ -34,35 +39,31 @@ export const ForgotFormSecond: FC = () => {
     const [isPasswordTouched, setPasswordTouched] = useState(false);
     const [isPasswordConfirmTouched, setPasswordConfirmTouched] = useState(false);
     const location = useLocation()
-    const {error} = useSelector((state: RootState) => state.auth);
     const thunkDispatch = useThunkDispatch();
     const checkAvailableButton = (deps: boolean[]) => deps.every(dep => dep)
-    const checkDisableClickButton = (): boolean => {
-        const firstCond = checkAvailableButton([getValues('password') === getValues('passwordConfirmation'), !getFieldState('passwordConfirmation').error, !getFieldState('password').error])
-        const secondCond = checkAvailableButton([!passwordConfirmFocus, !getFieldState('password').error, Boolean(getValues('password'))]);
-        if(firstCond && secondCond) return false;
-        if((firstCond && !secondCond) || (!firstCond && secondCond)) return false
-        return true
-    }
 
     const togglePasswordFocus = () => {
         setPasswordFocus(prev => !prev);
-        if(!isPasswordTouched){
+        if (!isPasswordTouched) {
             setPasswordTouched(true)
         }
     }
 
     const togglePasswordConfirmFocus = () => {
         setPasswordConfirmFocus(prev => !prev);
-        if(!isPasswordConfirmTouched){
+        if (!isPasswordConfirmTouched) {
             setPasswordConfirmTouched(true)
         }
     }
 
     const onSubmit: SubmitHandler<IFormForgotSecond> = (data) => {
         console.log('click')
-        if(getValues('password') === getValues('passwordConfirmation')){
-            thunkDispatch(resetPassword({password: data.password, passwordConfirmation: data.passwordConfirmation, code: location.search.slice(6)}))
+        if (getValues('password') === getValues('passwordConfirmation')) {
+            thunkDispatch(resetPassword({
+                password: data.password,
+                passwordConfirmation: data.passwordConfirmation,
+                code: location.search.slice(6)
+            }))
         }
     };
 
@@ -75,7 +76,8 @@ export const ForgotFormSecond: FC = () => {
     return (
         <>
             <p className={styles.title}>Восстановление пароля</p>
-            <form data-test-id='reset-password-form' className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            <form data-test-id='reset-password-form' className={styles.form}
+                  onSubmit={handleSubmit(onSubmit)}>
                 <div className={styles.form__field}>
                     <Input
                         inputedValue={getValues('password')}
@@ -91,7 +93,7 @@ export const ForgotFormSecond: FC = () => {
                     />
                     {getValues('password') && !passwordFocus && getFieldState('password').isDirty && formState.errors.password?.message && (
 
-                        <ColoredError dataTestId='hint' text={ERROR_ALL_TEXT} />
+                        <ColoredError dataTestId='hint' text={ERROR_ALL_TEXT}/>
                     )}
                     {getFieldState('password').isDirty &&
                         formState.errors.password?.message &&
@@ -101,9 +103,10 @@ export const ForgotFormSecond: FC = () => {
                         <p data-test-id='hint' className={styles.form__prompt}>{ERROR_ALL_TEXT}</p>
                     )}
                     {(!getFieldState('password').isDirty && formState.errors.password?.message) && (
-                        <ColoredError dataTestId='hint' text='Поле не может быть пустым' />
+                        <ColoredError dataTestId='hint' text='Поле не может быть пустым'/>
                     )}
-                    {!passwordFocus && isPasswordTouched && !getValues('password') && <ColoredError text='Поле не может быть пустым' dataTestId='hint'/>}
+                    {!passwordFocus && isPasswordTouched && !getValues('password') &&
+                        <ColoredError text='Поле не может быть пустым' dataTestId='hint'/>}
                 </div>
                 <div className={styles.form__field}>
                     <Input
@@ -119,21 +122,24 @@ export const ForgotFormSecond: FC = () => {
                         name='passwordConfirmation'
                     />
                     {getFieldState('passwordConfirmation').isDirty && !!getValues('passwordConfirmation') && !passwordConfirmFocus && getValues('passwordConfirmation') !== getValues('password') && (
-                        <ColoredError dataTestId='hint' text='Пароли не совпадают' />
+                        <ColoredError dataTestId='hint' text='Пароли не совпадают'/>
                     )}
                     {getFieldState('passwordConfirmation').error && !passwordConfirmFocus && (
-                        <ColoredError dataTestId='hint' text={getFieldState('passwordConfirmation').error!.message || ''} />
+                        <ColoredError dataTestId='hint'
+                                      text={getFieldState('passwordConfirmation').error!.message || ''}/>
                     )}
-                    {!getFieldState('passwordConfirmation').error && !passwordConfirmFocus && isPasswordConfirmTouched && !getValues('passwordConfirmation') && <ColoredError text='Поле не может быть пустым' dataTestId='hint'/>}
+                    {!getFieldState('passwordConfirmation').error && !passwordConfirmFocus && isPasswordConfirmTouched && !getValues('passwordConfirmation') &&
+                        <ColoredError text='Поле не может быть пустым' dataTestId='hint'/>}
                 </div>
                 <button
                     type='submit'
-                    className={checkAvailableButton([getValues('password') === getValues('passwordConfirmation') ,!getFieldState('passwordConfirmation').error, !getFieldState('password').error]) || checkAvailableButton([passwordConfirmFocus, !getFieldState('password').error, Boolean(getValues('password'))]) ? styles.form__btn : `${styles.form__btn} ${styles.form__btn_error}`}
+                    className={checkAvailableButton([getValues('password') === getValues('passwordConfirmation'), !getFieldState('passwordConfirmation').error, !getFieldState('password').error]) || checkAvailableButton([passwordConfirmFocus, !getFieldState('password').error, Boolean(getValues('password'))]) ? styles.form__btn : `${styles.form__btn} ${styles.form__btn_error}`}
                     disabled={(!passwordConfirmFocus && (!!getFieldState('passwordConfirmation').error || !!getFieldState('password').error || getValues('password') !== getValues('passwordConfirmation')))}
                 >
                     Сохранить изменения
                 </button>
-                <p className={styles.form__text}>После сохранения войдите в библиотеку, используя новый пароль</p>
+                <p className={styles.form__text}>После сохранения войдите в библиотеку, используя
+                    новый пароль</p>
             </form>
         </>
     )

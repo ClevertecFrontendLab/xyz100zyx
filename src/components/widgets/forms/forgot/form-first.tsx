@@ -3,7 +3,7 @@ import {FC, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {SubmitHandler} from 'react-hook-form/dist/types';
 import {useSelector} from 'react-redux';
-import {Navigate, useLocation, useNavigate} from 'react-router-dom';
+import {Navigate, useLocation} from 'react-router-dom';
 import {useThunkDispatch} from '../../../../hooks/redux/dispatchers';
 import {rememberPassword} from '../../../../store/slices/auth/async-actions';
 import {RootState} from '../../../../store/store';
@@ -25,7 +25,6 @@ export const ForgotFormFirst: FC = () => {
 
     const [focus, setFocus] = useState(false);
     const [isTouched, setTouched] = useState(false);
-    const navigate = useNavigate();
     const {error} = useSelector((state: RootState) => state.auth);
     const location = useLocation()
     const thunkDispatch = useThunkDispatch();
@@ -36,7 +35,7 @@ export const ForgotFormFirst: FC = () => {
 
     const onToggleFocus = () => {
         setFocus(prev => !prev);
-        if(!isTouched){
+        if (!isTouched) {
             setTouched(true)
         }
     }
@@ -45,10 +44,11 @@ export const ForgotFormFirst: FC = () => {
         watch();
     }, [watch]);
 
-    return localStorage.getItem('token') ? <Navigate to='/' /> :  !location.search ? (
+    return localStorage.getItem('token') ? <Navigate to='/'/> : !location.search ? (
         <>
             <p className={styles.title}>Восстановление пароля</p>
-            <form data-test-id='send-email-form' className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            <form data-test-id='send-email-form' className={styles.form}
+                  onSubmit={handleSubmit(onSubmit)}>
                 <div className={styles.form__field}>
                     <Input
                         inputedValue={getValues('email')}
@@ -60,16 +60,19 @@ export const ForgotFormFirst: FC = () => {
                         setFocus={onToggleFocus}
                     />
                     {getValues('email') && getFieldState('email').error?.message === 'Введите корректный e-mail' && (
-                        <ColoredError dataTestId='hint' text={getFieldState('email').error?.message || ''}/>
+                        <ColoredError dataTestId='hint'
+                                      text={getFieldState('email').error?.message || ''}/>
                     )}
                     {!getFieldState('email').error && !error &&
                         (!focus && getValues('email') && !isTouched) &&
-                        <p data-test-id='hint' className={styles.form__prompt}>На это email будет отправлено письмо с
+                        <p data-test-id='hint' className={styles.form__prompt}>На это email будет
+                            отправлено письмо с
                             инструкциями по восстановлению пароля</p>}
                     {getValues('email') && error && (
                         <ColoredError dataTestId='hint' text={error?.error?.message || 'error'}/>
                     )}
-                    {isTouched && !focus && !getValues('email') && <ColoredError dataTestId='hint' text='Поле не может быть пустым'/>}
+                    {isTouched && !focus && !getValues('email') &&
+                        <ColoredError dataTestId='hint' text='Поле не может быть пустым'/>}
                 </div>
                 <button
                     type='submit'

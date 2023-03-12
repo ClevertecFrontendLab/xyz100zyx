@@ -7,5 +7,6 @@ interface IProps {
 }
 
 export const ColoredError: FC<IProps> = ({text, dataTestId}) => (
-    <p className={styles.prompt}><span data-test-id={dataTestId} className={styles.prompt__error}>{text}</span></p>
+    <p className={styles.prompt}><span data-test-id={dataTestId}
+                                       className={styles.prompt__error}>{text}</span></p>
 )

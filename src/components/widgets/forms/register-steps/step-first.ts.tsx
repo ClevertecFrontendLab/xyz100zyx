@@ -5,9 +5,8 @@ import {yupResolver} from '@hookform/resolvers/yup/dist/yup';
 import {registerSchemaFirst} from '../../../../utils/validations/register.validation';
 import styles from '../register/register-form.module.scss';
 import {Input} from '../../../common/input/input';
-import {LightText} from '../../../common/light-text/light-text';
 import {getRegisterPassErrorText} from './utils/helpers';
-import {ERROR_ALL_TEXT, ERROR_LENGTH_NUMBER} from './utils/errors';
+import {ERROR_ALL_TEXT} from './utils/errors';
 import {ColoredPasswordError} from './components/colored-error-password';
 import {setFirstStepFields} from '../../../../store/slices/forms/register';
 import {ColoredError} from "./components/colored-error";
@@ -47,7 +46,6 @@ export const RegisterFirstStep: FC<IProps> = ({step, setStep}) => {
         if (!isTouchedLogin) {
             setTouchedLogin(true)
         }
-
     }
 
     const onPasswordFocusToggle = () => {
@@ -82,43 +80,41 @@ export const RegisterFirstStep: FC<IProps> = ({step, setStep}) => {
                     setFocus={onLoginFocusToggle}
                     name='username'
                 />
-                {(isTouchedLogin && !loginFocus && !getValues('username').length) && <ColoredError dataTestId='hint'
-                                                                                                                                         text='Поле не может быть пустым'/>}
+                {(isTouchedLogin && !loginFocus && !getValues('username').length) &&
+                    <ColoredError dataTestId='hint'
+                                  text='Поле не может быть пустым'/>}
                 {(!loginFocus && formState.errors.username?.message && getValues('username')) && (
                     <ColoredError dataTestId='hint'
                                   text='Используйте для логина латинский алфавит и цифры'/>
                 )}
                 {(getFieldState('username').isDirty && Array.isArray(getFieldState('username').error?.types?.matches) && loginFocus) && (
                     <p data-test-id='hint' className={styles.form__prompt}>
-                        {/* LightText(formState.errors.username?.message || '', 'Используйте для логина латинский алфавит и цифры', '', true) */}
-                        Используйте для логина <span className={styles.form__prompt_colored}>латинский алфавит</span> и <span className={styles.form__prompt_colored}>цифры</span>
+                        Используйте для логина <span className={styles.form__prompt_colored}>латинский алфавит</span> и <span
+                        className={styles.form__prompt_colored}>цифры</span>
                     </p>
                 )}
-                {/* getFieldState('username').isDirty && !(Array.isArray(getFieldState('username').error?.types?.matches)) && loginFocus && (
-                    (getFieldState('username').error?.message==='латинский алфавит' && getValues('username').match(new RegExp(/^[^а-яё]+$/iu))) ? (<p data-test-id='hint' className={styles.form__prompt}>Используйте для логина <span className={styles.form__prompt_colored}>латинский алфавит</span> и <span className={styles.form__prompt_colored}>цифры</span>
-                    </p>) : (getFieldState('username').error?.message==='латинский алфавит') ?  (<p data-test-id='hint' className={styles.form__prompt}>
-                        Используйте для логина <span className={styles.form__prompt_colored}>латинский алфавит</span> и цифры
-                    </p>) : (getFieldState('username').error?.message==='латинский алфавит') ? (<p data-test-id='hint' className={styles.form__prompt}>
-                        Используйте для логина латинский алфавит и <span className={styles.form__prompt_colored}>цифры</span>
-                    </p>) : null
-                ) */}
                 {(getFieldState('username').isDirty && loginFocus && getFieldState('username').error?.types?.matches === 'латинский алфавит' && !getValues('username').match(new RegExp(/^[^а-яё]+$/iu))) && (
                     <p data-test-id='hint' className={styles.form__prompt}>
-                        Используйте для логина латинский алфавит и <span style={{color: 'rgb(167, 167, 167)'}} className={styles.form__prompt_colored}>цифры</span>
+                        Используйте для логина латинский алфавит и <span
+                        style={{color: 'rgb(167, 167, 167)'}}
+                        className={styles.form__prompt_colored}>цифры</span>
                     </p>
                 )}
                 {(getFieldState('username').isDirty && loginFocus && getFieldState('username').error?.types?.matches === 'латинский алфавит' && getValues('username').match(new RegExp(/^[^а-яё]+$/iu))) && (
                     <p data-test-id='hint' className={styles.form__prompt}>
-                        Используйте для логина <span className={styles.form__prompt_colored}>латинский алфавит</span> и цифры
+                        Используйте для логина <span className={styles.form__prompt_colored}>латинский алфавит</span> и
+                        цифры
                     </p>
                 )}
                 {(getFieldState('username').isDirty && loginFocus && getFieldState('username').error?.types?.matches === 'цифры') && (
                     <p data-test-id='hint' className={styles.form__prompt}>
-                        Используйте для логина латинский алфавит и <span className={styles.form__prompt_colored}>цифры</span>
+                        Используйте для логина латинский алфавит и <span
+                        className={styles.form__prompt_colored}>цифры</span>
                     </p>
                 )}
                 {((!getFieldState('username').error) || (!isTouchedLogin && !loginFocus && !getValues('username'))) && (
-                    <p data-test-id='hint' className={styles.form__prompt}>Используйте для логина латинский алфавит и цифры</p>
+                    <p data-test-id='hint' className={styles.form__prompt}>Используйте для логина
+                        латинский алфавит и цифры</p>
                 )}
 
             </div>
@@ -135,14 +131,15 @@ export const RegisterFirstStep: FC<IProps> = ({step, setStep}) => {
                     name='password'
                     isNeedCheck={true}
                 />
-                {(isTouchedPassword && !passwordFocus && !getValues('password').length) && <ColoredError dataTestId='hint'
-                                                                                                                                         text='Поле не может быть пустым'/>}
+                {(isTouchedPassword && !passwordFocus && !getValues('password').length) &&
+                    <ColoredError dataTestId='hint'
+                                  text='Поле не может быть пустым'/>}
                 {(!passwordFocus && getFieldState('password').isDirty && formState.errors.password?.message && getValues('password')) && (
                     <ColoredError dataTestId='hint' text={ERROR_ALL_TEXT}/>
                 )}
                 {(getFieldState('password').isDirty &&
-                    formState.errors.password?.message &&
-                    passwordFocus) &&
+                        formState.errors.password?.message &&
+                        passwordFocus) &&
                     ColoredPasswordError(getRegisterPassErrorText(getValues('password')), true)}
                 {((!isTouchedPassword || !formState.errors.password?.message && getValues('password')) || (!getFieldState('password').error && passwordFocus)) && (
                     <p data-test-id='hint' className={styles.form__prompt}>{ERROR_ALL_TEXT}</p>

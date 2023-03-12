@@ -10,6 +10,7 @@ import {RootState} from '../../../../store/store';
 import {setThirdStepFields} from '../../../../store/slices/forms/register';
 import {registration} from '../../../../store/slices/auth/async-actions';
 import {ColoredError} from "./components/colored-error";
+import {RegistrationRegExp} from "../../../../utils/validations/regex";
 
 interface IFormRegister {
     phone: string;
@@ -20,7 +21,6 @@ export const RegisterThirdStep: FC = () => {
     const {
         register,
         handleSubmit,
-        formState,
         watch,
         getValues,
         getFieldState,
@@ -115,9 +115,9 @@ export const RegisterThirdStep: FC = () => {
                         />
                     )}
                 />
-                {((getValues('phone')?.match(/^\+375 \((25|29|33|44)\) [0-9]{3}-[0-9]{2}-[0-9]{2}$/) && getValues('phone')) || !isTouchedPhone) && <p data-test-id='hint' className={styles.form__prompt}>В формате +375 (xx) xxx-xx-xx</p>}
+                {((getValues('phone')?.match(RegistrationRegExp.PHONE) && getValues('phone')) || !isTouchedPhone) && <p data-test-id='hint' className={styles.form__prompt}>В формате +375 (xx) xxx-xx-xx</p>}
                 {((isTouchedPhone && !getValues('phone') && !phoneFocus)) && <ColoredError text='Поле не может быть пустым' dataTestId='hint'/>}
-                {(!getValues('phone')?.match(/^\+375 \((25|29|33|44)\) [0-9]{3}-[0-9]{2}-[0-9]{2}$/) && isTouchedPhone && getValues('phone')) && <ColoredError text='В формате +375 (xx) xxx-xx-xx' dataTestId='hint'/>}
+                {(!getValues('phone')?.match(RegistrationRegExp.PHONE) && isTouchedPhone && getValues('phone')) && <ColoredError text='В формате +375 (xx) xxx-xx-xx' dataTestId='hint'/>}
             </div>
             <div className={styles.form__field}>
                 <Input

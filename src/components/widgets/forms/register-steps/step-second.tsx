@@ -5,7 +5,6 @@ import {yupResolver} from "@hookform/resolvers/yup/dist/yup";
 import {registerSchemaSecond} from "../../../../utils/validations/register.validation";
 import styles from "../register/register-form.module.scss";
 import {Input} from "../../../common/input/input";
-import {LightText} from "../../../common/light-text/light-text";
 import {setSecondStepFields} from '../../../../store/slices/forms/register';
 import {ColoredError} from "./components/colored-error";
 
@@ -72,7 +71,6 @@ export const RegisterSecondStep: FC<IProps> = ({step, setStep}) => {
                        setFocus={onFirstNameFocusToggle}
                        name='firstName'
                 />
-                {/* <p className={styles.form__prompt}>{formState.errors.name && LightText(formState.errors.name?.message || '', 'Поле не может быть пустым', '', true)}</p> */}
                 {formState.errors.firstName &&
                     <ColoredError dataTestId='hint' text={formState.errors.firstName.message || ''}/>}
                 {!nameFocus && !getValues('firstName') && isTouchedFirstName && <ColoredError text='Поле не может быть пустым' dataTestId='hint'/>}

@@ -3,7 +3,7 @@ import {Navigate} from "react-router-dom";
 import styles from './register-form.module.scss';
 import {RegisterFirstStep} from "../register-steps/step-first.ts";
 import {RegisterSecondStep} from "../register-steps/step-second";
-import { RegisterThirdStep } from '../register-steps/step-third';
+import {RegisterThirdStep} from '../register-steps/step-third';
 
 export interface IFormRegister {
     login: string;
@@ -22,7 +22,7 @@ export const RegisterForm: FC = () => {
 
             {step === 1 && <RegisterFirstStep step={step} setStep={setStep}/>}
             {step === 2 && <RegisterSecondStep step={step} setStep={setStep}/>}
-            {step === 3 && <RegisterThirdStep />}
+            {step === 3 && <RegisterThirdStep/>}
         </>
-    ) : <Navigate to='/' />
+    ) : <Navigate to='/'/>
 }

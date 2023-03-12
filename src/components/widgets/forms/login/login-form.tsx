@@ -23,8 +23,6 @@ export const LoginForm: FC = () => {
         getFieldState,
         watch,
         getValues,
-        formState,
-        control
     } = useForm<IFormLogin>({
         resolver: yupResolver(loginSchema),
         mode: 'all',
@@ -87,8 +85,9 @@ export const LoginForm: FC = () => {
                     {getFieldState('identifier').error &&
                         <ColoredError dataTestId='hint'
                                       text={getFieldState('identifier').error?.message || ''}/>}
-                    {(!getFieldState('identifier').error && isDirtyLogin && !loginFocus && !getValues('identifier').length) && <ColoredError dataTestId='hint'
-                                                                                                                             text='Поле не может быть пустым'/>}
+                    {(!getFieldState('identifier').error && isDirtyLogin && !loginFocus && !getValues('identifier').length) &&
+                        <ColoredError dataTestId='hint'
+                                      text='Поле не может быть пустым'/>}
                 </div>
                 <div className={styles.form__field}>
                     <Input
@@ -105,9 +104,10 @@ export const LoginForm: FC = () => {
                     {getFieldState('password').error &&
                         <ColoredError dataTestId='hint'
                                       text={getFieldState('password').error?.message || ''}/>}
-                    {(!getFieldState('password').error && isDirtyPassword && !passwordFocus && !getValues('password').length) && <ColoredError dataTestId='hint' text='Поле не может быть пустым' />}
+                    {(!getFieldState('password').error && isDirtyPassword && !passwordFocus && !getValues('password').length) &&
+                        <ColoredError dataTestId='hint' text='Поле не может быть пустым'/>}
 
-                        </div>
+                </div>
                 {error?.error?.status === 400 ? (
                     <p className={styles.form__error}>
                         <span data-test-id='hint'>Неверный логин или пароль!</span>
