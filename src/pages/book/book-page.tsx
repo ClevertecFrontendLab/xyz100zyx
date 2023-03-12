@@ -1,5 +1,5 @@
 import {FC, useEffect, useRef, useState} from 'react';
-import {Link, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../store/store';
 import {fetchBookById} from '../../store/slices/books/async-actions';
@@ -15,6 +15,7 @@ import {nullableStatus} from '../../store/slices/books/book-slice';
 import {getCategoryName, getCurrentCategoryId} from '../../utils/categories.utils';
 import {fetchGenres} from '../../store/slices/nav/async-actions';
 import {changeInputValue, changeActiveGenre} from '../../store/slices/filter/filter-slice';
+import { BookDetails } from '../../components/widgets/book-details';
 
 export const BookPage: FC = () => {
     const [isVisibleComments, setVisibleComments] = useState(true);
@@ -29,6 +30,7 @@ export const BookPage: FC = () => {
     const {activeGenre} = useSelector((state: RootState) => state.filter)
     const thunkDispatch = useThunkDispatch();
     const dispatch = useDispatch();
+    const navigate = useNavigate()
 
     const onLinkClick = () => {
         dispatch(nullableStatus());
@@ -47,16 +49,21 @@ export const BookPage: FC = () => {
 
             isNeedFirstUpdate.current = false;
         }
-    }, []);
+    }, [dispatch, thunkDispatch, navStatus, booksId]);
 
     useEffect(() => {
         if (isNeedSecondUpdate.current === true) {
             dispatch(changeInputValue(''))
-            if (!books.length) {
-                dispatch(changeActiveGenre(getCurrentCategoryId(category!, genres)!))
-            }
             isNeedSecondUpdate.current = false;
         }
+        if (!books.length) {
+            dispatch(changeActiveGenre(getCurrentCategoryId(category!, genres)!))
+            console.log(activeGenre, category, genres)
+        }
+    }, [genres])
+
+    useEffect(() => {
+        if(!localStorage.getItem('token')) navigate('/auth');
     }, [])
 
     return status === 'fulfilled' ? (
@@ -83,65 +90,23 @@ export const BookPage: FC = () => {
             >
                 <h5 className={styles.section__label}>Рейтинг</h5>
                 {/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */}
-                <ul className={styles.rating}>
-                    {book?.rating
-                        ? [...Array(5)].map((_, index) =>
-                            index < Math.round(book?.rating!) ? (
-                                <IconStarFill key={book?.ISBN[index]}/>
-                            ) : (
-                                <IconStarUnfill key={book?.ISBN[index]}/>
+                <div className={styles.rating__wrapper}>
+                    <ul className={styles.rating}>
+                        {book?.rating
+                            ? [...Array(5)].map((_, index) =>
+                                index < Math.round(book?.rating!) ? (
+                                    <IconStarFill key={book?.ISBN[index]}/>
+                                ) : (
+                                    <IconStarUnfill key={book?.ISBN[index]}/>
+                                )
                             )
-                        )
-                        : [...Array(5)].map((_, index) => <IconStarUnfill
-                            key={book?.ISBN[index]}/>)}
-                </ul>
-                <h5 className={styles.rating__text}>{book?.rating || 'ещё нет оценок'}</h5>
-            </div>
-            <div className={styles.detailed}>
-                <h5 className={styles.section__label}>Подробная иформация</h5>
-                <div className={styles.detailed__info}>
-                    <ul className={styles.detailed__left}>
-                        <li>
-                            <span className={styles.detailed__key}>Издательство</span>
-                            <span className={styles.detailed__value}>{book?.publish}</span>
-                        </li>
-                        <li>
-                            <span className={styles.detailed__key}>Год издания</span>
-                            <span className={styles.detailed__value}>{book?.issueYear}</span>
-                        </li>
-                        <li>
-                            <span className={styles.detailed__key}>Страниц</span>
-                            <span className={styles.detailed__value}>{book?.pages}</span>
-                        </li>
-                        <li>
-                            <span className={styles.detailed__key}>Переплёт</span>
-                            <span className={styles.detailed__value}>{book?.cover}</span>
-                        </li>
-                        <li>
-                            <span className={styles.detailed__key}>Формат</span>
-                            <span className={styles.detailed__value}>{book?.format}</span>
-                        </li>
+                            : [...Array(5)].map((_, index) => <IconStarUnfill
+                                key={book?.ISBN[index]}/>)}
                     </ul>
-                    <ul className={styles.detailed__right}>
-                        <li>
-                            <span className={styles.detailed__key}>Жанр</span>
-                            <span className={styles.detailed__value}>{book?.categories[0]}</span>
-                        </li>
-                        <li>
-                            <span className={styles.detailed__key}>Вес</span>
-                            <span className={styles.detailed__value}>{book?.weight} г</span>
-                        </li>
-                        <li>
-                            <span className={styles.detailed__key}>ISBN</span>
-                            <span className={styles.detailed__value}>{book?.ISBN}</span>
-                        </li>
-                        <li>
-                            <span className={styles.detailed__key}>Изготовитель</span>
-                            <span className={styles.detailed__value}>{book?.producer}</span>
-                        </li>
-                    </ul>
+                    <h5 className={styles.rating__text}>{book?.rating || 'ещё нет оценок'}</h5>
                 </div>
             </div>
+            <BookDetails book={book!} />
             <div className={styles.reviews}>
                 <h5
                     className={

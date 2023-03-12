@@ -1,0 +1,17 @@
+.prompt {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.2px;
+  color: #a7a7a7;
+  mix-blend-mode: normal;
+  padding: 2px 4px 2px 12px;
+    position: absolute;
+    top: -1;
+    left: 0;
+
+  &__error {
+    color: #f42c4f;
+  }
+}

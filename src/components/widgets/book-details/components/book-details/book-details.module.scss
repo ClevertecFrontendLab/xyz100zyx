@@ -1,0 +1,46 @@
+.detailed {
+  padding-top: 62px;
+  width: 100%;
+}
+
+.section__label {
+  max-width: 350px;
+  width: 100%;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0.1px;
+  position: relative;
+  padding-bottom: 16px;
+  margin-block-end: 0;
+  margin-block-start: 0;
+
+  &::after {
+    position: absolute;
+    content: '';
+    height: 1px;
+    max-width: 350px;
+    width: 100%;
+    background-color: #ebebeb;
+    display: block;
+    bottom: 0;
+
+    @media (max-width: 768px) {
+      max-width: 305px;
+    }
+
+    @media (max-width: 320px) {
+      max-width: 209px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  @media (max-width: 768px) {
+    padding-bottom: 8px;
+  }
+}

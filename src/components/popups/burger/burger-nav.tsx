@@ -1,12 +1,19 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { NavMenu } from '../..';
 import styles from './burger-nav.module.scss';
 import { RootState } from '../../../store/store';
+import {setAllNull} from "../../../store/slices/auth/auth-slice";
 
 export const BurgerNav: FC = () => {
   const isBurgerMenu = useSelector((state: RootState) => state.popup.burgerNav);
+  const dispatch = useDispatch()
+
+  const onLogoutClick = () => {
+      dispatch(setAllNull())
+      localStorage.removeItem('token')
+  }
 
   return (
     <div
@@ -26,7 +33,7 @@ export const BurgerNav: FC = () => {
       <span className={styles.navigation__divider} />
       <div className={`${styles.navigation__auth} ${styles.navigation__wrapper}`}>
         <Link to='/'>Профиль</Link>
-        <Link to='/'>Выход</Link>
+        <Link data-test-id='exit-button' onClick={onLogoutClick} to='/auth'>Выход</Link>
       </div>
     </div>
   );
