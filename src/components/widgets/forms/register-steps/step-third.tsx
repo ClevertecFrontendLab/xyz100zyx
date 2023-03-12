@@ -28,6 +28,7 @@ export const RegisterThirdStep: FC = () => {
     } = useForm<IFormRegister>({
         resolver: yupResolver(registerSchemaThird),
         criteriaMode: 'all',
+        reValidateMode: 'onChange',
         mode: 'all',
     });
 
@@ -114,9 +115,9 @@ export const RegisterThirdStep: FC = () => {
                         />
                     )}
                 />
-                {(!getFieldState('phone').error && !!getValues('phone')) && <p className={styles.form__prompt}>В формате +375 (xx) xxx-xx-xx</p>}
-                {((isTouchedPhone && !getFieldState('phone').error && !getValues('phone') && !phoneFocus) || getFieldState('phone').error?.types?.required) && <ColoredError text='Поле не может быть пустым' dataTestId='hint'/>}
-                {(getFieldState('phone').error?.types?.matches) && <ColoredError text='В формате +375 (xx) xxx-xx-xx' dataTestId='hint'/>}
+                {((getValues('phone')?.match(/^\+375 \((25|29|33|44)\) [0-9]{3}-[0-9]{2}-[0-9]{2}$/) && getValues('phone')) || !isTouchedPhone) && <p data-test-id='hint' className={styles.form__prompt}>В формате +375 (xx) xxx-xx-xx</p>}
+                {((isTouchedPhone && !getValues('phone') && !phoneFocus)) && <ColoredError text='Поле не может быть пустым' dataTestId='hint'/>}
+                {(!getValues('phone')?.match(/^\+375 \((25|29|33|44)\) [0-9]{3}-[0-9]{2}-[0-9]{2}$/) && isTouchedPhone && getValues('phone')) && <ColoredError text='В формате +375 (xx) xxx-xx-xx' dataTestId='hint'/>}
             </div>
             <div className={styles.form__field}>
                 <Input
